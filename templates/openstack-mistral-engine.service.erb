@@ -1,0 +1,12 @@
+[Unit]
+Description=OpenStack workflow service (code-named Mistral)
+After=syslog.target network.target
+
+[Service]
+Type=simple
+Restart=always
+User=mistral
+ExecStart=/usr/bin/python /usr/lib/python2.7/site-packages/mistral/cmd/launch.py --server engine  --config-file <%= @conf_file %>
+
+[Install]
+WantedBy=multi-user.target
