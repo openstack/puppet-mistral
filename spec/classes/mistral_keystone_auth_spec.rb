@@ -19,7 +19,6 @@ describe 'mistral::keystone::auth' do
     it { is_expected.to contain_keystone_user('mistral').with(
       :ensure   => 'present',
       :password => 'mistral_password',
-      :tenant   => 'services'
     ) }
 
     it { is_expected.to contain_keystone_user_role('mistral@services').with(
