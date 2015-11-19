@@ -4,62 +4,62 @@
 #
 # === Parameters
 #  [*qpid_hostname*]
-#  The name/ip of qpid. Defult 'localhost'
+#  The name/ip of qpid. Default 'localhost'
 #
 #  [*qpid_port*]
-#  The port of qpid. Defult '5671'
+#  The port of qpid. Default '5671'
 #
 #  [*qpid_username*]
-#  User name for qpid. Defult 'guest'
+#  User name for qpid. Default 'guest'
 #
 #  [*qpid_password*]
-#  password for qpid. Defult 'guest'
+#  password for qpid. Default 'guest'
 #
 #  [*qpid_protocol*]
-#  protocol for qpid. Defult 'ssl'
+#  protocol for qpid. Default 'ssl'
 #
 #  [*qpid_tcp_nodelay*]
-#  Shuld tcp be no deply at qpid? defult 'true'
+#  Should tcp be no delay for qpid. Default 'true'
 #
 #  [*rpc_backend*]
-#  The rpc backend defult 'qpid'
+#  The rpc backend. Default 'qpid'
 #
 #  [*auth_uri*]
-#  Keystone url. Defult 'http://localhost:5000/v2.0/'
+#  Keystone url. Default 'http://localhost:5000/v2.0/'
 #
 #  [*admin_user*]
-#  The user name from 'mistral::keystone::auth'. Defult 'mistral'
+#  The user name from 'mistral::keystone::auth'. Default 'mistral'
 #
 #  [*admin_tenant_name*]
-#  The tenant name from 'mistral::keystone::auth'. Defult 'service'
+#  The tenant name from 'mistral::keystone::auth'. Default 'service'
 #
 #  [*admin_password*]
-#  The password  from 'mistral::keystone::auth'. Defult 'password'
+#  The password  from 'mistral::keystone::auth'. Default 'password'
 #
 #  [*log_dir*]
-#  Path to the log dir. Defult '$::mistral::params::log_dir'
+#  Path to the log dir. Default '$::mistral::params::log_dir'
 #
 #  [*mysql_vip*]
-#  ip for the my sql DB. Defult '127.0.0.1'
+#  ip for the my sql DB. Default '127.0.0.1'
 #
 #  [*mistral_db_pass*]
 #  password for thr DB. Shulde be the same as mistral::db::mysql.
-#  Defult 'password'
+#  Default 'password'
 #
 #  [*auth_version*]
-#  Keystone Api versioh. Defult 'v2.0'
+#  Keystone Api version. Default 'v2.0'
 #
 # [*rabbit_hostname*]
-# The name/ip of rabbit. Defult 'localhost'
+# The name/ip of rabbit. Default 'localhost'
 #
 # [*rabbit_userid*]
-# User id for rabbit. Defult 'guest'
+# User id for rabbit. Default 'guest'
 #
 # [*rabbit_password*]
-# password for rabbit. Defult 'guest'
+# password for rabbit. Default 'guest'
 #
 # [*rabbit_port*]
-# The port of rabbit. Defult '5671'
+# The port of rabbit. Default '5671'
 #
 # [*auth_protocol*]
 # Keystone protocol
