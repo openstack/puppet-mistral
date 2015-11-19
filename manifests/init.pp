@@ -3,6 +3,10 @@
 # Full description of class mistral here.
 #
 # === Parameters
+# [*package_ensure*]
+#  (Optional) Ensure state for package.
+#  Defaults to 'present'
+#
 #  [*qpid_hostname*]
 #  The name/ip of qpid. Default 'localhost'
 #
@@ -70,6 +74,7 @@
 # Keystone protocol
 #
 class mistral(
+  $package_ensure    = 'present',
   $qpid_hostname     = 'localhost',
   $qpid_port         =  5671,
   $qpid_username     = 'guest',
@@ -94,156 +99,10 @@ class mistral(
 ){
   include ::mistral::params
 
-  group { 'mistral':
-    ensure => 'present',
-    name   => 'mistral',
-  }
-
-  file { '/home/mistral' :
-    ensure => directory,
-    owner  => 'mistral',
-    group  => 'mistral',
-    mode   => '0750',
-  }
-
-  user { 'mistral':
-    name   => 'mistral',
-    gid    => 'mistral',
-    groups => ['mistral'],
-    home   => '/home/mistral',
-    system => true
-  }
-
-
-  package { 'MySQL-python':
-    ensure => installed,
-    name   => 'MySQL-python',
-  }
-
-  package { 'python-devel':
-    ensure => installed,
-    name   => 'python-devel',
-  }
-
-  package { 'python-pip':
-    ensure => installed,
-    name   => 'python-pip',
-  }
-
-  package { 'python-keystonemiddleware':
-    ensure => latest,
-    name   => 'python-keystonemiddleware',
-  }
-
-  package { 'python-oslo-utils':
-    ensure => latest,
-    name   => 'python-oslo-utils',
-  }
-
-  package { 'python-oslo-db':
-    ensure => latest,
-    name   => 'python-oslo-db',
-  }
-
-  package { 'python-oslo-log':
-    ensure => latest,
-    name   => 'python-oslo-log',
-  }
-
-  package { 'python-oslo-service':
-    ensure => latest,
-    name   => 'python-oslo-service',
-  }
-
-  package { 'python-oslo-i18n':
-    ensure => latest,
-    name   => 'python-oslo-i18n',
-  }
-
-  package { 'python-oslo-config':
-    ensure => latest,
-    name   => 'python-oslo-config',
-  }
-
-  package { 'python-oslo-messaging':
-    ensure => latest,
-    name   => 'python-oslo-messaging',
-  }
-
-  package { 'python-oslo-context':
-    ensure => latest,
-    name   => 'python-oslo-context',
-  }
-
-  package { 'python-oslo-serialization':
-    ensure => latest,
-    name   => 'python-oslo-serialization',
-  }
-
-  package { 'python-novaclient':
-    ensure => latest,
-    name   => 'python-novaclient',
-  }
-
-  package { 'python-eventlet':
-    ensure => latest,
-    name   => 'python-eventlet',
-  }
-
-
-  package { 'yaql':
-    ensure => installed,
-    name   => 'yaql',
-  }
-
-  package { 'python-pecan':
-    ensure => latest,
-    name   => 'python-pecan',
-  }
-
-  package { 'python-ply':
-    ensure => installed,
-    name   => 'python-ply',
-  }
-
-  package { 'python-jsonschema':
-    ensure => installed,
-    name   => 'python-jsonschema',
-  }
-
-  package { 'python-croniter':
-    ensure => installed,
-    name   => 'python-croniter',
-  }
-
-  package { 'python-networkx':
-    ensure => installed,
-    name   => 'python-networkx',
-  }
-
-  package { 'python-warlock':
-    ensure => installed,
-    name   => 'python-warlock',
-  }
-
-  package { 'python-cliff':
-    ensure => installed,
-    name   => 'python-cliff',
-  }
-
-  package { 'python-wsme':
-    ensure => installed,
-    name   => 'python-wsme',
-  }
-
-  package { 'python-paramiko':
-    ensure => installed,
-    name   => 'python-paramiko',
-  }
-
-  package { 'mistral':
-    ensure => latest,
-    name   => 'mistral',
+  package { 'mistral-common':
+    ensure => $package_ensure,
+    name   => $::mistral::params::common_package_name,
+    tag    => ['openstack', 'mistral-package'],
   }
 
   $database_connection = "mysql://mistral:${mistral_db_pass}@${mysql_vip}/mistral"
@@ -278,4 +137,3 @@ class mistral(
     }
   }
 }
-

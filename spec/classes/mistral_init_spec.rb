@@ -9,7 +9,7 @@ describe 'mistral' do
     }
   end
 
-  shared_examples_for 'a mistral base installation' do
+  shared_examples_for 'mistral' do
 
     it { is_expected.to contain_class('mistral::params') }
 
@@ -21,5 +21,38 @@ describe 'mistral' do
       is_expected.to contain_mistral_config('keystone_authtoken/identity_uri').with_value( params[:identity_uri] )
     end
 
+    it 'installs mistral package' do
+      is_expected.to contain_package('mistral-common').with(
+        :ensure => 'present',
+        :name   => platform_params[:common_package_name],
+        :tag    => ['openstack', 'mistral-package'],
+      )
+    end
+
   end
+
+  context 'on Debian platforms' do
+    let :facts do
+      { :osfamily => 'Debian' }
+    end
+
+    let :platform_params do
+      { :common_package_name => 'mistral' }
+    end
+
+    it_configures 'mistral'
+  end
+
+  context 'on RedHat platforms' do
+    let :facts do
+      { :osfamily => 'RedHat' }
+    end
+
+    let :platform_params do
+      { :common_package_name => 'openstack-mistral-common' }
+    end
+
+    it_configures 'mistral'
+  end
+
 end
