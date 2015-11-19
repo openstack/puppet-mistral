@@ -25,7 +25,12 @@
 #  The rpc backend. Default 'qpid'
 #
 #  [*auth_uri*]
-#  Keystone url. Default 'http://localhost:5000/v2.0/'
+#  Specifies the public Identity URI for Mistral to use.
+#  Default 'http://localhost:5000/v2.0/'
+
+# [*identity_uri*]
+#  Specifies the admin Identity URI for Mistral to use.
+#  Default 'http://localhost:35357/'
 #
 #  [*admin_user*]
 #  The user name from 'mistral::keystone::auth'. Default 'mistral'
@@ -73,6 +78,7 @@ class mistral(
   $qpid_tcp_nodelay  = true,
   $rpc_backend       = 'qpid',
   $auth_uri          = 'http://localhost:5000/v2.0/',
+  $identity_uri      = 'http://localhost:35357/',
   $admin_user        = 'mistral',
   $admin_tenant_name = 'services',
   $admin_password    = 'password',
@@ -240,16 +246,14 @@ class mistral(
     name   => 'mistral',
   }
 
-  $auth_uri_with_version = "${auth_uri}${auth_version}/"
   $database_connection = "mysql://mistral:${mistral_db_pass}@${mysql_vip}/mistral"
   mistral_config {
     'DEFAULT/log_dir'                      : value  => $log_dir;
     'DEFAULT/rpc_backend'                  : value  => $rpc_backend;
-    'keystone_authtoken/auth_uri'          : value  =>
-      $auth_uri_with_version;
+    'keystone_authtoken/auth_uri'          : value  => $auth_uri;
+    'keystone_authtoken/identity_uri'      : value  => $identity_uri;
     'keystone_authtoken/auth_version'      : value  => $auth_version;
     'keystone_authtoken/auth_protocol'     : value  => $auth_protocol;
-    'keystone_authtoken/identity_uri'      : value  => $auth_uri;
     'keystone_authtoken/admin_user'        : value  => $admin_user;
     'keystone_authtoken/admin_password'    : value  => $admin_password;
     'keystone_authtoken/admin_tenant_name' : value  => $admin_tenant_name;
