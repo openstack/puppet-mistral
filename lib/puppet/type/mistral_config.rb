@@ -39,4 +39,9 @@ Puppet::Type.newtype(:mistral_config) do
 
     defaultto false
   end
+
+  autorequire(:package) do
+    'mistral-common'
+  end
+
 end
