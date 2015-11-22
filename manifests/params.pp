@@ -15,11 +15,15 @@ class mistral::params {
       $common_package_name = 'openstack-mistral-common'
       $api_package_name    = 'openstack-mistral-api'
       $api_service_name    = 'openstack-mistral-api'
+      $engine_package_name = 'openstack-mistral-engine'
+      $engine_service_name = 'openstack-mistral-engine'
     }
     'Debian': {
-      $common_package_name = 'mistral'
-      $api_package_name    = 'mistral-api'
-      $api_service_name    = 'mistral-api'
+      $common_package_name    = 'mistral'
+      $api_package_name       = 'mistral-api'
+      $api_service_name       = 'mistral-api'
+      $engine_package_name    = 'mistral-engine'
+      $engine_service_name    = 'mistral-engine'
     }
     default: {
       fail("Unsupported osfamily: ${::osfamily} operatingsystem: \
