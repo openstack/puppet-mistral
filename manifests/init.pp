@@ -7,26 +7,8 @@
 #  (Optional) Ensure state for package.
 #  Defaults to 'present'
 #
-#  [*qpid_hostname*]
-#  The name/ip of qpid. Default 'localhost'
-#
-#  [*qpid_port*]
-#  The port of qpid. Default '5671'
-#
-#  [*qpid_username*]
-#  User name for qpid. Default 'guest'
-#
-#  [*qpid_password*]
-#  password for qpid. Default 'guest'
-#
-#  [*qpid_protocol*]
-#  protocol for qpid. Default 'ssl'
-#
-#  [*qpid_tcp_nodelay*]
-#  Should tcp be no delay for qpid. Default 'true'
-#
 #  [*rpc_backend*]
-#  The rpc backend. Default 'qpid'
+#  The rpc backend. Default 'rabbit'
 #
 #  [*auth_uri*]
 #  Specifies the public Identity URI for Mistral to use.
@@ -73,15 +55,29 @@
 # [*auth_protocol*]
 # Keystone protocol
 #
+# DEPRECATED PARAMETERS
+#
+#  [*qpid_hostname*]
+#  The name/ip of qpid. Default undef
+#
+#  [*qpid_port*]
+#  The port of qpid. Default undef
+#
+#  [*qpid_username*]
+#  User name for qpid. Default undef
+#
+#  [*qpid_password*]
+#  password for qpid. Default undef
+#
+#  [*qpid_protocol*]
+#  protocol for qpid. Default undef
+#
+#  [*qpid_tcp_nodelay*]
+#  Should tcp be no delay for qpid. Default undef
+#
 class mistral(
   $package_ensure    = 'present',
-  $qpid_hostname     = 'localhost',
-  $qpid_port         =  5671,
-  $qpid_username     = 'guest',
-  $qpid_password     = 'guest',
-  $qpid_protocol     = 'ssl',
-  $qpid_tcp_nodelay  = true,
-  $rpc_backend       = 'qpid',
+  $rpc_backend       = 'rabbit',
   $auth_uri          = 'http://localhost:5000/v2.0/',
   $identity_uri      = 'http://localhost:35357/',
   $admin_user        = 'mistral',
@@ -95,7 +91,14 @@ class mistral(
   $rabbit_hostname   = 'localhost',
   $rabbit_userid     = 'guest',
   $rabbit_password   = 'guest',
-  $rabbit_port       = 5671
+  $rabbit_port       = 5671,
+  # DEPRECATED PARAMETERS
+  $qpid_hostname     = undef,
+  $qpid_port         = undef,
+  $qpid_username     = undef,
+  $qpid_password     = undef,
+  $qpid_protocol     = undef,
+  $qpid_tcp_nodelay  = undef,
 ){
   include ::mistral::params
 
@@ -119,14 +122,7 @@ class mistral(
     'database/connection' : value  => $database_connection;
   }
   if $rpc_backend == 'qpid' {
-    mistral_config {
-      'oslo_messaging_qpid/qpid_hostname'    : value  => $qpid_hostname;
-      'oslo_messaging_qpid/qpid_port'        : value  => $qpid_port;
-      'oslo_messaging_qpid/qpid_username'    : value  => $qpid_username;
-      'oslo_messaging_qpid/qpid_password'    : value  => $qpid_password;
-      'oslo_messaging_qpid/qpid_protocol'    : value  => $qpid_protocol;
-      'oslo_messaging_qpid/qpid_tcp_nodelay' : value  => $qpid_tcp_nodelay;
-    }
+    warning('Qpid driver is removed from Oslo.messaging in the Mitaka release')
   }
   if $rpc_backend == 'rabbit' {
     mistral_config {
