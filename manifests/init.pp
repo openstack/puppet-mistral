@@ -50,7 +50,7 @@
 # password for rabbit. Default 'guest'
 #
 # [*rabbit_port*]
-# The port of rabbit. Default '5671'
+# The port of rabbit. Default $::os_service_default
 #
 # [*auth_protocol*]
 # Keystone protocol
@@ -91,7 +91,7 @@ class mistral(
   $rabbit_hostname   = 'localhost',
   $rabbit_userid     = 'guest',
   $rabbit_password   = 'guest',
-  $rabbit_port       = 5671,
+  $rabbit_port       = $::os_service_default,
   # DEPRECATED PARAMETERS
   $qpid_hostname     = undef,
   $qpid_port         = undef,
