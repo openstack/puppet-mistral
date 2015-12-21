@@ -13,9 +13,13 @@ class mistral::params {
   case $::osfamily {
     'RedHat': {
       $common_package_name = 'openstack-mistral-common'
+      $api_package_name    = 'openstack-mistral-api'
+      $api_service_name    = 'openstack-mistral-api'
     }
     'Debian': {
       $common_package_name = 'mistral'
+      $api_package_name    = 'mistral-api'
+      $api_service_name    = 'mistral-api'
     }
     default: {
       fail("Unsupported osfamily: ${::osfamily} operatingsystem: \
