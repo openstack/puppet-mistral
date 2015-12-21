@@ -50,6 +50,6 @@ class mistral::db::postgresql(
     privileges    => $privileges,
   }
 
-  ::Openstacklib::Db::Postgresql['mistral'] ~> Exec<| title == 'mistral-dbsync' |>
+  ::Openstacklib::Db::Postgresql['mistral'] ~> Exec<| title == 'mistral-db-sync' |>
 
 }
