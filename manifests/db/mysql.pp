@@ -1,7 +1,7 @@
 # The mistral::db::mysql class implements mysql backend for mistral
 #
 # This class can be used to create tables, users and grant
-# privelege for a mysql mistral database.
+# privilege for a mysql mistral database.
 #
 # == parameters
 #
