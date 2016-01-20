@@ -6,7 +6,7 @@ After=syslog.target network.target
 Type=simple
 Restart=always
 User=mistral
-ExecStart=/usr/bin/python /usr/lib/python2.7/site-packages/mistral/cmd/launch.py --server executor  --config-file <%= @conf_file %>
+ExecStart=/usr/bin/mistral-server --server executor  --config-file <%= @conf_file %> --log-file <%= @log_file %>
 
 [Install]
 WantedBy=multi-user.target

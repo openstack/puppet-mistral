@@ -16,13 +16,16 @@
 # [*conf_file*]
 #  path to the conf file. Defaults '$::mistral::params::mistral_conf'
 #
+# [*log_file*]
+#  path to the service log file. Defaults '$::mistral::params::service_log_file'
+#
 class mistral::services(
   $is_engine   = true,
   $is_api      = true,
   $is_executor = true,
-  $conf_file   = $::mistral::params::mistral_conf
-) {
-
+  $conf_file   = $::mistral::params::mistral_conf,
+  $log_file    = $::mistral::params::service_log_file
+)  inherits ::mistral::params {
   if $is_engine {
     notify { 'Start mistral-engine': }
 
