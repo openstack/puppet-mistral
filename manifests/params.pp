@@ -6,6 +6,8 @@ class mistral::params {
 
   $mistral_conf_dir = '/etc/mistral'
   $mistral_conf = "${mistral_conf_dir}/mistral.conf"
+  $mistral_log_dir='/var/log/mistral'
+  $service_log_file="${mistral_log_dir}/mistral-server.log"
   $client_package     = 'python-mistralclient'
   $log_dir ='/var/log/mistral'
   $db_sync_command = "mistral-db-manage --config-file=${mistral_conf} upgrade head"
