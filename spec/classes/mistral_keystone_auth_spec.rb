@@ -26,12 +26,12 @@ describe 'mistral::keystone::auth' do
       :roles   => ['admin']
     )}
 
-    it { is_expected.to contain_keystone_service('mistral::workflow').with(
+    it { is_expected.to contain_keystone_service('mistral::workflowv2').with(
       :ensure      => 'present',
       :description => 'Openstack workflow Service'
     ) }
 
-    it { is_expected.to contain_keystone_endpoint('RegionOne/mistral::workflow').with(
+    it { is_expected.to contain_keystone_endpoint('RegionOne/mistral::workflowv2').with(
       :ensure       => 'present',
       :public_url   => "http://127.0.0.1:8989/v2",
       :admin_url    => "http://127.0.0.1:8989/v2",
@@ -47,8 +47,8 @@ describe 'mistral::keystone::auth' do
 
     it { is_expected.to contain_keystone_user('mistraly') }
     it { is_expected.to contain_keystone_user_role('mistraly@services') }
-    it { is_expected.to contain_keystone_service('mistraly::workflow') }
-    it { is_expected.to contain_keystone_endpoint('RegionOne/mistraly::workflow') }
+    it { is_expected.to contain_keystone_service('mistraly::workflowv2') }
+    it { is_expected.to contain_keystone_endpoint('RegionOne/mistraly::workflowv2') }
   end
 
   describe 'when overriding service name' do
@@ -60,8 +60,8 @@ describe 'mistral::keystone::auth' do
 
     it { is_expected.to contain_keystone_user('mistral') }
     it { is_expected.to contain_keystone_user_role('mistral@services') }
-    it { is_expected.to contain_keystone_service('mistral_service::workflow') }
-    it { is_expected.to contain_keystone_endpoint('RegionOne/mistral_service::workflow') }
+    it { is_expected.to contain_keystone_service('mistral_service::workflowv2') }
+    it { is_expected.to contain_keystone_endpoint('RegionOne/mistral_service::workflowv2') }
   end
 
   describe 'when disabling user configuration' do
@@ -75,7 +75,7 @@ describe 'mistral::keystone::auth' do
 
     it { is_expected.not_to contain_keystone_user('mistral') }
     it { is_expected.to contain_keystone_user_role('mistral@services') }
-    it { is_expected.to contain_keystone_service('mistral::workflow').with(
+    it { is_expected.to contain_keystone_service('mistral::workflowv2').with(
       :ensure      => 'present',
       :description => 'Openstack workflow Service'
     ) }
@@ -94,7 +94,7 @@ describe 'mistral::keystone::auth' do
 
     it { is_expected.not_to contain_keystone_user('mistral') }
     it { is_expected.not_to contain_keystone_user_role('mistral@services') }
-    it { is_expected.to contain_keystone_service('mistral::workflow').with(
+    it { is_expected.to contain_keystone_service('mistral::workflowv2').with(
       :ensure      => 'present',
       :description => 'Openstack workflow Service'
     ) }

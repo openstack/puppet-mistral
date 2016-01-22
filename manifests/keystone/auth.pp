@@ -24,7 +24,7 @@
 #   Defaults to 'true'.
 #
 # [*service_type*]
-#   Type of service. Defaults to 'workflow'.
+#   Type of service. Defaults to 'workflowv2'.
 #
 # [*public_url*]
 #   (optional) The endpoint's public url.
@@ -111,7 +111,7 @@ class mistral::keystone::auth(
   $email                  = 'mistral@localhost',
   $auth_name              = 'mistral',
   $service_name           = undef,
-  $service_type           = 'workflow',
+  $service_type           = 'workflowv2',
   $public_url             = 'http://127.0.0.1:8989/v2',
   $admin_url              = 'http://127.0.0.1:8989/v2',
   $internal_url           = 'http://127.0.0.1:8989/v2',
