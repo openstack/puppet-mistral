@@ -4,34 +4,30 @@
 #
 class mistral::params {
 
-  $mistral_conf_dir = '/etc/mistral'
-  $mistral_conf = "${mistral_conf_dir}/mistral.conf"
-  $mistral_log_dir='/var/log/mistral'
-  $service_log_file="${mistral_log_dir}/mistral-server.log"
-  $client_package     = 'python-mistralclient'
-  $log_dir ='/var/log/mistral'
-  $db_sync_command = "mistral-db-manage --config-file=${mistral_conf} upgrade head"
-  $db_populate_command = "mistral-db-manage --config-file=${mistral_conf} populate"
-  $update_service_command = '/usr/bin/systemctl daemon-reload'
+  $client_package      = 'python-mistralclient'
+  $db_sync_command     = 'mistral-db-manage --config-file=/etc/mistral/mistral.conf upgrade head'
+  $db_populate_command = 'mistral-db-manage --config-file=/etc/mistral/mistral.conf populate'
 
   case $::osfamily {
     'RedHat': {
-      $common_package_name = 'openstack-mistral-common'
-      $api_package_name    = 'openstack-mistral-api'
-      $api_service_name    = 'openstack-mistral-api'
-      $engine_package_name = 'openstack-mistral-engine'
-      $engine_service_name = 'openstack-mistral-engine'
+      $common_package_name   = 'openstack-mistral-common'
+      $api_package_name      = 'openstack-mistral-api'
+      $api_service_name      = 'openstack-mistral-api'
+      $engine_package_name   = 'openstack-mistral-engine'
+      $engine_service_name   = 'openstack-mistral-engine'
       $executor_package_name = 'openstack-mistral-executor'
       $executor_service_name = 'openstack-mistral-executor'
+      $pymysql_package_name  = undef
     }
     'Debian': {
-      $common_package_name    = 'mistral'
-      $api_package_name       = 'mistral-api'
-      $api_service_name       = 'mistral-api'
-      $engine_package_name    = 'mistral-engine'
-      $engine_service_name    = 'mistral-engine'
-      $executor_package_name    = 'mistral-executor'
-      $executor_service_name    = 'mistral-executor'
+      $common_package_name   = 'mistral'
+      $api_package_name      = 'mistral-api'
+      $api_service_name      = 'mistral-api'
+      $engine_package_name   = 'mistral-engine'
+      $engine_service_name   = 'mistral-engine'
+      $executor_package_name = 'mistral-executor'
+      $executor_service_name = 'mistral-executor'
+      $pymysql_package_name  = 'python-pymysql'
     }
     default: {
       fail("Unsupported osfamily: ${::osfamily} operatingsystem: \

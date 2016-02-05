@@ -53,7 +53,6 @@ class mistral::executor (
   $older_than          = $::os_service_default,
 ) {
 
-  include ::mistral
   include ::mistral::params
 
   package { 'mistral-executor':
@@ -80,11 +79,11 @@ class mistral::executor (
   }
 
   mistral_config {
-    'executor/host' : value => $host;
-    'executor/topic' : value => $topic;
-    'executor/version' : value => $version;
+    'executor/host' :                                   value => $host;
+    'executor/topic' :                                  value => $topic;
+    'executor/version' :                                value => $version;
     'execution_expiration_policy/evaluation_interval' : value => $evaluation_interval;
-    'execution_expiration_policy/older_than' : value => $older_than;
+    'execution_expiration_policy/older_than' :          value => $older_than;
   }
 
 }

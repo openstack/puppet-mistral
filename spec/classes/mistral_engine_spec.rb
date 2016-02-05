@@ -15,7 +15,6 @@ describe 'mistral::engine' do
 
     context 'config params' do
 
-      it { is_expected.to contain_class('mistral') }
       it { is_expected.to contain_class('mistral::params') }
 
       it { is_expected.to contain_mistral_config('engine/host').with_value( params[:host] ) }

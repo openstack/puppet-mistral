@@ -71,19 +71,18 @@ Whether to hide the value from Puppet logs. Defaults to `false`.
 
 If value is equal to ensure_absent_val then the resource will behave as if `ensure => absent` was specified. Defaults to `<SERVICE DEFAULT>`
 
-Limitations
------------
 
-### Packages
+Beaker-Rspec
+------------
 
-For now there aren't supported packages for Mistral.
+This module has beaker-rspec tests
 
-Instructions for building the rpm on the trunk:
+To run:
 
-1. Clone mistral repo to your machine: ```git clone https://github.com/openstack/mistral.git```
-2. In the mistral repo run the command: ```python ./setup.py bdist_rpm```
-
-
+``shell
+bundle install
+bundle exec rspec spec/acceptance
+``
 
 Development
 -----------

@@ -24,20 +24,53 @@ describe 'mistral::logging' do
      :instance_format => '[instance: %(uuid)s] ',
      :instance_uuid_format => '[instance: %(uuid)s] ',
      :log_date_format => '%Y-%m-%d %H:%M:%S',
+     :use_syslog => false,
+     :use_stderr => false,
+     :log_facility => 'LOG_USER',
+     :log_dir => '/var/log',
+     :verbose => true,
+     :debug => true,
     }
   end
 
   shared_examples_for 'mistral-logging' do
+
+    context 'with basic logging options and default settings' do
+      it_configures  'basic default logging settings'
+    end
+
+    context 'with basic logging options and non-default settings' do
+      before { params.merge!( log_params ) }
+      it_configures 'basic non-default logging settings'
+    end
 
     context 'with extended logging options' do
       before { params.merge!( log_params ) }
       it_configures 'logging params set'
     end
 
-    context 'without extended logging options' do
-      it_configures 'logging params unset'
-    end
+  end
 
+  shared_examples 'basic default logging settings' do
+    it 'configures mistral logging settins with default values' do
+      is_expected.to contain_mistral_config('DEFAULT/use_syslog').with(:value => '<SERVICE DEFAULT>')
+      is_expected.to contain_mistral_config('DEFAULT/use_stderr').with(:value => '<SERVICE DEFAULT>')
+      is_expected.to contain_mistral_config('DEFAULT/syslog_log_facility').with(:value => '<SERVICE DEFAULT>')
+      is_expected.to contain_mistral_config('DEFAULT/log_dir').with(:value => '/var/log/mistral')
+      is_expected.to contain_mistral_config('DEFAULT/verbose').with(:value => '<SERVICE DEFAULT>')
+      is_expected.to contain_mistral_config('DEFAULT/debug').with(:value => '<SERVICE DEFAULT>')
+    end
+  end
+
+  shared_examples 'basic non-default logging settings' do
+    it 'configures mistral logging settins with non-default values' do
+      is_expected.to contain_mistral_config('DEFAULT/use_syslog').with(:value => 'false')
+      is_expected.to contain_mistral_config('DEFAULT/use_stderr').with(:value => 'false')
+      is_expected.to contain_mistral_config('DEFAULT/syslog_log_facility').with(:value => 'LOG_USER')
+      is_expected.to contain_mistral_config('DEFAULT/log_dir').with(:value => '/var/log')
+      is_expected.to contain_mistral_config('DEFAULT/verbose').with(:value => 'true')
+      is_expected.to contain_mistral_config('DEFAULT/debug').with(:value => 'true')
+    end
   end
 
   shared_examples_for 'logging params set' do
@@ -76,32 +109,16 @@ describe 'mistral::logging' do
     end
   end
 
+  on_supported_os({
+    :supported_os   => OSDefaults.get_supported_os
+  }).each do |os,facts|
+    context "on #{os}" do
+      let (:facts) do
+        facts.merge(OSDefaults.get_facts({:processorcount => 8}))
+      end
 
-  shared_examples_for 'logging params unset' do
-   [ :logging_context_format_string, :logging_default_format_string,
-     :logging_debug_format_suffix, :logging_exception_prefix,
-     :log_config_append, :publish_errors,
-     :default_log_levels, :fatal_deprecations,
-     :instance_format, :instance_uuid_format,
-     :log_date_format, ].each { |param|
-        it { is_expected.to contain_mistral_config("DEFAULT/#{param}").with_ensure('absent') }
-      }
-  end
-
-  context 'on Debian platforms' do
-    let :facts do
-      { :osfamily => 'Debian' }
+      it_configures 'mistral-logging'
     end
-
-    it_configures 'mistral-logging'
-  end
-
-  context 'on RedHat platforms' do
-    let :facts do
-      { :osfamily => 'RedHat' }
-    end
-
-    it_configures 'mistral-logging'
   end
 
 end

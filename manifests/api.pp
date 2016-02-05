@@ -38,8 +38,11 @@ class mistral::api (
   $allow_action_execution_deletion = $::os_service_default,
 ) {
 
-  include ::mistral
   include ::mistral::params
+  include ::mistral::policy
+
+  Package['mistral-api'] -> Class['mistral::policy']
+  Class['mistral::policy'] ~> Service['mistral-api']
 
   package { 'mistral-api':
     ensure => $package_ensure,

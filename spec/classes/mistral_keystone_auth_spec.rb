@@ -28,7 +28,7 @@ describe 'mistral::keystone::auth' do
 
     it { is_expected.to contain_keystone_service('mistral::workflowv2').with(
       :ensure      => 'present',
-      :description => 'Openstack workflow Service'
+      :description => 'OpenStack Workflow Service'
     ) }
 
     it { is_expected.to contain_keystone_endpoint('RegionOne/mistral::workflowv2').with(
@@ -77,7 +77,7 @@ describe 'mistral::keystone::auth' do
     it { is_expected.to contain_keystone_user_role('mistral@services') }
     it { is_expected.to contain_keystone_service('mistral::workflowv2').with(
       :ensure      => 'present',
-      :description => 'Openstack workflow Service'
+      :description => 'OpenStack Workflow Service'
     ) }
 
   end
@@ -96,7 +96,7 @@ describe 'mistral::keystone::auth' do
     it { is_expected.not_to contain_keystone_user_role('mistral@services') }
     it { is_expected.to contain_keystone_service('mistral::workflowv2').with(
       :ensure      => 'present',
-      :description => 'Openstack workflow Service'
+      :description => 'OpenStack Workflow Service'
     ) }
 
   end

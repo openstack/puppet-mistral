@@ -14,8 +14,8 @@ describe 'mistral::api' do
 
     context 'config params' do
 
-      it { is_expected.to contain_class('mistral') }
       it { is_expected.to contain_class('mistral::params') }
+      it { is_expected.to contain_class('mistral::policy') }
 
       it { is_expected.to contain_mistral_config('api/host').with_value( params[:bind_host] ) }
       it { is_expected.to contain_mistral_config('api/port').with_value( params[:bind_port] ) }

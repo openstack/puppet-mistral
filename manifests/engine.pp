@@ -43,7 +43,6 @@ class mistral::engine (
   $execution_field_size_limit_kb = $::os_service_default,
 ) {
 
-  include ::mistral
   include ::mistral::params
 
   package { 'mistral-engine':
