@@ -84,14 +84,30 @@ describe 'mistral::db' do
       end
 
       it 'install the proper backend package' do
-        is_expected.to contain_package('mistral-backend-package').with(
+        is_expected.to contain_package('db_backend_package').with(
           :ensure => 'present',
           :name   => 'python-pymysql',
-          :tag    => 'openstack'
+          :tag    => ['openstack'],
         )
       end
     end
-  end
+
+
+    context 'with sqlite backend' do
+      let :params do
+        { :database_connection     => 'sqlite:///var/lib/mistral/mistral.sqlite', }
+      end
+
+      it 'install the proper backend package' do
+        is_expected.to contain_package('db_backend_package').with(
+          :ensure => 'present',
+          :name   => 'python-pysqlite2',
+          :tag    => ['openstack'],
+        )
+      end
+    end
+
+   end
 
   context 'on Redhat platforms' do
     let :facts do
@@ -108,7 +124,7 @@ describe 'mistral::db' do
         { :database_connection     => 'mysql+pymysql://mistral:mistral@localhost/mistral', }
       end
 
-      it { is_expected.not_to contain_package('mistral-backend-package') }
+      it { is_expected.not_to contain_package('db_backend_package') }
     end
   end
 
