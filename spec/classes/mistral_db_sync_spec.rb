@@ -26,28 +26,19 @@ describe 'mistral::db::sync' do
 
   end
 
-  context 'on a RedHat osfamily' do
-    let :facts do
-      {
-        :osfamily                 => 'RedHat',
-        :operatingsystemrelease   => '7.0',
-        :concat_basedir => '/var/lib/puppet/concat'
-      }
+  on_supported_os({
+    :supported_os   => OSDefaults.get_supported_os
+  }).each do |os,facts|
+    context "on #{os}" do
+      let (:facts) do
+        facts.merge(OSDefaults.get_facts({
+          :processorcount => 8,
+          :concat_basedir => '/var/lib/puppet/concat'
+        }))
+      end
+
+      it_configures 'mistral-db-sync'
     end
-
-    it_configures 'mistral-db-sync'
-  end
-
-  context 'on a Debian osfamily' do
-    let :facts do
-      {
-        :operatingsystemrelease => '8.0',
-        :osfamily               => 'Debian',
-        :concat_basedir => '/var/lib/puppet/concat'
-      }
-    end
-
-    it_configures 'mistral-db-sync'
   end
 
 end
