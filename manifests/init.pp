@@ -173,7 +173,7 @@
 #
 # [*control_exchange*]
 #   (Optional)
-#   Defaults to 'openstack'.
+#   Defaults to $::os_service_default
 #
 # [*coordination_backend_url*]
 #   (optional) The backend URL to be used for coordination.
@@ -192,7 +192,7 @@ class mistral(
   $rpc_backend                        = $::os_service_default,
   $auth_uri                           = 'http://localhost:5000/',
   $identity_uri                       = 'http://localhost:35357/',
-  $control_exchange                   = 'openstack',
+  $control_exchange                   = $::os_service_default,
   $rabbit_host                        = $::os_service_default,
   $rabbit_port                        = $::os_service_default,
   $rabbit_hosts                       = $::os_service_default,
@@ -241,9 +241,12 @@ class mistral(
     'keystone_authtoken/admin_tenant_name': value => $keystone_tenant;
     'coordination/backend_url':             value => $coordination_backend_url;
     'coordination/heartbeat_interval':      value => $coordination_heartbeat_interval;
-    'DEFAULT/control_exchange':             value => $control_exchange;
     'DEFAULT/report_interval':              value => $report_interval;
     'DEFAULT/service_down_time':            value => $service_down_time;
+  }
+
+  oslo::messaging::default {'mistral_config':
+      control_exchange     => $control_exchange
   }
 
   if $rpc_backend in [$::os_service_default, 'rabbit'] {
