@@ -11,6 +11,7 @@ describe 'mistral::db' do
       it { is_expected.to contain_mistral_config('database/min_pool_size').with_value('<SERVICE DEFAULT>') }
       it { is_expected.to contain_mistral_config('database/max_retries').with_value('<SERVICE DEFAULT>') }
       it { is_expected.to contain_mistral_config('database/retry_interval').with_value('<SERVICE DEFAULT>') }
+      it { is_expected.to contain_mistral_config('database/db_max_retries').with_value('<SERVICE DEFAULT>') }
 
     end
 
@@ -20,7 +21,9 @@ describe 'mistral::db' do
           :database_idle_timeout   => '3601',
           :database_min_pool_size  => '2',
           :database_max_retries    => '11',
-          :database_retry_interval => '11', }
+          :database_retry_interval => '11', 
+          :database_db_max_retries => '-1',
+        }
       end
 
       it { is_expected.to contain_mistral_config('database/connection').with_value('mysql+pymysql://mistral:mistral@localhost/mistral').with_secret(true) }
@@ -28,6 +31,7 @@ describe 'mistral::db' do
       it { is_expected.to contain_mistral_config('database/min_pool_size').with_value('2') }
       it { is_expected.to contain_mistral_config('database/max_retries').with_value('11') }
       it { is_expected.to contain_mistral_config('database/retry_interval').with_value('11') }
+      it { is_expected.to contain_mistral_config('database/db_max_retries').with_value('-1') }
     end
 
     context 'with postgresql backend' do
