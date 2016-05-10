@@ -33,6 +33,20 @@
 #   of runtime execution objects. Use -1 for no limit.
 #   Defaults to $::os_service_default.
 #
+# [*evaluation_interval*]
+#   (Optional) How often will the executions be evaluated
+#   (in minutes). For example for value 120 the interval
+#   will be 2 hours (every 2 hours).
+#   Defaults to $::os_service_default.
+#
+# [*older_than*]
+#   (Optional) Evaluate from which time remove executions in minutes.
+#   For example when older_than = 60, remove all executions
+#   that finished a 60 minutes ago or more.
+#   Minimum value is 1.
+#   Note that only final state execution will remove (SUCCESS/ERROR).
+#   Defaults to $::os_service_default.
+#
 class mistral::engine (
   $package_ensure                = present,
   $manage_service                = true,
@@ -41,6 +55,8 @@ class mistral::engine (
   $topic                         = $::os_service_default,
   $version                       = $::os_service_default,
   $execution_field_size_limit_kb = $::os_service_default,
+  $evaluation_interval           = $::os_service_default,
+  $older_than                    = $::os_service_default,
 ) {
 
   include ::mistral::params
@@ -69,10 +85,12 @@ class mistral::engine (
   }
 
   mistral_config {
-    'engine/host'                          : value => $host;
-    'engine/topic'                         : value => $topic;
-    'engine/version'                       : value => $version;
-    'engine/execution_field_size_limit_kb' : value => $execution_field_size_limit_kb;
+    'engine/host':                                     value => $host;
+    'engine/topic':                                    value => $topic;
+    'engine/version':                                  value => $version;
+    'engine/execution_field_size_limit_kb':            value => $execution_field_size_limit_kb;
+    'execution_expiration_policy/evaluation_interval': value => $evaluation_interval;
+    'execution_expiration_policy/older_than':          value => $older_than;
   }
 
 }
