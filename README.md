@@ -48,12 +48,12 @@ configuration and extra functionality through types and providers.
 The `mistral_config` provider is a children of the ini_setting provider. It allows one to write an entry in the `/etc/mistral/mistral.conf` file.
 
 ```puppet
-mistral_config { 'DEFAULT/verbose' :
-  value => true,
+mistral_config { 'DEFAULT/use_syslog' :
+  value => false,
 }
 ```
 
-This will write `verbose=true` in the `[DEFAULT]` section.
+This will write `use_syslog=false` in the `[DEFAULT]` section.
 
 ##### name
 

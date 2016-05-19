@@ -48,10 +48,6 @@
 #   (Optional) Syslog facility to receive log lines.
 #   Defaults to undef.
 #
-# [*verbose*]
-#   (Optional) Should the daemons log verbose messages
-#   Defaults to undef.
-#
 # [*debug*]
 #   (Optional) Should the daemons log debug messages
 #   Defaults to undef.
@@ -183,6 +179,12 @@
 #   (optional) Number of seconds between heartbeats for coordination.
 #   Defaults to $::os_service_default
 #
+# DEPRECATED PARAMETERS
+#
+# [*verbose*]
+#   (Optional) DEPRECATED. Should the daemons log verbose messages
+#   Defaults to undef.
+#
 class mistral(
   $keystone_password,
   $keystone_user                      = 'mistral',
@@ -215,10 +217,11 @@ class mistral(
   $use_stderr                         = undef,
   $log_dir                            = '/var/log/mistral',
   $log_facility                       = undef,
-  $verbose                            = undef,
   $debug                              = undef,
   $coordination_backend_url           = $::os_service_default,
   $coordination_heartbeat_interval    = $::os_service_default,
+  # Deprecated
+  $verbose                            = undef,
 ){
   include ::mistral::params
 
@@ -231,6 +234,10 @@ class mistral(
     ensure => $package_ensure,
     name   => $::mistral::params::common_package_name,
     tag    => ['openstack', 'mistral-package'],
+  }
+
+  if $verbose {
+    warning('verbose is deprecated, has no effect and will be removed after Newton cycle.')
   }
 
   mistral_config {

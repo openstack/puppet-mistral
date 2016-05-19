@@ -40,7 +40,6 @@ describe 'basic mistral' do
             rabbit_password     => 'an_even_bigger_secret',
             rabbit_host         => '127.0.0.1',
             debug               => true,
-            verbose             => true,
           }
           class { '::mistral::keystone::auth':
             password => 'a_big_secret',
