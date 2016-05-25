@@ -29,7 +29,7 @@ class mistral::params {
       $executor_package_name      = 'mistral-executor'
       $executor_service_name      = 'mistral-executor'
       $mistral_wsgi_script_path   = '/usr/lib/cgi-bin/mistral'
-      $mistral_wsgi_script_source = '/usr/share/mistral-common/wsgi.py'
+      $mistral_wsgi_script_source = '/usr/lib/python2.7/dist-packages/mistral/api/wsgi.py'
     }
     default: {
       fail("Unsupported osfamily: ${::osfamily} operatingsystem: \

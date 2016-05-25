@@ -115,7 +115,7 @@ describe 'mistral::wsgi::apache' do
         :httpd_service_name => 'apache2',
         :httpd_ports_file   => '/etc/apache2/ports.conf',
         :wsgi_script_path   => '/usr/lib/cgi-bin/mistral',
-        :wsgi_script_source => '/usr/share/mistral-common/wsgi.py'
+        :wsgi_script_source => '/usr/lib/python2.7/dist-packages/mistral/api/wsgi.py'
       }
     end
 
