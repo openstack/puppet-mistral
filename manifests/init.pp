@@ -13,7 +13,7 @@
 #
 # [*auth_uri*]
 #   (optional) Specifies the public Identity URI for Mistral to use.
-#   Default 'http://localhost:5000/v2.0/'.
+#   Default 'http://localhost:5000/'.
 #
 # [*identity_uri*]
 #   (optional) Specifies the admin Identity URI for Mistral to use.
@@ -87,7 +87,7 @@
 #
 # [*rabbit_port*]
 #   (Optional) Port of the rabbit server.
-#   Defaults to $::os_service_default 
+#   Defaults to $::os_service_default
 #
 # [*rabbit_hosts*]
 #   (Optional) Array of host:port (used with HA queues).
