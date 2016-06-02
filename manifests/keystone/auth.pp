@@ -43,7 +43,7 @@
 #
 # [*service_name*]
 #   (optional) Name of the service.
-#   Defaults to the value of auth_name.
+#   Defaults to 'mistral'.
 #
 # [*configure_service*]
 #   Should mistral service be configured? Defaults to 'true'.
@@ -60,7 +60,7 @@ class mistral::keystone::auth(
   $password,
   $email                  = 'mistral@localhost',
   $auth_name              = 'mistral',
-  $service_name           = undef,
+  $service_name           = 'mistral',
   $service_type           = 'workflowv2',
   $public_url             = 'http://127.0.0.1:8989/v2',
   $admin_url              = 'http://127.0.0.1:8989/v2',
@@ -76,20 +76,15 @@ class mistral::keystone::auth(
 
   validate_string($password)
 
-  if $service_name == undef {
-    $real_service_name = $auth_name
-  } else {
-    $real_service_name = $service_name
-  }
-
-  keystone::resource::service_identity { $auth_name:
+  keystone::resource::service_identity { 'mistral':
     configure_user      => $configure_user,
     configure_user_role => $configure_user_role,
     configure_endpoint  => $configure_endpoint,
     service_type        => $service_type,
     service_description => $service_description,
-    service_name        => $real_service_name,
+    service_name        => $service_name,
     region              => $region,
+    auth_name           => $auth_name,
     password            => $password,
     email               => $email,
     tenant              => $tenant,

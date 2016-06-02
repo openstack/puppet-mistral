@@ -39,29 +39,17 @@ describe 'mistral::keystone::auth' do
     ) }
   end
 
-  describe 'when overriding auth name' do
+  describe 'when overriding auth and service name' do
     let :params do
-      { :password => 'foo',
-        :auth_name => 'mistraly' }
+      { :service_name => 'mistraly',
+        :auth_name    => 'mistraly',
+        :password     => 'mistral_password' }
     end
 
     it { is_expected.to contain_keystone_user('mistraly') }
     it { is_expected.to contain_keystone_user_role('mistraly@services') }
     it { is_expected.to contain_keystone_service('mistraly::workflowv2') }
     it { is_expected.to contain_keystone_endpoint('RegionOne/mistraly::workflowv2') }
-  end
-
-  describe 'when overriding service name' do
-    let :params do
-      { :service_name => 'mistral_service',
-        :auth_name    => 'mistral',
-        :password     => 'mistral_password' }
-    end
-
-    it { is_expected.to contain_keystone_user('mistral') }
-    it { is_expected.to contain_keystone_user_role('mistral@services') }
-    it { is_expected.to contain_keystone_service('mistral_service::workflowv2') }
-    it { is_expected.to contain_keystone_endpoint('RegionOne/mistral_service::workflowv2') }
   end
 
   describe 'when disabling user configuration' do
