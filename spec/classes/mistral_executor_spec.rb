@@ -7,9 +7,7 @@ describe 'mistral::executor' do
       :manage_service      => true,
       :host                => true,
       :topic               => true,
-      :version             => true,
-      :evaluation_interval => 1234,
-      :older_than          => 60}
+      :version             => true}
   end
 
   shared_examples_for 'mistral-executor' do
@@ -21,8 +19,6 @@ describe 'mistral::executor' do
       it { is_expected.to contain_mistral_config('executor/host').with_value( params[:host] ) }
       it { is_expected.to contain_mistral_config('executor/topic').with_value( params[:topic] ) }
       it { is_expected.to contain_mistral_config('executor/version').with_value( params[:version] ) }
-      it { is_expected.to contain_mistral_config('execution_expiration_policy/evaluation_interval').with_value( params[:evaluation_interval] ) }
-      it { is_expected.to contain_mistral_config('execution_expiration_policy/older_than').with_value( params[:older_than] ) }
 
     end
 

@@ -29,18 +29,13 @@
 #   Defaults to $::os_service_default.
 #
 # [*evaluation_interval*]
-#   (Optional) How often will the executions be evaluated
-#   (in minutes). For example for value 120 the interval
-#   will be 2 hours (every 2 hours).
-#   Defaults to $::os_service_default.
+#   (Deprecated) This should now be set via
+#    mistral::engine::evaluation_interval.
+#   Defaults to false.
 #
 # [*older_than*]
-#   (Optional) Evaluate from which time remove executions in minutes.
-#   For example when older_than = 60, remove all executions
-#   that finished a 60 minutes ago or more.
-#   Minimum value is 1.
-#   Note that only final state execution will remove (SUCCESS/ERROR).
-#   Defaults to $::os_service_default.
+#   (Deprecated) This should now be set via mistral::engine::older_than.
+#   Defaults to false.
 #
 class mistral::executor (
   $package_ensure      = present,
@@ -49,11 +44,19 @@ class mistral::executor (
   $host                = $::os_service_default,
   $topic               = $::os_service_default,
   $version             = $::os_service_default,
-  $evaluation_interval = $::os_service_default,
-  $older_than          = $::os_service_default,
+  #DEPRECATED
+  $evaluation_interval = false,
+  $older_than          = false,
 ) {
 
   include ::mistral::params
+
+  if $evaluation_interval {
+    warning('evaluation_interval is deprecated here. Please use mistral::engine::evaluation_interval instead.')
+  }
+  if $older_than {
+    warning('older_than is deprecated here. Please use mistral::engine::older_than instead.')
+  }
 
   package { 'mistral-executor':
     ensure => $package_ensure,
@@ -79,11 +82,9 @@ class mistral::executor (
   }
 
   mistral_config {
-    'executor/host' :                                   value => $host;
-    'executor/topic' :                                  value => $topic;
-    'executor/version' :                                value => $version;
-    'execution_expiration_policy/evaluation_interval' : value => $evaluation_interval;
-    'execution_expiration_policy/older_than' :          value => $older_than;
+    'executor/host':    value => $host;
+    'executor/topic':   value => $topic;
+    'executor/version': value => $version;
   }
 
 }

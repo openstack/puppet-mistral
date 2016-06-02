@@ -8,7 +8,9 @@ describe 'mistral::engine' do
       :host                               => 'foo_host',
       :topic                              => 'foo_topic',
       :version                            => '1.0',
-      :execution_field_size_limit_kb      => '1234'}
+      :execution_field_size_limit_kb      => '1234',
+      :evaluation_interval                => 1234,
+      :older_than                         => 60}
   end
 
   shared_examples_for 'mistral-engine' do
@@ -21,6 +23,8 @@ describe 'mistral::engine' do
       it { is_expected.to contain_mistral_config('engine/topic').with_value( params[:topic] ) }
       it { is_expected.to contain_mistral_config('engine/version').with_value( params[:version] ) }
       it { is_expected.to contain_mistral_config('engine/execution_field_size_limit_kb').with_value( params[:execution_field_size_limit_kb] ) }
+      it { is_expected.to contain_mistral_config('execution_expiration_policy/evaluation_interval').with_value( params[:evaluation_interval] ) }
+      it { is_expected.to contain_mistral_config('execution_expiration_policy/older_than').with_value( params[:older_than] ) }
 
     end
 
