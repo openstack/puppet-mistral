@@ -4,6 +4,7 @@ describe 'mistral' do
     {
       :database_connection => 'mysql://user:password@host/database',
       :keystone_password   => 'foo',
+      :purge_config        => false,
     }
   end
 
@@ -23,6 +24,12 @@ describe 'mistral' do
     it { is_expected.to contain_class('mistral::logging') }
     it { is_expected.to contain_class('mistral::params') }
     it { is_expected.to contain_class('mysql::bindings::python') }
+
+    it 'passes purge to resource' do
+      is_expected.to contain_resources('mistral_config').with({
+        :purge => false
+      })
+    end
 
     it 'should contain default config' do
       is_expected.to contain_mistral_config('DEFAULT/rpc_backend').with(:value => 'rabbit')

@@ -179,6 +179,11 @@
 #   (optional) Number of seconds between heartbeats for coordination.
 #   Defaults to $::os_service_default
 #
+# [*purge_config*]
+#   (optional) Whether to set only the specified config options
+#   in the mistral config.
+#   Defaults to false.
+#
 # DEPRECATED PARAMETERS
 #
 # [*verbose*]
@@ -220,6 +225,7 @@ class mistral(
   $debug                              = undef,
   $coordination_backend_url           = $::os_service_default,
   $coordination_heartbeat_interval    = $::os_service_default,
+  $purge_config                       = false,
   # Deprecated
   $verbose                            = undef,
 ){
@@ -234,6 +240,10 @@ class mistral(
     ensure => $package_ensure,
     name   => $::mistral::params::common_package_name,
     tag    => ['openstack', 'mistral-package'],
+  }
+
+  resources { 'mistral_config':
+    purge => $purge_config,
   }
 
   if $verbose {
