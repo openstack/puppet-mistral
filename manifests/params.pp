@@ -3,6 +3,7 @@
 # Parameters for puppet-mistral
 #
 class mistral::params {
+  include ::openstacklib::defaults
 
   $client_package      = 'python-mistralclient'
   $db_sync_command     = 'mistral-db-manage --config-file=/etc/mistral/mistral.conf upgrade head'

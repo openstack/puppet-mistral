@@ -68,7 +68,9 @@ describe 'mistral::executor' do
 
   context 'on Debian platforms' do
     let :facts do
-      { :osfamily => 'Debian' }
+      OSDefaults.get_facts({
+        :osfamily        => 'Debian',
+      })
     end
 
     let :platform_params do
@@ -80,7 +82,9 @@ describe 'mistral::executor' do
 
   context 'on RedHat platforms' do
     let :facts do
-      { :osfamily => 'RedHat' }
+      OSDefaults.get_facts({
+        :osfamily    => 'Redhat',
+      })
     end
 
     let :platform_params do
