@@ -70,4 +70,6 @@ class mistral::db::mysql(
     allowed_hosts => $allowed_hosts,
   }
 
+  ::Openstacklib::Db::Mysql['mistral'] ~> Exec<| title == 'mistral-db-sync' |>
+
 }
