@@ -3,17 +3,17 @@
 # Installs & configure the Mistral API service
 #
 # === Parameters
-# [*package_ensure*]
-#    (Optional) Ensure state for package.
-#    Defaults to present
 #
-# [*enabled*]
-#   (optional) Should the service be enabled.
-#   Defaults to 'true'.
+# [*allow_action_execution_deletion*]
+#   (Optional) Enables the ability to delete action_execution
+#   which has no relationship with workflows. (boolean value).
+#   Defaults to $::os_service_default.
 #
-# [*manage_service*]
-#   (optional) Whether the service should be managed by Puppet.
-#   Defaults to 'true'.
+# [*api_workers*]
+#   (Optional) Number of workers for Mistral API service
+#   default is equal to the number of CPUs available if that can
+#   be determined, else a default worker count of 1 is returned.
+#   Defaults to $::os_service_default
 #
 # [*bind_host*]
 #   (Optional) Address to bind the server. Useful when
@@ -24,10 +24,17 @@
 #   (Optional) The port on which the server will listen.
 #   Defaults to $::os_service_default.
 #
-# [*allow_action_execution_deletion*]
-#   (Optional) Enables the ability to delete action_execution which has no
-#   relationship with workflows. (boolean value).
-#   Defaults to $::os_service_default.
+# [*enabled*]
+#   (optional) Should the service be enabled.
+#   Defaults to 'true'.
+#
+# [*manage_service*]
+#   (optional) Whether the service should be managed by Puppet.
+#   Defaults to 'true'.
+#
+# [*package_ensure*]
+#    (Optional) Ensure state for package.
+#    Defaults to present
 #
 # [*service_name*]
 #   (optional) Name of the service that will be providing the
@@ -39,12 +46,13 @@
 #   Defaults to '$::mistral::params::api_service_name'
 #
 class mistral::api (
-  $package_ensure                  = present,
-  $manage_service                  = true,
-  $enabled                         = true,
+  $allow_action_execution_deletion = $::os_service_default,
+  $api_workers                     = $::os_service_default,
   $bind_host                       = $::os_service_default,
   $bind_port                       = $::os_service_default,
-  $allow_action_execution_deletion = $::os_service_default,
+  $enabled                         = true,
+  $manage_service                  = true,
+  $package_ensure                  = present,
   $service_name                    = $::mistral::params::api_service_name,
 ) inherits mistral::params {
 
@@ -98,6 +106,7 @@ class mistral::api (
   }
 
   mistral_config {
+    'api/api_workers'                      : value => $api_workers;
     'api/host'                             : value => $bind_host;
     'api/port'                             : value => $bind_port;
     'api/allow_action_execution_deletion'  : value => $allow_action_execution_deletion;

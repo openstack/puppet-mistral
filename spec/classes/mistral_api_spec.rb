@@ -3,7 +3,8 @@ require 'spec_helper'
 describe 'mistral::api' do
 
   let :params do
-    { :enabled                         => true,
+    { :api_workers                     => '1',
+      :enabled                         => true,
       :manage_service                  => true,
       :bind_host                       => '127.0.0.1',
       :bind_port                       => '1234',
@@ -17,6 +18,7 @@ describe 'mistral::api' do
       it { is_expected.to contain_class('mistral::params') }
       it { is_expected.to contain_class('mistral::policy') }
 
+      it { is_expected.to contain_mistral_config('api/api_workers').with_value( params[:api_workers] ) }
       it { is_expected.to contain_mistral_config('api/host').with_value( params[:bind_host] ) }
       it { is_expected.to contain_mistral_config('api/port').with_value( params[:bind_port] ) }
       it { is_expected.to contain_mistral_config('api/allow_action_execution_deletion').with_value( params[:allow_action_execution_deletion] ) }
