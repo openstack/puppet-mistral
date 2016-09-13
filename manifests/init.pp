@@ -19,6 +19,11 @@
 #   (optional) Specifies the admin Identity URI for Mistral to use.
 #   Default 'http://localhost:35357/'.
 #
+# [*os_actions_endpoint_type*]
+#   (optional) Type of endpoint in identity service catalog to use for
+#   communication with OpenStack services
+#   Defaults to $::os_service_default
+#
 # [*keystone_user*]
 #   (optional) The name of the auth user
 #   Defaults to 'mistral'.
@@ -203,6 +208,7 @@ class mistral(
   $rpc_backend                        = $::os_service_default,
   $auth_uri                           = 'http://localhost:5000/',
   $identity_uri                       = 'http://localhost:35357/',
+  $os_actions_endpoint_type           = $::os_service_default,
   $control_exchange                   = $::os_service_default,
   $rpc_response_timeout               = $::os_service_default,
   $rabbit_host                        = $::os_service_default,
@@ -265,6 +271,7 @@ class mistral(
     'coordination/heartbeat_interval':      value => $coordination_heartbeat_interval;
     'DEFAULT/report_interval':              value => $report_interval;
     'DEFAULT/service_down_time':            value => $service_down_time;
+    'DEFAULT/os_actions_endpoint_type':     value => $os_actions_endpoint_type;
   }
 
   oslo::messaging::default {'mistral_config':
