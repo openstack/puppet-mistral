@@ -171,6 +171,10 @@
 #   (Optional)
 #   Defaults to $::os_service_default
 #
+# [*rpc_response_timeout*]
+#   (Optional) Seconds to wait for a response from a call. (integer value)
+#   Defaults to $::os_service_default
+#
 # [*coordination_backend_url*]
 #   (optional) The backend URL to be used for coordination.
 #   Defaults to $::os_service_default
@@ -200,6 +204,7 @@ class mistral(
   $auth_uri                           = 'http://localhost:5000/',
   $identity_uri                       = 'http://localhost:35357/',
   $control_exchange                   = $::os_service_default,
+  $rpc_response_timeout               = $::os_service_default,
   $rabbit_host                        = $::os_service_default,
   $rabbit_port                        = $::os_service_default,
   $rabbit_hosts                       = $::os_service_default,
@@ -263,7 +268,8 @@ class mistral(
   }
 
   oslo::messaging::default {'mistral_config':
-      control_exchange     => $control_exchange
+      control_exchange     => $control_exchange,
+      rpc_response_timeout => $rpc_response_timeout,
   }
 
   if $rpc_backend in [$::os_service_default, 'rabbit'] {
