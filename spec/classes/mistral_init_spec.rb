@@ -64,6 +64,9 @@ describe 'mistral' do
       is_expected.to contain_mistral_config('keystone_authtoken/admin_password').with(
        :value => 'foo'
       )
+      is_expected.to contain_mistral_config('DEFAULT/os_actions_endpoint_type').with(
+        :value => '<SERVICE DEFAULT>'
+      )
     end
 
   end
@@ -209,6 +212,16 @@ describe 'mistral' do
       is_expected.to contain_mistral_config('coordination/backend_url').with(:value => 'redis://127.0.0.1')
       is_expected.to contain_mistral_config('coordination/heartbeat_interval').with(:value => '10.0')
     end
+  end
+
+  describe 'with os_actions_keystone_endpoint overriden' do
+    let :params do
+      req_params.merge({
+        :os_actions_endpoint_type => 'internal',
+      })
+    end
+
+    it { is_expected.to contain_mistral_config('DEFAULT/os_actions_endpoint_type').with_value('internal') }
   end
 
 end
