@@ -102,8 +102,8 @@ class mistral::api (
     # we need to make sure mistral-api s stopped before trying to start apache
     Service['mistral-api'] -> Service[$service_name]
   } else {
-    fail('Invalid service_name. Either mistral/openstack-mistral-api for running \
-          as a standalone service, or httpd for being run by a httpd server')
+    fail("Invalid service_name. Either mistral/openstack-mistral-api for running \
+as a standalone service, or httpd for being run by a httpd server")
   }
 
   mistral_config {
