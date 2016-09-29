@@ -16,6 +16,8 @@ class mistral::db::sync {
     user        => 'mistral',
     logoutput   => on_failure,
     refreshonly => true,
+    try_sleep   => 5,
+    tries       => 10,
   }
 
   Exec['mistral-db-sync'] -> Exec['mistral-db-populate']
