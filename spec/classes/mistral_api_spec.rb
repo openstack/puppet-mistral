@@ -108,7 +108,6 @@ describe 'mistral::api' do
         :operatingsystemrelease => '8.0',
         :concat_basedir         => '/var/lib/puppet/concat',
         :fqdn                   => 'some.host.tld',
-        :processorcount         => 2,
       })
     end
 
@@ -127,7 +126,6 @@ describe 'mistral::api' do
         :operatingsystemrelease => '7.1',
         :fqdn                   => 'some.host.tld',
         :concat_basedir         => '/var/lib/puppet/concat',
-        :processorcount         => 2,
       })
     end
 
