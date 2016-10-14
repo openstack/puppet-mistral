@@ -13,7 +13,7 @@
 #   (Optional) Number of workers for Mistral API service
 #   default is equal to the number of CPUs available if that can
 #   be determined, else a default worker count of 1 is returned.
-#   Defaults to $::os_service_default
+#   Defaults to $::os_workers
 #
 # [*bind_host*]
 #   (Optional) Address to bind the server. Useful when
@@ -47,7 +47,7 @@
 #
 class mistral::api (
   $allow_action_execution_deletion = $::os_service_default,
-  $api_workers                     = $::os_service_default,
+  $api_workers                     = $::os_workers,
   $bind_host                       = $::os_service_default,
   $bind_port                       = $::os_service_default,
   $enabled                         = true,

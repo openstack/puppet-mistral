@@ -3,3 +3,5 @@ other:
   - Parameters that control the number of spawned child processes for
     distributing processing have had their default value changed from
     ::processorcount to ::os_workers.
+  - Switched default api worker count for the api service when
+    not run under apache to use os_workers.
