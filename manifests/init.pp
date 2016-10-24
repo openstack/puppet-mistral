@@ -193,12 +193,6 @@
 #   in the mistral config.
 #   Defaults to false.
 #
-# DEPRECATED PARAMETERS
-#
-# [*verbose*]
-#   (Optional) DEPRECATED. Should the daemons log verbose messages
-#   Defaults to undef.
-#
 class mistral(
   $keystone_password,
   $keystone_user                      = 'mistral',
@@ -237,8 +231,6 @@ class mistral(
   $coordination_backend_url           = $::os_service_default,
   $coordination_heartbeat_interval    = $::os_service_default,
   $purge_config                       = false,
-  # Deprecated
-  $verbose                            = undef,
 ){
   include ::mistral::params
 
@@ -255,10 +247,6 @@ class mistral(
 
   resources { 'mistral_config':
     purge => $purge_config,
-  }
-
-  if $verbose {
-    warning('verbose is deprecated, has no effect and will be removed after Newton cycle.')
   }
 
   mistral_config {

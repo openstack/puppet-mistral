@@ -86,12 +86,6 @@
 #    Defaults to $::os_service_default
 #    Example: 'Y-%m-%d %H:%M:%S'
 #
-# DEPRECATED PARAMETERS
-#
-#  [*verbose*]
-#    (Optional) Deprecated. Should the daemons log verbose messages
-#    Defaults to undef
-#
 class mistral::logging(
   $use_syslog                    = $::os_service_default,
   $use_stderr                    = $::os_service_default,
@@ -109,8 +103,6 @@ class mistral::logging(
   $instance_format               = $::os_service_default,
   $instance_uuid_format          = $::os_service_default,
   $log_date_format               = $::os_service_default,
-  # Deprecated
-  $verbose                       = undef,
 ) {
 
   # NOTE(spredzy): In order to keep backward compatibility we rely on the pick function
@@ -120,10 +112,6 @@ class mistral::logging(
   $log_facility_real = pick($::mistral::log_facility,$log_facility)
   $log_dir_real = pick($::mistral::log_dir,$log_dir)
   $debug_real = pick($::mistral::debug,$debug)
-
-  if $verbose {
-    warning('verbose is deprecated, has no effect and will be removed after Newton cycle.')
-  }
 
   oslo::log { 'mistral_config':
     use_syslog                    => $use_syslog_real,
