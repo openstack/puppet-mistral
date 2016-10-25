@@ -2,7 +2,7 @@
   "name": "openstack-mistral",
   "version": "9.4.0",
   "author": "OpenStack Contributors",
-  "summary": "Puppet module for OpenStack mistral",
+  "summary": "Puppet module for OpenStack Mistral",
   "license": "Apache-2.0",
   "source": "git://github.com/openstack/puppet-mistral.git",
   "project_page": "https://launchpad.net/puppet-mistral",
