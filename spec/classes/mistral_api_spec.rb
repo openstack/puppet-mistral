@@ -8,6 +8,7 @@ describe 'mistral::api' do
       :manage_service                  => true,
       :bind_host                       => '127.0.0.1',
       :bind_port                       => '1234',
+      :enable_proxy_headers_parsing    => false,
       :allow_action_execution_deletion => false}
   end
 
@@ -21,6 +22,7 @@ describe 'mistral::api' do
       it { is_expected.to contain_mistral_config('api/api_workers').with_value( params[:api_workers] ) }
       it { is_expected.to contain_mistral_config('api/host').with_value( params[:bind_host] ) }
       it { is_expected.to contain_mistral_config('api/port').with_value( params[:bind_port] ) }
+      it { is_expected.to contain_mistral_config('oslo_middleware/enable_proxy_headers_parsing').with_value( params[:enable_proxy_headers_parsing] ) }
       it { is_expected.to contain_mistral_config('api/allow_action_execution_deletion').with_value( params[:allow_action_execution_deletion] ) }
 
     end
@@ -44,6 +46,14 @@ describe 'mistral::api' do
           is_expected.to contain_service('mistral-api').that_subscribes_to(nil)
         end
       end
+    end
+
+    context 'with enable_proxy_headers_parsing' do
+      before do
+        params.merge!({:enable_proxy_headers_parsing => true })
+      end
+
+      it { is_expected.to contain_mistral_config('oslo_middleware/enable_proxy_headers_parsing').with_value( params[:enable_proxy_headers_parsing] ) }
     end
 
     context 'with disabled service managing' do

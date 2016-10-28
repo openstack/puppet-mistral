@@ -45,6 +45,11 @@
 #   to make mistral-api be a web app using apache mod_wsgi.
 #   Defaults to '$::mistral::params::api_service_name'
 #
+# [*enable_proxy_headers_parsing*]
+#   (Optional) Enable paste middleware to handle SSL requests through
+#   HTTPProxyToWSGI middleware.
+#   Defaults to $::os_service_default.
+#
 class mistral::api (
   $allow_action_execution_deletion = $::os_service_default,
   $api_workers                     = $::os_workers,
@@ -54,6 +59,7 @@ class mistral::api (
   $manage_service                  = true,
   $package_ensure                  = present,
   $service_name                    = $::mistral::params::api_service_name,
+  $enable_proxy_headers_parsing    = $::os_service_default,
 ) inherits mistral::params {
 
   include ::mistral::params
@@ -111,6 +117,10 @@ as a standalone service, or httpd for being run by a httpd server")
     'api/host'                             : value => $bind_host;
     'api/port'                             : value => $bind_port;
     'api/allow_action_execution_deletion'  : value => $allow_action_execution_deletion;
+  }
+
+  oslo::middleware { 'mistral_config':
+    enable_proxy_headers_parsing => $enable_proxy_headers_parsing,
   }
 
 }
