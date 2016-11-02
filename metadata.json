@@ -8,6 +8,16 @@
   "project_page": "https://launchpad.net/puppet-mistral",
   "issues_url": "https://bugs.launchpad.net/puppet-mistral",
   "description": "Installs and configures OpenStack mistral.",
+  "requirements": [
+    {
+      "name": "pe",
+      "version_requirement": "4.x"
+    },
+    {
+      "name": "puppet",
+      "version_requirement": "4.x"
+    }
+  ],
   "operatingsystem_support": [
     {
       "operatingsystem": "Debian",
