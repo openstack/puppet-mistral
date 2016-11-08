@@ -86,30 +86,10 @@
 #   If set, use this value for max_overflow with sqlalchemy.
 #   (Optional) Defaults to undef.
 #
-# [*rabbit_host*]
-#   (Optional) IP or hostname of the rabbit server.
-#   Defaults to $::os_service_default
-#
-# [*rabbit_port*]
-#   (Optional) Port of the rabbit server.
-#   Defaults to $::os_service_default
-#
-# [*rabbit_hosts*]
-#   (Optional) Array of host:port (used with HA queues).
-#   If defined, will remove rabbit_host & rabbit_port parameters from config
-#   Defaults to $::os_service_default
-#
-# [*rabbit_userid*]
-#   (Optional) User to connect to the rabbit server.
-#   Defaults to $::os_service_default
-#
-# [*rabbit_password*]
-#   (Required) Password to connect to the rabbit_server.
-#   Required if using the Rabbit (kombu) backend.
-#   Default to $::os_service_default
-#
-# [*rabbit_virtual_host*]
-#   (Optional) Virtual_host to use.
+# [*default_transport_url*]
+#   (optional) A URL representing the messaging driver to use and its full
+#   configuration. Transport URLs take the form:
+#     transport://user:pass@host1:port[,hostN:portN]/virtual_host
 #   Defaults to $::os_service_default
 #
 # [*rabbit_ha_queues*]
@@ -193,6 +173,34 @@
 #   in the mistral config.
 #   Defaults to false.
 #
+# === DEPRECATED PARAMTERS
+#
+# [*rabbit_host*]
+#   (Optional) IP or hostname of the rabbit server.
+#   Defaults to $::os_service_default
+#
+# [*rabbit_port*]
+#   (Optional) Port of the rabbit server.
+#   Defaults to $::os_service_default
+#
+# [*rabbit_hosts*]
+#   (Optional) Array of host:port (used with HA queues).
+#   If defined, will remove rabbit_host & rabbit_port parameters from config
+#   Defaults to $::os_service_default
+#
+# [*rabbit_userid*]
+#   (Optional) User to connect to the rabbit server.
+#   Defaults to $::os_service_default
+#
+# [*rabbit_password*]
+#   (Required) Password to connect to the rabbit_server.
+#   Required if using the Rabbit (kombu) backend.
+#   Default to $::os_service_default
+#
+# [*rabbit_virtual_host*]
+#   (Optional) Virtual_host to use.
+#   Defaults to $::os_service_default
+#
 class mistral(
   $keystone_password,
   $keystone_user                      = 'mistral',
@@ -205,15 +213,10 @@ class mistral(
   $os_actions_endpoint_type           = $::os_service_default,
   $control_exchange                   = $::os_service_default,
   $rpc_response_timeout               = $::os_service_default,
-  $rabbit_host                        = $::os_service_default,
-  $rabbit_port                        = $::os_service_default,
-  $rabbit_hosts                       = $::os_service_default,
-  $rabbit_virtual_host                = $::os_service_default,
+  $default_transport_url              = $::os_service_default,
   $rabbit_ha_queues                   = $::os_service_default,
   $rabbit_heartbeat_timeout_threshold = $::os_service_default,
   $rabbit_heartbeat_rate              = $::os_service_default,
-  $rabbit_userid                      = $::os_service_default,
-  $rabbit_password                    = $::os_service_default,
   $rabbit_use_ssl                     = $::os_service_default,
   $service_down_time                  = $::os_service_default,
   $report_interval                    = $::os_service_default,
@@ -231,6 +234,13 @@ class mistral(
   $coordination_backend_url           = $::os_service_default,
   $coordination_heartbeat_interval    = $::os_service_default,
   $purge_config                       = false,
+  # DEPRECATED PARAMETERS
+  $rabbit_host                        = $::os_service_default,
+  $rabbit_port                        = $::os_service_default,
+  $rabbit_hosts                       = $::os_service_default,
+  $rabbit_userid                      = $::os_service_default,
+  $rabbit_password                    = $::os_service_default,
+  $rabbit_virtual_host                = $::os_service_default,
 ){
   include ::mistral::params
 
@@ -238,6 +248,17 @@ class mistral(
   include ::mistral::logging
 
   validate_string($keystone_password)
+
+  if !is_service_default($rabbit_host) or
+    !is_service_default($rabbit_hosts) or
+    !is_service_default($rabbit_password) or
+    !is_service_default($rabbit_port) or
+    !is_service_default($rabbit_userid) or
+    !is_service_default($rabbit_virtual_host) {
+    warning("mistral::rabbit_host, mistral::rabbit_hosts, mistral::rabbit_password, \
+mistral::rabbit_port, mistral::rabbit_userid and mistral::rabbit_virtual_host are \
+deprecated. Please use mistral::default_transport_url instead.")
+  }
 
   package { 'mistral-common':
     ensure => $package_ensure,
@@ -263,8 +284,9 @@ class mistral(
   }
 
   oslo::messaging::default {'mistral_config':
-      control_exchange     => $control_exchange,
-      rpc_response_timeout => $rpc_response_timeout,
+    transport_url        => $default_transport_url,
+    control_exchange     => $control_exchange,
+    rpc_response_timeout => $rpc_response_timeout,
   }
 
   if $rpc_backend in [$::os_service_default, 'rabbit'] {

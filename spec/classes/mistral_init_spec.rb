@@ -106,6 +106,16 @@ describe 'mistral' do
     end
   end
 
+  describe 'with rabbit transport url configured' do
+    let :params do
+      req_params.merge({'default_transport_url' => 'rabbit://user:pass@host:1234/virt' })
+    end
+
+    it 'should contain transport_url' do
+      is_expected.to contain_mistral_config('DEFAULT/transport_url').with(:value => 'rabbit://user:pass@host:1234/virt')
+    end
+  end
+
   describe 'with rabbitmq heartbeats' do
     let :params do
       req_params.merge({'rabbit_heartbeat_timeout_threshold' => '60', 'rabbit_heartbeat_rate' => '10'})

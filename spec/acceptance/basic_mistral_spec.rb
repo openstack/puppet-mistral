@@ -34,12 +34,10 @@ describe 'basic mistral' do
         }
         'RedHat': {
           class { '::mistral':
-            database_connection => 'mysql+pymysql://mistral:a_big_secret@127.0.0.1/mistral?charset=utf8',
-            keystone_password   => 'a_big_secret',
-            rabbit_userid       => 'mistral',
-            rabbit_password     => 'an_even_bigger_secret',
-            rabbit_host         => '127.0.0.1',
-            debug               => true,
+            database_connection   => 'mysql+pymysql://mistral:a_big_secret@127.0.0.1/mistral?charset=utf8',
+            keystone_password     => 'a_big_secret',
+            default_transport_url => 'rabbit://mistral:an_even_bigger_secret@127.0.0.1:5672',
+            debug                 => true,
           }
           class { '::mistral::keystone::auth':
             password => 'a_big_secret',

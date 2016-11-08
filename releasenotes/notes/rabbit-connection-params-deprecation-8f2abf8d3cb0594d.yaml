@@ -1,0 +1,6 @@
+---
+deprecations:
+  - mistral::rabbit_host, mistral::rabbit_hosts, mistral::rabbit_password,
+    mistral::rabbit_port, mistral::rabbit_userid and
+    mistral::rabbit_virtual_host are deprecated.
+    mistral::default_transport_url should be used instead.
