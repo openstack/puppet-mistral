@@ -24,6 +24,8 @@ class mistral::config (
   $mistral_config = {},
 ) {
 
+  include ::mistral::deps
+
   validate_hash($mistral_config)
 
   create_resources('mistral_config', $mistral_config)

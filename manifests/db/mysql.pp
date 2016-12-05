@@ -58,6 +58,8 @@ class mistral::db::mysql(
   $allowed_hosts = undef
 ) {
 
+  include ::mistral::deps
+
   validate_string($password)
 
   ::openstacklib::db::mysql { 'mistral':
@@ -70,6 +72,7 @@ class mistral::db::mysql(
     allowed_hosts => $allowed_hosts,
   }
 
-  ::Openstacklib::Db::Mysql['mistral'] ~> Exec<| title == 'mistral-db-sync' |>
-
+  Anchor['mistral::db::begin']
+  ~> Class['mistral::db::mysql']
+  ~> Anchor['mistral::db::end']
 }

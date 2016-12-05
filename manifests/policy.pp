@@ -28,6 +28,8 @@ class mistral::policy (
   $policy_path = '/etc/mistral/policy.json',
 ) {
 
+  include ::mistral::deps
+
   validate_hash($policies)
 
   Openstacklib::Policy::Base {

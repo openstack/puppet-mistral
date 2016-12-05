@@ -62,14 +62,9 @@ class mistral::api (
   $enable_proxy_headers_parsing    = $::os_service_default,
 ) inherits mistral::params {
 
+  include ::mistral::deps
   include ::mistral::params
   include ::mistral::policy
-
-  Mistral_config<||> ~> Service[$service_name]
-  Class['mistral::policy'] ~> Service[$service_name]
-  Package['mistral-api'] -> Class['mistral::policy']
-  Package['mistral-api'] -> Service[$service_name]
-  Package['mistral-api'] -> Service['mistral-api']
 
   package { 'mistral-api':
     ensure => $package_ensure,
@@ -102,7 +97,6 @@ class mistral::api (
       enable => false,
       tag    => 'mistral-service',
     }
-    Class['mistral::db'] -> Service[$service_name]
     Service <<| title == 'httpd' |>> { tag +> 'mistral-service' }
 
     # we need to make sure mistral-api s stopped before trying to start apache

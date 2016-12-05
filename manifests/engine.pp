@@ -59,6 +59,7 @@ class mistral::engine (
   $older_than                    = $::os_service_default,
 ) {
 
+  include ::mistral::deps
   include ::mistral::params
 
   package { 'mistral-engine':

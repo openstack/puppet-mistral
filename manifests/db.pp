@@ -49,6 +49,8 @@ class mistral::db (
   $database_db_max_retries    = $::os_service_default,
 ) {
 
+  include ::mistral::deps
+
   # NOTE(spredzy): In order to keep backward compatibility we rely on the pick function
   # to use mistral::<myparam> if mistral::db::<myparam> isn't specified.
   $database_connection_real     = pick($::mistral::database_connection,$database_connection)

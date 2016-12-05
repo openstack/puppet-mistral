@@ -40,7 +40,7 @@ class mistral::db::postgresql(
   $privileges = 'ALL',
 ) {
 
-  Class['mistral::db::postgresql'] -> Service<| title == 'mistral' |>
+  include ::mistral::deps
 
   ::openstacklib::db::postgresql { 'mistral':
     password_hash => postgresql_password($user, $password),
@@ -50,6 +50,7 @@ class mistral::db::postgresql(
     privileges    => $privileges,
   }
 
-  ::Openstacklib::Db::Postgresql['mistral'] ~> Exec<| title == 'mistral-db-sync' |>
-
+  Anchor['mistral::db::begin']
+  ~> Class['mistral::db::postgresql']
+  ~> Anchor['mistral::db::end']
 }

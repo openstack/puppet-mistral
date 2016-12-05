@@ -105,6 +105,8 @@ class mistral::logging(
   $log_date_format               = $::os_service_default,
 ) {
 
+  include ::mistral::deps
+
   # NOTE(spredzy): In order to keep backward compatibility we rely on the pick function
   # to use mistral::<myparam> if mistral::logging::<myparam> isn't specified.
   $use_syslog_real = pick($::mistral::use_syslog,$use_syslog)

@@ -74,6 +74,8 @@ class mistral::keystone::auth(
   $service_description    = 'OpenStack Workflow Service',
 ) {
 
+  include ::mistral::deps
+
   validate_string($password)
 
   keystone::resource::service_identity { 'mistral':

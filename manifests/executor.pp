@@ -49,6 +49,7 @@ class mistral::executor (
   $older_than          = false,
 ) {
 
+  include ::mistral::deps
   include ::mistral::params
 
   if $evaluation_interval {

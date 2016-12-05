@@ -11,6 +11,7 @@ class mistral::client(
   $package_ensure = 'present'
 ) {
 
+  include ::mistral::deps
   include ::mistral::params
 
   package { 'python-mistralclient':

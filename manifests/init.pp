@@ -242,8 +242,9 @@ class mistral(
   $rabbit_password                    = $::os_service_default,
   $rabbit_virtual_host                = $::os_service_default,
 ){
-  include ::mistral::params
 
+  include ::mistral::deps
+  include ::mistral::params
   include ::mistral::db
   include ::mistral::logging
 
