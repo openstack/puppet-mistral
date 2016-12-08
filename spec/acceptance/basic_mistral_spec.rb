@@ -57,6 +57,9 @@ describe 'basic mistral' do
           class { '::mistral::executor': }
           class { '::mistral::db::sync': }
         }
+        default: {
+          fail("Unsupported osfamily (${::osfamily})")
+        }
       }
       EOS
 
