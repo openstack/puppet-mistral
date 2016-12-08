@@ -5,7 +5,6 @@ describe 'mistral::db::mysql' do
   let :pre_condition do
     [
       'include mysql::server',
-      'include mistral::db::sync'
     ]
   end
 

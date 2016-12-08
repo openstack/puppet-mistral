@@ -55,7 +55,6 @@ describe 'basic mistral' do
           class { '::mistral::client': }
           class { '::mistral::engine': }
           class { '::mistral::executor': }
-          class { '::mistral::db::sync': }
         }
       }
       EOS

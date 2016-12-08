@@ -173,6 +173,10 @@
 #   in the mistral config.
 #   Defaults to false.
 #
+# [*sync_db*]
+#   (Optional) Enable dbsync
+#   Defaults to true.
+#
 # === DEPRECATED PARAMTERS
 #
 # [*rabbit_host*]
@@ -234,6 +238,7 @@ class mistral(
   $coordination_backend_url           = $::os_service_default,
   $coordination_heartbeat_interval    = $::os_service_default,
   $purge_config                       = false,
+  $sync_db                            = true,
   # DEPRECATED PARAMETERS
   $rabbit_host                        = $::os_service_default,
   $rabbit_port                        = $::os_service_default,
@@ -311,5 +316,9 @@ deprecated. Please use mistral::default_transport_url instead.")
     }
   } else {
     mistral_config { 'DEFAULT/rpc_backend': value => $rpc_backend }
+  }
+
+  if $sync_db {
+    include ::mistral::db::sync
   }
 }
