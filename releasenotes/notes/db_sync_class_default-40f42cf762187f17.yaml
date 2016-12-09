@@ -1,0 +1,4 @@
+---
+features:
+  - By default the mistral::db::sync class will be included
+    This can be disable by setting mistral::sync_db to false.

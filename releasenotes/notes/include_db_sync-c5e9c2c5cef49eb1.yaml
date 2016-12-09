@@ -1,0 +1,4 @@
+---
+features:
+  - The class mistral::db::sync will be included by default.
+    This matches what most other modules do.
