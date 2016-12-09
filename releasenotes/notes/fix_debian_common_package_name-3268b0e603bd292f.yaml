@@ -1,0 +1,5 @@
+---
+fixes:
+  - The name of the mistal common package was incorrect
+    on debian based systems. The correct package name
+    is 'mistral-common'

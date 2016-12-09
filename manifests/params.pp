@@ -22,7 +22,7 @@ class mistral::params {
       $mistral_wsgi_script_source = '/usr/lib/python2.7/site-packages/mistral/api/wsgi.py'
     }
     'Debian': {
-      $common_package_name        = 'mistral'
+      $common_package_name        = 'mistral-common'
       $api_package_name           = 'mistral-api'
       $api_service_name           = 'mistral-api'
       $engine_package_name        = 'mistral-engine'
