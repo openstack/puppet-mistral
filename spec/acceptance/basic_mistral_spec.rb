@@ -33,9 +33,11 @@ describe 'basic mistral' do
           warning('Mistral is not yet packaged on Ubuntu systems.')
         }
         'RedHat': {
+          class { '::mistral::keystone::authtoken':
+            password => 'a_big_secret',
+          }
           class { '::mistral':
             database_connection   => 'mysql+pymysql://mistral:a_big_secret@127.0.0.1/mistral?charset=utf8',
-            keystone_password     => 'a_big_secret',
             default_transport_url => 'rabbit://mistral:an_even_bigger_secret@127.0.0.1:5672',
             debug                 => true,
           }

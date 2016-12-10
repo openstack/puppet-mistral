@@ -85,9 +85,11 @@ describe 'mistral::api' do
       let :pre_condition do
         "include ::apache
          include ::mistral::db
+         class { 'mistral::keystone::authtoken':
+           password => 'foo',
+         }
          class { '::mistral':
-           keystone_password => 'foo',
-           rabbit_password   => 'bar',
+           rabbit_password => 'bar',
          }"
       end
 

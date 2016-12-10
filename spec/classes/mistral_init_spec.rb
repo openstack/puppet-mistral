@@ -49,21 +49,6 @@ describe 'mistral' do
       is_expected.to contain_mistral_config('oslo_messaging_rabbit/kombu_reconnect_delay').with(:value => '<SERVICE DEFAULT>')
       is_expected.to contain_mistral_config('coordination/backend_url').with(:value => '<SERVICE DEFAULT>')
       is_expected.to contain_mistral_config('coordination/heartbeat_interval').with(:value => '<SERVICE DEFAULT>')
-      is_expected.to contain_mistral_config('keystone_authtoken/auth_uri').with(
-       :value => 'http://localhost:5000/'
-      )
-      is_expected.to contain_mistral_config('keystone_authtoken/identity_uri').with(
-       :value => 'http://localhost:35357/'
-      )
-      is_expected.to contain_mistral_config('keystone_authtoken/admin_tenant_name').with(
-       :value => 'services'
-      )
-      is_expected.to contain_mistral_config('keystone_authtoken/admin_user').with(
-       :value => 'mistral'
-      )
-      is_expected.to contain_mistral_config('keystone_authtoken/admin_password').with(
-       :value => 'foo'
-      )
       is_expected.to contain_mistral_config('DEFAULT/os_actions_endpoint_type').with(
         :value => '<SERVICE DEFAULT>'
       )
