@@ -11,10 +11,29 @@
 #   (optional) The rpc backend.
 #   Defaults to 'rabbit'.
 #
+# [*auth_uri*]
+#   (optional) Specifies the public Identity URI for Mistral to use.
+#   Default 'http://localhost:5000/'.
+#
+# [*identity_uri*]
+#   (optional) Specifies the admin Identity URI for Mistral to use.
+#   Default 'http://localhost:35357/'.
+#
 # [*os_actions_endpoint_type*]
 #   (optional) Type of endpoint in identity service catalog to use for
 #   communication with OpenStack services
 #   Defaults to $::os_service_default
+#
+# [*keystone_user*]
+#   (optional) The name of the auth user
+#   Defaults to 'mistral'.
+#
+# [*keystone_tenant*]
+#   (optional) The tenant of the auth user
+#   Defaults to 'services'.
+#
+# [*keystone_password*]
+#   (required) The password of the auth user.
 #
 # [*log_dir*]
 #   (optional) Directory where logs should be stored.
@@ -158,11 +177,6 @@
 #   (Optional) Enable dbsync
 #   Defaults to true.
 #
-# [*auth_strategy*]
-#   (Optional) What type of auth to use. By default it is 'keystone' which
-#   will include the keystone middleware configuration.
-#   Defaults to 'keystone'
-#
 # === DEPRECATED PARAMTERS
 #
 # [*rabbit_host*]
@@ -191,30 +205,15 @@
 #   (Optional) Virtual_host to use.
 #   Defaults to $::os_service_default
 #
-# [*auth_uri*]
-#   (optional) Specifies the public Identity URI for Mistral to use.
-#   Default to undef.
-#
-# [*identity_uri*]
-#   (optional) Specifies the admin Identity URI for Mistral to use.
-#   Default to undef.
-#
-# [*keystone_user*]
-#   (optional) The name of the auth user
-#   Defaults to undef.
-#
-# [*keystone_tenant*]
-#   (optional) The tenant of the auth user
-#   Defaults to undef.
-#
-# [*keystone_password*]
-#   (optional) The password of the auth user.
-#   Defaults to undef.
-#
 class mistral(
+  $keystone_password,
+  $keystone_user                      = 'mistral',
+  $keystone_tenant                    = 'services',
   $package_ensure                     = 'present',
   $database_connection                = $::os_service_default,
   $rpc_backend                        = $::os_service_default,
+  $auth_uri                           = 'http://localhost:5000/',
+  $identity_uri                       = 'http://localhost:35357/',
   $os_actions_endpoint_type           = $::os_service_default,
   $control_exchange                   = $::os_service_default,
   $rpc_response_timeout               = $::os_service_default,
@@ -240,7 +239,6 @@ class mistral(
   $coordination_heartbeat_interval    = $::os_service_default,
   $purge_config                       = false,
   $sync_db                            = true,
-  $auth_strategy                      = 'keystone',
   # DEPRECATED PARAMETERS
   $rabbit_host                        = $::os_service_default,
   $rabbit_port                        = $::os_service_default,
@@ -248,11 +246,6 @@ class mistral(
   $rabbit_userid                      = $::os_service_default,
   $rabbit_password                    = $::os_service_default,
   $rabbit_virtual_host                = $::os_service_default,
-  $auth_uri                           = undef,
-  $identity_uri                       = undef,
-  $keystone_password                  = undef,
-  $keystone_user                      = undef,
-  $keystone_tenant                    = undef,
 ){
 
   include ::mistral::deps
@@ -260,21 +253,7 @@ class mistral(
   include ::mistral::db
   include ::mistral::logging
 
-  if $auth_uri {
-    warning('auth_uri is deprecated, use mistral::keystone::authtoken::auth_uri instead.')
-  }
-  if $identity_uri {
-    warning('identity_uri is deprecated, use mistral::keystone::authtoken::auth_url instead.')
-  }
-  if $keystone_password {
-    warning('keystone_password is deprecated, use mistral::keystone::authtoken::password instead.')
-  }
-  if $keystone_user {
-    warning('keystone_user is deprecated, use mistral::keystone::authtoken::username instead.')
-  }
-  if $keystone_tenant {
-    warning('keystone_tenant is deprecated, use mistral::keystone::authtoken::project_name instead.')
-  }
+  validate_string($keystone_password)
 
   if !is_service_default($rabbit_host) or
     !is_service_default($rabbit_hosts) or
@@ -297,11 +276,12 @@ deprecated. Please use mistral::default_transport_url instead.")
     purge => $purge_config,
   }
 
-  if $auth_strategy == 'keystone' {
-    include ::mistral::keystone::authtoken
-  }
-
   mistral_config {
+    'keystone_authtoken/auth_uri':          value => $auth_uri;
+    'keystone_authtoken/identity_uri':      value => $identity_uri;
+    'keystone_authtoken/admin_user':        value => $keystone_user;
+    'keystone_authtoken/admin_password':    value => $keystone_password;
+    'keystone_authtoken/admin_tenant_name': value => $keystone_tenant;
     'coordination/backend_url':             value => $coordination_backend_url;
     'coordination/heartbeat_interval':      value => $coordination_heartbeat_interval;
     'DEFAULT/report_interval':              value => $report_interval;
