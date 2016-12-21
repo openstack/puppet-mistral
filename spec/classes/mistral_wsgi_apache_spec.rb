@@ -2,14 +2,6 @@ require 'spec_helper'
 
 describe 'mistral::wsgi::apache' do
 
-  let :global_facts do
-    @default_facts.merge({
-      :os_workers     => 8,
-      :concat_basedir => '/var/lib/puppet/concat',
-      :fqdn           => 'some.host.tld',
-    })
-  end
-
   shared_examples_for 'apache serving mistral with mod_wsgi' do
     it { is_expected.to contain_service('httpd').with_name(platform_parameters[:httpd_service_name]) }
     it { is_expected.to contain_class('mistral::params') }
@@ -81,44 +73,38 @@ describe 'mistral::wsgi::apache' do
     end
   end
 
-  context 'on RedHat platforms' do
-    let :facts do
-      global_facts.merge({
-        :osfamily               => 'RedHat',
-        :operatingsystemrelease => '7.0'
-      })
+  on_supported_os({
+    :supported_os   => OSDefaults.get_supported_os
+  }).each do |os,facts|
+    context "on #{os}" do
+      let (:facts) do
+        facts.merge!(OSDefaults.get_facts({
+          :os_workers     => 8,
+          :concat_basedir => '/var/lib/puppet/concat',
+          :fqdn           => 'some.host.tld'
+        }))
+      end
+
+      let(:platform_parameters) do
+        case facts[:osfamily]
+        when 'Debian'
+          {
+            :httpd_service_name => 'apache2',
+            :httpd_ports_file   => '/etc/apache2/ports.conf',
+            :wsgi_script_path   => '/usr/lib/cgi-bin/mistral',
+            :wsgi_script_source => '/usr/lib/python2.7/dist-packages/mistral/api/wsgi.py'
+          }
+        when 'RedHat'
+          {
+            :httpd_service_name => 'httpd',
+            :httpd_ports_file   => '/etc/httpd/conf/ports.conf',
+            :wsgi_script_path   => '/var/www/cgi-bin/mistral',
+            :wsgi_script_source => '/usr/lib/python2.7/site-packages/mistral/api/wsgi.py'
+          }
+
+        end
+      end
+      it_configures 'apache serving mistral with mod_wsgi'
     end
-
-    let :platform_parameters do
-      {
-        :httpd_service_name => 'httpd',
-        :httpd_ports_file   => '/etc/httpd/conf/ports.conf',
-        :wsgi_script_path   => '/var/www/cgi-bin/mistral',
-        :wsgi_script_source => '/usr/lib/python2.7/site-packages/mistral/api/wsgi.py'
-      }
-    end
-
-    it_configures 'apache serving mistral with mod_wsgi'
-  end
-
-  context 'on Debian platforms' do
-    let :facts do
-      global_facts.merge({
-        :osfamily               => 'Debian',
-        :operatingsystem        => 'Debian',
-        :operatingsystemrelease => '7.0'
-      })
-    end
-
-    let :platform_parameters do
-      {
-        :httpd_service_name => 'apache2',
-        :httpd_ports_file   => '/etc/apache2/ports.conf',
-        :wsgi_script_path   => '/usr/lib/cgi-bin/mistral',
-        :wsgi_script_source => '/usr/lib/python2.7/dist-packages/mistral/api/wsgi.py'
-      }
-    end
-
-    it_configures 'apache serving mistral with mod_wsgi'
   end
 end
