@@ -4,6 +4,7 @@ describe 'mistral::wsgi::apache' do
 
   shared_examples_for 'apache serving mistral with mod_wsgi' do
     it { is_expected.to contain_service('httpd').with_name(platform_parameters[:httpd_service_name]) }
+    it { is_expected.to contain_class('mistral::deps') }
     it { is_expected.to contain_class('mistral::params') }
     it { is_expected.to contain_class('apache') }
     it { is_expected.to contain_class('apache::mod::wsgi') }
@@ -37,6 +38,13 @@ describe 'mistral::wsgi::apache' do
         'docroot_group'               => 'mistral',
         'ssl'                         => 'true',
         'wsgi_daemon_process'         => 'mistral',
+        'wsgi_daemon_process_options' => {
+          'user'         => 'mistral',
+          'group'        => 'mistral',
+          'processes'    => 1,
+          'threads'      => '8',
+          'display-name' => 'mistral_wsgi',
+        },
         'wsgi_process_group'          => 'mistral',
         'wsgi_script_aliases'         => { '/' => "#{platform_parameters[:wsgi_script_path]}/app" },
         'require'                     => 'File[mistral_wsgi]'
@@ -47,11 +55,12 @@ describe 'mistral::wsgi::apache' do
     describe 'when overriding parameters using different ports' do
       let :params do
         {
-          :servername  => 'dummy.host',
-          :bind_host   => '10.42.51.1',
-          :port        => 12345,
-          :ssl         => false,
-          :workers     => 37,
+          :servername                => 'dummy.host',
+          :bind_host                 => '10.42.51.1',
+          :port                      => 12345,
+          :ssl                       => false,
+          :wsgi_process_display_name => 'mistral',
+          :workers                   => 37,
         }
       end
 
@@ -64,6 +73,13 @@ describe 'mistral::wsgi::apache' do
         'docroot_group'               => 'mistral',
         'ssl'                         => 'false',
         'wsgi_daemon_process'         => 'mistral',
+        'wsgi_daemon_process_options' => {
+            'user'         => 'mistral',
+            'group'        => 'mistral',
+            'processes'    => '37',
+            'threads'      => '8',
+            'display-name' => 'mistral',
+        },
         'wsgi_process_group'          => 'mistral',
         'wsgi_script_aliases'         => { '/' => "#{platform_parameters[:wsgi_script_path]}/app" },
         'require'                     => 'File[mistral_wsgi]'
