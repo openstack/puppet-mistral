@@ -24,6 +24,10 @@ class mistral::deps {
   ~> Service<| tag == 'mistral-service' |>
   ~> anchor { 'mistral::service::end': }
 
+  # all db settings should be applied and all packages should be installed
+  # before dbsync starts
+  Oslo::Db<||> -> Anchor['mistral::dbsync::begin']
+
   # policy config should occur in the config block
   Anchor['mistral::config::begin']
   -> Openstacklib::Policy::Base<||>
