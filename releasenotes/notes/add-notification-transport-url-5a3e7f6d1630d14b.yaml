@@ -1,0 +1,4 @@
+---
+features:
+  - Add olso.messaging notification transport_url via puppet-olso
+    resource.

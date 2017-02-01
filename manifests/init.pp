@@ -92,6 +92,12 @@
 #     transport://user:pass@host1:port[,hostN:portN]/virtual_host
 #   Defaults to $::os_service_default
 #
+# [*notification_transport_url*]
+#   (optional) A URL representing the messaging driver to use for notifications
+#   and its full configuration. Transport URLs take the form:
+#     transport://user:pass@host1:port[,hostN:portN]/virtual_host
+#   Defaults to $::os_service_default
+#
 # [*rabbit_ha_queues*]
 #   (optional) Use HA queues in RabbitMQ (x-ha-policy: all).
 #   Defaults to $::os_service_default
@@ -218,6 +224,7 @@ class mistral(
   $control_exchange                   = $::os_service_default,
   $rpc_response_timeout               = $::os_service_default,
   $default_transport_url              = $::os_service_default,
+  $notification_transport_url         = $::os_service_default,
   $rabbit_ha_queues                   = $::os_service_default,
   $rabbit_heartbeat_timeout_threshold = $::os_service_default,
   $rabbit_heartbeat_rate              = $::os_service_default,
@@ -293,6 +300,10 @@ deprecated. Please use mistral::default_transport_url instead.")
     transport_url        => $default_transport_url,
     control_exchange     => $control_exchange,
     rpc_response_timeout => $rpc_response_timeout,
+  }
+
+  oslo::messaging::notifications {'mistral_config':
+    transport_url => $notification_transport_url,
   }
 
   if $rpc_backend in [$::os_service_default, 'rabbit'] {
