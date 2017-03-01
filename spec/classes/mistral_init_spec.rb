@@ -39,6 +39,8 @@ describe 'mistral' do
       is_expected.to contain_mistral_config('DEFAULT/service_down_time').with(:value => '<SERVICE DEFAULT>')
       is_expected.to contain_mistral_config('DEFAULT/transport_url').with(:value => '<SERVICE DEFAULT>')
       is_expected.to contain_mistral_config('oslo_messaging_notifications/transport_url').with(:value => '<SERVICE DEFAULT>')
+      is_expected.to contain_mistral_config('oslo_messaging_notifications/driver').with(:value => '<SERVICE DEFAULT>')
+      is_expected.to contain_mistral_config('oslo_messaging_notifications/topics').with(:value => '<SERVICE DEFAULT>')
       is_expected.to contain_mistral_config('oslo_messaging_rabbit/rabbit_password').with(:value => '<SERVICE DEFAULT>', :secret => true)
       is_expected.to contain_mistral_config('oslo_messaging_rabbit/rabbit_host').with(:value => '<SERVICE DEFAULT>')
       is_expected.to contain_mistral_config('oslo_messaging_rabbit/rabbit_port').with(:value => '<SERVICE DEFAULT>')
@@ -120,11 +122,17 @@ describe 'mistral' do
 
   describe 'with rabbit notification transport url configured' do
     let :params do
-      req_params.merge({'notification_transport_url' => 'rabbit://user:pass@host:1234/virt' })
+      req_params.merge({
+        :notification_transport_url => 'rabbit://user:pass@host:1234/virt',
+        :notification_topics        => 'openstack',
+        :notification_driver        => 'messagingv1',
+      })
     end
 
     it 'should contain transport_url' do
       is_expected.to contain_mistral_config('oslo_messaging_notifications/transport_url').with(:value => 'rabbit://user:pass@host:1234/virt')
+      is_expected.to contain_mistral_config('oslo_messaging_notifications/driver').with(:value => 'messagingv1')
+      is_expected.to contain_mistral_config('oslo_messaging_notifications/topics').with(:value => 'openstack')
     end
   end
 

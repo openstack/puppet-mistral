@@ -98,6 +98,15 @@
 #     transport://user:pass@host1:port[,hostN:portN]/virtual_host
 #   Defaults to $::os_service_default
 #
+# [*notification_driver*]
+#   (optional) Driver or drivers to handle sending notifications.
+#   Value can be a string or a list.
+#   Defaults to $::os_service_default
+#
+# [*notification_topics*]
+#   (optional) AMQP topic used for OpenStack notifications
+#   Defaults to $::os_service_default
+#
 # [*rabbit_ha_queues*]
 #   (optional) Use HA queues in RabbitMQ (x-ha-policy: all).
 #   Defaults to $::os_service_default
@@ -227,6 +236,8 @@ class mistral(
   $rpc_response_timeout               = $::os_service_default,
   $default_transport_url              = $::os_service_default,
   $notification_transport_url         = $::os_service_default,
+  $notification_driver                = $::os_service_default,
+  $notification_topics                = $::os_service_default,
   $rabbit_ha_queues                   = $::os_service_default,
   $rabbit_heartbeat_timeout_threshold = $::os_service_default,
   $rabbit_heartbeat_rate              = $::os_service_default,
@@ -306,6 +317,8 @@ deprecated. Please use mistral::default_transport_url instead.")
 
   oslo::messaging::notifications {'mistral_config':
     transport_url => $notification_transport_url,
+    driver        => $notification_driver,
+    topics        => $notification_topics,
   }
 
   if $rpc_backend in [$::os_service_default, 'rabbit'] {
