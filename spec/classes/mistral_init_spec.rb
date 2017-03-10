@@ -158,13 +158,13 @@ describe 'mistral' do
       })
     end
 
-    it do
-      is_expected.to contain_mistral_config('oslo_messaging_rabbit/rabbit_use_ssl').with_value('true')
-      is_expected.to contain_mistral_config('oslo_messaging_rabbit/kombu_ssl_ca_certs').with_value('/path/to/ssl/ca/certs')
-      is_expected.to contain_mistral_config('oslo_messaging_rabbit/kombu_ssl_certfile').with_value('/path/to/ssl/cert/file')
-      is_expected.to contain_mistral_config('oslo_messaging_rabbit/kombu_ssl_keyfile').with_value('/path/to/ssl/keyfile')
-      is_expected.to contain_mistral_config('oslo_messaging_rabbit/kombu_ssl_version').with_value('TLSv1')
-    end
+    it { is_expected.to contain_oslo__messaging__rabbit('mistral_config').with(
+        :rabbit_use_ssl     => true,
+        :kombu_ssl_ca_certs => '/path/to/ssl/ca/certs',
+        :kombu_ssl_certfile => '/path/to/ssl/cert/file',
+        :kombu_ssl_keyfile  => '/path/to/ssl/keyfile',
+        :kombu_ssl_version  => 'TLSv1'
+    )}
   end
 
   describe 'with SSL enabled without kombu' do
@@ -174,13 +174,9 @@ describe 'mistral' do
       })
     end
 
-    it do
-      is_expected.to contain_mistral_config('oslo_messaging_rabbit/rabbit_use_ssl').with_value('true')
-      is_expected.to contain_mistral_config('oslo_messaging_rabbit/kombu_ssl_ca_certs').with_value('<SERVICE DEFAULT>')
-      is_expected.to contain_mistral_config('oslo_messaging_rabbit/kombu_ssl_certfile').with_value('<SERVICE DEFAULT>')
-      is_expected.to contain_mistral_config('oslo_messaging_rabbit/kombu_ssl_keyfile').with_value('<SERVICE DEFAULT>')
-      is_expected.to contain_mistral_config('oslo_messaging_rabbit/kombu_ssl_version').with_value('<SERVICE DEFAULT>')
-    end
+    it { is_expected.to contain_oslo__messaging__rabbit('mistral_config').with(
+        :rabbit_use_ssl => true,
+    )}
   end
 
   describe 'with SSL disabled' do
@@ -190,13 +186,9 @@ describe 'mistral' do
       })
     end
 
-    it do
-      is_expected.to contain_mistral_config('oslo_messaging_rabbit/rabbit_use_ssl').with_value('false')
-      is_expected.to contain_mistral_config('oslo_messaging_rabbit/kombu_ssl_ca_certs').with_value('<SERVICE DEFAULT>')
-      is_expected.to contain_mistral_config('oslo_messaging_rabbit/kombu_ssl_certfile').with_value('<SERVICE DEFAULT>')
-      is_expected.to contain_mistral_config('oslo_messaging_rabbit/kombu_ssl_keyfile').with_value('<SERVICE DEFAULT>')
-      is_expected.to contain_mistral_config('oslo_messaging_rabbit/kombu_ssl_version').with_value('<SERVICE DEFAULT>')
-    end
+    it { is_expected.to contain_oslo__messaging__rabbit('mistral_config').with(
+        :rabbit_use_ssl => false,
+    )}
   end
 
   describe 'with amqp_durable_queues disabled' do
