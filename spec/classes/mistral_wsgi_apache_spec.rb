@@ -41,8 +41,8 @@ describe 'mistral::wsgi::apache' do
         'wsgi_daemon_process_options' => {
           'user'         => 'mistral',
           'group'        => 'mistral',
-          'processes'    => 1,
-          'threads'      => '8',
+          'processes'    => '8',
+          'threads'      => '1',
           'display-name' => 'mistral_wsgi',
         },
         'wsgi_process_group'          => 'mistral',
@@ -77,7 +77,7 @@ describe 'mistral::wsgi::apache' do
             'user'         => 'mistral',
             'group'        => 'mistral',
             'processes'    => '37',
-            'threads'      => '8',
+            'threads'      => '1',
             'display-name' => 'mistral',
         },
         'wsgi_process_group'          => 'mistral',
@@ -108,14 +108,14 @@ describe 'mistral::wsgi::apache' do
             :httpd_service_name => 'apache2',
             :httpd_ports_file   => '/etc/apache2/ports.conf',
             :wsgi_script_path   => '/usr/lib/cgi-bin/mistral',
-            :wsgi_script_source => '/usr/lib/python2.7/dist-packages/mistral/api/wsgi.py'
+            :wsgi_script_source => '/usr/bin/mistral-wsgi-api'
           }
         when 'RedHat'
           {
             :httpd_service_name => 'httpd',
             :httpd_ports_file   => '/etc/httpd/conf/ports.conf',
             :wsgi_script_path   => '/var/www/cgi-bin/mistral',
-            :wsgi_script_source => '/usr/lib/python2.7/site-packages/mistral/api/wsgi.py'
+            :wsgi_script_source => '/usr/bin/mistral-wsgi-api'
           }
 
         end

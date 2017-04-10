@@ -19,7 +19,7 @@ class mistral::params {
       $executor_package_name      = 'openstack-mistral-executor'
       $executor_service_name      = 'openstack-mistral-executor'
       $mistral_wsgi_script_path   = '/var/www/cgi-bin/mistral'
-      $mistral_wsgi_script_source = '/usr/lib/python2.7/site-packages/mistral/api/wsgi.py'
+      $mistral_wsgi_script_source = '/usr/bin/mistral-wsgi-api'
     }
     'Debian': {
       $common_package_name        = 'mistral-common'
@@ -30,7 +30,7 @@ class mistral::params {
       $executor_package_name      = 'mistral-executor'
       $executor_service_name      = 'mistral-executor'
       $mistral_wsgi_script_path   = '/usr/lib/cgi-bin/mistral'
-      $mistral_wsgi_script_source = '/usr/lib/python2.7/dist-packages/mistral/api/wsgi.py'
+      $mistral_wsgi_script_source = '/usr/bin/mistral-wsgi-api'
     }
     default: {
       fail("Unsupported osfamily: ${::osfamily} operatingsystem: \

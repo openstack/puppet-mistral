@@ -86,7 +86,7 @@ class mistral::wsgi::apache (
   $bind_host                  = undef,
   $path                       = '/',
   $ssl                        = true,
-  $workers                    = 1,
+  $workers                    = $::os_workers,
   $ssl_cert                   = undef,
   $ssl_key                    = undef,
   $ssl_chain                  = undef,
@@ -95,7 +95,7 @@ class mistral::wsgi::apache (
   $ssl_crl                    = undef,
   $ssl_certs_dir              = undef,
   $wsgi_process_display_name  = undef,
-  $threads                    = $::os_workers,
+  $threads                    = 1,
   $priority                   = '10',
 ) {
 
