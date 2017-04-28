@@ -56,16 +56,16 @@ describe 'mistral' do
       is_expected.to contain_mistral_config('keystone_authtoken/auth_uri').with(
        :value => 'http://localhost:5000/'
       )
-      is_expected.to contain_mistral_config('keystone_authtoken/identity_uri').with(
+      is_expected.to contain_mistral_config('keystone_authtoken/auth_url').with(
        :value => 'http://localhost:35357/'
       )
-      is_expected.to contain_mistral_config('keystone_authtoken/admin_tenant_name').with(
+      is_expected.to contain_mistral_config('keystone_authtoken/project_name').with(
        :value => 'services'
       )
-      is_expected.to contain_mistral_config('keystone_authtoken/admin_user').with(
+      is_expected.to contain_mistral_config('keystone_authtoken/username').with(
        :value => 'mistral'
       )
-      is_expected.to contain_mistral_config('keystone_authtoken/admin_password').with(
+      is_expected.to contain_mistral_config('keystone_authtoken/password').with(
        :value => 'foo'
       )
       is_expected.to contain_mistral_config('DEFAULT/os_actions_endpoint_type').with(
