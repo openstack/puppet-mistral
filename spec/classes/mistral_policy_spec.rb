@@ -20,7 +20,9 @@ describe 'mistral::policy' do
         :key   => 'context_is_admin',
         :value => 'foo:bar'
       })
-      is_expected.to contain_mistral_config('oslo_policy/policy_file').with_value('/etc/mistral/policy.json')
+      is_expected.to contain_oslo__policy('mistral_config').with(
+        :policy_file => '/etc/mistral/policy.json',
+      )
     end
   end
 
