@@ -11,8 +11,10 @@ describe 'mistral::db' do
         :connection     => 'sqlite:////var/lib/mistral/mistral.sqlite',
         :idle_timeout   => '<SERVICE DEFAULT>',
         :min_pool_size  => '<SERVICE DEFAULT>',
+        :max_pool_size  => '<SERVICE DEFAULT>',
         :max_retries    => '<SERVICE DEFAULT>',
         :retry_interval => '<SERVICE DEFAULT>',
+        :max_overflow   => '<SERVICE DEFAULT>',
       )}
 
     end
@@ -22,9 +24,11 @@ describe 'mistral::db' do
         { :database_connection     => 'mysql+pymysql://mistral:mistral@localhost/mistral',
           :database_idle_timeout   => '3601',
           :database_min_pool_size  => '2',
+          :database_max_pool_size  => '11',
           :database_max_retries    => '11',
           :database_retry_interval => '11', 
           :database_db_max_retries => '-1',
+          :database_max_overflow   => '21', 
         }
       end
 
@@ -33,8 +37,10 @@ describe 'mistral::db' do
         :connection     => 'mysql+pymysql://mistral:mistral@localhost/mistral',
         :idle_timeout   => '3601',
         :min_pool_size  => '2',
+        :max_pool_size  => '11',
         :max_retries    => '11',
         :retry_interval => '11',
+        :max_overflow   => '21',
       )}
     end
 
