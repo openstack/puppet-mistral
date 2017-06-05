@@ -55,6 +55,7 @@ describe 'basic mistral' do
           class { '::mistral::client': }
           class { '::mistral::engine': }
           class { '::mistral::executor': }
+          class { '::mistral::event_engine': }
         }
         default: {
           fail("Unsupported osfamily (${::osfamily})")
