@@ -46,7 +46,7 @@ class mistral::db (
   $database_max_retries    = $::os_service_default,
   $database_retry_interval = $::os_service_default,
   $database_max_overflow   = $::os_service_default,
-  $database_db_max_retries    = $::os_service_default,
+  $database_db_max_retries = $::os_service_default,
 ) {
 
   include ::mistral::deps
