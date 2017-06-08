@@ -97,7 +97,7 @@ class mistral::api (
       enable => false,
       tag    => 'mistral-service',
     }
-    Service <<| title == 'httpd' |>> { tag +> 'mistral-service' }
+    Service <| title == 'httpd' |> { tag +> 'mistral-service' }
 
     # we need to make sure mistral-api s stopped before trying to start apache
     Service['mistral-api'] -> Service[$service_name]
