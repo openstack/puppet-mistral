@@ -11,10 +11,29 @@
 #   (optional) The rpc backend.
 #   Defaults to 'rabbit'.
 #
+# [*auth_uri*]
+#   (optional) Specifies the public Identity URI for Mistral to use.
+#   Default 'http://localhost:5000/'.
+#
+# [*identity_uri*]
+#   (optional) Specifies the admin Identity URI for Mistral to use.
+#   Default 'http://localhost:35357/'.
+#
 # [*os_actions_endpoint_type*]
 #   (optional) Type of endpoint in identity service catalog to use for
 #   communication with OpenStack services
 #   Defaults to $::os_service_default
+#
+# [*keystone_user*]
+#   (optional) The name of the auth user
+#   Defaults to 'mistral'.
+#
+# [*keystone_tenant*]
+#   (optional) The tenant of the auth user
+#   Defaults to 'services'.
+#
+# [*keystone_password*]
+#   (required) The password of the auth user.
 #
 # [*log_dir*]
 #   (optional) Directory where logs should be stored.
@@ -203,30 +222,15 @@
 #   (Optional) Virtual_host to use.
 #   Defaults to $::os_service_default
 #
-# [*auth_uri*]
-#   (optional) Specifies the public Identity URI for Mistral to use.
-#   Default 'http://localhost:5000/'.
-#
-# [*identity_uri*]
-#   (optional) Specifies the admin Identity URI for Mistral to use.
-#   Default 'http://localhost:35357/'.
-#
-# [*keystone_user*]
-#   (optional) The name of the auth user
-#   Defaults to 'mistral'.
-#
-# [*keystone_tenant*]
-#   (optional) The tenant of the auth user
-#   Defaults to 'services'.
-#
-# [*keystone_password*]
-#   (optional) The password of the auth user.
-#   Defaults to undef.
-#
 class mistral(
+  $keystone_password,
+  $keystone_user                      = 'mistral',
+  $keystone_tenant                    = 'services',
   $package_ensure                     = 'present',
   $database_connection                = $::os_service_default,
   $rpc_backend                        = $::os_service_default,
+  $auth_uri                           = 'http://localhost:5000/',
+  $identity_uri                       = 'http://localhost:35357/',
   $os_actions_endpoint_type           = $::os_service_default,
   $control_exchange                   = $::os_service_default,
   $rpc_response_timeout               = $::os_service_default,
@@ -262,18 +266,12 @@ class mistral(
   $rabbit_userid                      = $::os_service_default,
   $rabbit_password                    = $::os_service_default,
   $rabbit_virtual_host                = $::os_service_default,
-  $keystone_password                  = undef,
-  $keystone_user                      = 'mistral',
-  $keystone_tenant                    = 'services',
-  $auth_uri                           = 'http://localhost:5000/',
-  $identity_uri                       = 'http://localhost:35357/',
 ){
 
   include ::mistral::deps
   include ::mistral::params
   include ::mistral::db
   include ::mistral::logging
-  include ::mistral::keystone::authtoken
 
   validate_string($keystone_password)
 
@@ -299,6 +297,11 @@ deprecated. Please use mistral::default_transport_url instead.")
   }
 
   mistral_config {
+    'keystone_authtoken/auth_uri':          value => $auth_uri;
+    'keystone_authtoken/identity_uri':      value => $identity_uri;
+    'keystone_authtoken/admin_user':        value => $keystone_user;
+    'keystone_authtoken/admin_password':    value => $keystone_password;
+    'keystone_authtoken/admin_tenant_name': value => $keystone_tenant;
     'coordination/backend_url':             value => $coordination_backend_url;
     'coordination/heartbeat_interval':      value => $coordination_heartbeat_interval;
     'DEFAULT/report_interval':              value => $report_interval;
