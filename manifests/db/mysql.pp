@@ -34,10 +34,6 @@
 #   Only used with mysql modules >= 2.2.
 #   Defaults to 'utf8_general_ci'
 #
-# [*listening_service*]
-#    The name that will be called from the mysql machine
-#    Defaults to 'mistral_db'.
-#
 # == Dependencies
 #   Class['mysql::server']
 #
@@ -49,7 +45,6 @@
 #
 class mistral::db::mysql(
   $password,
-  $listening_service = 'mistral_db',
   $dbname        = 'mistral',
   $user          = 'mistral',
   $host          = '127.0.0.1',
