@@ -20,8 +20,10 @@ class mistral::db::sync {
       Anchor['mistral::dbsync::begin']
     ],
     notify      => Anchor['mistral::dbsync::end'],
-  } ->
+  }
+
   exec { 'mistral-db-populate':
+    require     => Exec['mistral-db-sync'],
     command     => $::mistral::params::db_populate_command,
     path        => '/usr/bin',
     user        => 'mistral',
