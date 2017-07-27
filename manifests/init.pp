@@ -7,10 +7,6 @@
 #   (Optional) Ensure state for package.
 #   Defaults to 'present'.
 #
-# [*rpc_backend*]
-#   (optional) The rpc backend.
-#   Defaults to 'rabbit'.
-#
 # [*auth_uri*]
 #   (optional) Specifies the public Identity URI for Mistral to use.
 #   Default 'http://localhost:5000/'.
@@ -222,13 +218,16 @@
 #   (Optional) Virtual_host to use.
 #   Defaults to $::os_service_default
 #
+# [*rpc_backend*]
+#   (optional) The rpc backend.
+#   Defaults to 'rabbit'.
+#
 class mistral(
   $keystone_password,
   $keystone_user                      = 'mistral',
   $keystone_tenant                    = 'services',
   $package_ensure                     = 'present',
   $database_connection                = $::os_service_default,
-  $rpc_backend                        = $::os_service_default,
   $auth_uri                           = 'http://localhost:5000/',
   $identity_uri                       = 'http://localhost:35357/',
   $os_actions_endpoint_type           = $::os_service_default,
@@ -266,6 +265,7 @@ class mistral(
   $rabbit_userid                      = $::os_service_default,
   $rabbit_password                    = $::os_service_default,
   $rabbit_virtual_host                = $::os_service_default,
+  $rpc_backend                        = $::os_service_default,
 ){
 
   include ::mistral::deps
@@ -280,10 +280,12 @@ class mistral(
     !is_service_default($rabbit_password) or
     !is_service_default($rabbit_port) or
     !is_service_default($rabbit_userid) or
-    !is_service_default($rabbit_virtual_host) {
+    !is_service_default($rabbit_virtual_host) or
+    !is_service_default($rpc_backend) {
     warning("mistral::rabbit_host, mistral::rabbit_hosts, mistral::rabbit_password, \
-mistral::rabbit_port, mistral::rabbit_userid and mistral::rabbit_virtual_host are \
-deprecated. Please use mistral::default_transport_url instead.")
+mistral::rabbit_port, mistral::rabbit_userid, mistral::rabbit_virtual_host and \
+mistral::rpc_backend are deprecated. Please use mistral::default_transport_url \
+instead.")
   }
 
   package { 'mistral-common':
@@ -321,28 +323,23 @@ deprecated. Please use mistral::default_transport_url instead.")
     topics        => $notification_topics,
   }
 
-  if $rpc_backend in [$::os_service_default, 'rabbit'] {
-
-    oslo::messaging::rabbit {'mistral_config':
-      rabbit_host                 => $rabbit_host,
-      rabbit_port                 => $rabbit_port,
-      rabbit_hosts                => $rabbit_hosts,
-      rabbit_password             => $rabbit_password,
-      rabbit_userid               => $rabbit_userid,
-      rabbit_virtual_host         => $rabbit_virtual_host,
-      rabbit_ha_queues            => $rabbit_ha_queues,
-      rabbit_use_ssl              => $rabbit_use_ssl,
-      kombu_ssl_version           => $kombu_ssl_version,
-      kombu_ssl_ca_certs          => $kombu_ssl_ca_certs,
-      kombu_ssl_certfile          => $kombu_ssl_certfile,
-      kombu_ssl_keyfile           => $kombu_ssl_keyfile,
-      kombu_reconnect_delay       => $kombu_reconnect_delay,
-      heartbeat_timeout_threshold => $rabbit_heartbeat_timeout_threshold,
-      heartbeat_rate              => $rabbit_heartbeat_rate,
-      amqp_durable_queues         => $amqp_durable_queues,
-    }
-  } else {
-    mistral_config { 'DEFAULT/rpc_backend': value => $rpc_backend }
+  oslo::messaging::rabbit {'mistral_config':
+    rabbit_host                 => $rabbit_host,
+    rabbit_port                 => $rabbit_port,
+    rabbit_hosts                => $rabbit_hosts,
+    rabbit_password             => $rabbit_password,
+    rabbit_userid               => $rabbit_userid,
+    rabbit_virtual_host         => $rabbit_virtual_host,
+    rabbit_ha_queues            => $rabbit_ha_queues,
+    rabbit_use_ssl              => $rabbit_use_ssl,
+    kombu_ssl_version           => $kombu_ssl_version,
+    kombu_ssl_ca_certs          => $kombu_ssl_ca_certs,
+    kombu_ssl_certfile          => $kombu_ssl_certfile,
+    kombu_ssl_keyfile           => $kombu_ssl_keyfile,
+    kombu_reconnect_delay       => $kombu_reconnect_delay,
+    heartbeat_timeout_threshold => $rabbit_heartbeat_timeout_threshold,
+    heartbeat_rate              => $rabbit_heartbeat_rate,
+    amqp_durable_queues         => $amqp_durable_queues,
   }
 
   if $sync_db {
