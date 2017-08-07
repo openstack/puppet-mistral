@@ -220,7 +220,7 @@
 #
 # [*rpc_backend*]
 #   (optional) The rpc backend.
-#   Defaults to 'rabbit'.
+#   Defaults to $::os_service_default.
 #
 class mistral(
   $keystone_password,

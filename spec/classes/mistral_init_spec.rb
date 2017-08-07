@@ -32,7 +32,6 @@ describe 'mistral' do
     end
 
     it 'should contain default config' do
-      is_expected.to contain_mistral_config('DEFAULT/rpc_backend').with(:value => 'rabbit')
       is_expected.to contain_mistral_config('DEFAULT/control_exchange').with(:value => '<SERVICE DEFAULT>')
       is_expected.to contain_mistral_config('DEFAULT/rpc_response_timeout').with(:value => '<SERVICE DEFAULT>')
       is_expected.to contain_mistral_config('DEFAULT/report_interval').with(:value => '<SERVICE DEFAULT>')
