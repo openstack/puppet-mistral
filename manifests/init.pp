@@ -205,19 +205,19 @@
 #
 # [*auth_uri*]
 #   (optional) Specifies the public Identity URI for Mistral to use.
-#   Default 'http://localhost:5000/'.
+#   Default undef.
 #
 # [*identity_uri*]
 #   (optional) Specifies the admin Identity URI for Mistral to use.
-#   Default 'http://localhost:35357/'.
+#   Default undef.
 #
 # [*keystone_user*]
 #   (optional) The name of the auth user
-#   Defaults to 'mistral'.
+#   Defaults to undef.
 #
 # [*keystone_tenant*]
 #   (optional) The tenant of the auth user
-#   Defaults to 'services'.
+#   Defaults to undef.
 #
 # [*keystone_password*]
 #   (optional) The password of the auth user.
@@ -263,10 +263,10 @@ class mistral(
   $rabbit_virtual_host                = $::os_service_default,
   $rpc_backend                        = $::os_service_default,
   $keystone_password                  = undef,
-  $keystone_user                      = 'mistral',
-  $keystone_tenant                    = 'services',
-  $auth_uri                           = 'http://localhost:5000/',
-  $identity_uri                       = 'http://localhost:35357/',
+  $keystone_user                      = undef,
+  $keystone_tenant                    = undef,
+  $auth_uri                           = undef,
+  $identity_uri                       = undef,
 ){
 
   include ::mistral::deps
