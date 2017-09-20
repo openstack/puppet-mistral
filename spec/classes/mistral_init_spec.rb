@@ -53,10 +53,10 @@ describe 'mistral' do
       is_expected.to contain_mistral_config('coordination/backend_url').with(:value => '<SERVICE DEFAULT>')
       is_expected.to contain_mistral_config('coordination/heartbeat_interval').with(:value => '<SERVICE DEFAULT>')
       is_expected.to contain_mistral_config('keystone_authtoken/auth_uri').with(
-       :value => 'http://localhost:5000/'
+       :value => 'http://localhost:5000'
       )
       is_expected.to contain_mistral_config('keystone_authtoken/auth_url').with(
-       :value => 'http://localhost:35357/'
+       :value => 'http://localhost:35357'
       )
       is_expected.to contain_mistral_config('keystone_authtoken/project_name').with(
        :value => 'services'
