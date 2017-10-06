@@ -70,6 +70,18 @@
 #     apache::vhost ssl parameters.
 #     Optional. Default to apache::vhost 'ssl_*' defaults.
 #
+#   [*access_log_file*]
+#     The log file name for the virtualhost.
+#     Optional. Defaults to false.
+#
+#   [*access_log_format*]
+#     The log format for the virtualhost.
+#     Optional. Defaults to false.
+#
+#   [*error_log_file*]
+#     The error log file name for the virtualhost.
+#     Optional. Defaults to undef.
+#
 # == Dependencies
 #
 #   requires Class['apache'] & Class['mistral']
@@ -97,6 +109,9 @@ class mistral::wsgi::apache (
   $wsgi_process_display_name  = undef,
   $threads                    = 1,
   $priority                   = '10',
+  $access_log_file            = false,
+  $access_log_format          = false,
+  $error_log_file             = undef,
 ) {
 
   include ::mistral::deps
@@ -151,5 +166,8 @@ class mistral::wsgi::apache (
     wsgi_script_dir           => $::mistral::params::mistral_wsgi_script_path,
     wsgi_script_file          => 'app',
     wsgi_script_source        => $::mistral::params::mistral_wsgi_script_source,
+    access_log_file           => $access_log_file,
+    access_log_format         => $access_log_format,
+    error_log_file            => $error_log_file,
   }
 }
