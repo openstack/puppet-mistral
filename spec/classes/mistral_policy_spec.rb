@@ -17,8 +17,10 @@ describe 'mistral::policy' do
 
     it 'set up the policies' do
       is_expected.to contain_openstacklib__policy__base('context_is_admin').with({
-        :key   => 'context_is_admin',
-        :value => 'foo:bar'
+        :key        => 'context_is_admin',
+        :value      => 'foo:bar',
+        :file_user  => 'root',
+        :file_group => 'mistral',
       })
       is_expected.to contain_oslo__policy('mistral_config').with(
         :policy_file => '/etc/mistral/policy.json',
@@ -37,5 +39,4 @@ describe 'mistral::policy' do
       it_configures 'mistral policies'
     end
   end
-
 end
