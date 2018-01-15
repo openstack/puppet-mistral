@@ -16,6 +16,10 @@
 #    (Optional) Use json for logging.
 #    Defaults to $::os_service_default
 #
+#  [*use_journal*]
+#    (Optional) Use journal for logging.
+#    Defaults to $::os_service_default
+#
 #  [*use_stderr*]
 #    (optional) Use stderr for logging
 #    Defaults to $::os_service_default
@@ -93,6 +97,7 @@
 class mistral::logging(
   $use_syslog                    = $::os_service_default,
   $use_json                      = $::os_service_default,
+  $use_journal                   = $::os_service_default,
   $use_stderr                    = $::os_service_default,
   $log_facility                  = $::os_service_default,
   $log_dir                       = '/var/log/mistral',
@@ -127,6 +132,7 @@ class mistral::logging(
   oslo::log { 'mistral_config':
     use_syslog                    => $use_syslog_real,
     use_json                      => $use_json,
+    use_journal                   => $use_journal,
     use_stderr                    => $use_stderr_real,
     syslog_log_facility           => $log_facility_real,
     log_dir                       => $log_dir_real,
