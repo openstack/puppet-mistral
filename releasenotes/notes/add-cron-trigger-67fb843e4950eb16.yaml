@@ -1,0 +1,4 @@
+---
+features:
+  - Add new parameters that allow configuring cron trigger
+    settings.
