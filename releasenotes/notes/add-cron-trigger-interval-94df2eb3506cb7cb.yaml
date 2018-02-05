@@ -1,0 +1,3 @@
+---
+features:
+  - Add the execution_interval parameter to the cron trigger manifest.
