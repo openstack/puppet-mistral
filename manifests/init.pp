@@ -117,6 +117,12 @@
 #  considered up (integer value).
 #  Defaults to $::os_service_default
 #
+# [*kombu_failover_strategy*]
+#   (Optional) Determines how the next RabbitMQ node is chosen in case the one
+#   we are currently connected to becomes unavailable. Takes effect only if
+#   more than one RabbitMQ node is provided in config. (string value)
+#   Defaults to $::os_service_default
+#
 # [*kombu_ssl_ca_certs*]
 #   (optional) SSL certification authority file (valid only if SSL enabled).
 #   Defaults to $::os_service_default
@@ -239,6 +245,7 @@ class mistral(
   $rabbit_use_ssl                     = $::os_service_default,
   $service_down_time                  = $::os_service_default,
   $report_interval                    = $::os_service_default,
+  $kombu_failover_strategy            = $::os_service_default,
   $kombu_ssl_ca_certs                 = $::os_service_default,
   $kombu_ssl_certfile                 = $::os_service_default,
   $kombu_ssl_keyfile                  = $::os_service_default,
@@ -329,6 +336,7 @@ instead.")
     rabbit_virtual_host         => $rabbit_virtual_host,
     rabbit_ha_queues            => $rabbit_ha_queues,
     rabbit_use_ssl              => $rabbit_use_ssl,
+    kombu_failover_strategy     => $kombu_failover_strategy,
     kombu_ssl_version           => $kombu_ssl_version,
     kombu_ssl_ca_certs          => $kombu_ssl_ca_certs,
     kombu_ssl_certfile          => $kombu_ssl_certfile,
