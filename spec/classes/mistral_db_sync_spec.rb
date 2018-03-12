@@ -13,7 +13,8 @@ describe 'mistral::db::sync' do
         :refreshonly => 'true',
         :try_sleep   => 5,
         :tries       => 10,
-        :logoutput   => 'on_failure'
+        :logoutput   => 'on_failure',
+        :tag         => 'openstack-db',
       )
 
       is_expected.to contain_exec('mistral-db-populate').with(
@@ -21,7 +22,8 @@ describe 'mistral::db::sync' do
         :path        => '/usr/bin',
         :user        => 'mistral',
         :refreshonly => 'true',
-        :logoutput   => 'on_failure'
+        :logoutput   => 'on_failure',
+        :tag         => 'openstack-db',
       )
 
     end
