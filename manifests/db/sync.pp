@@ -20,6 +20,7 @@ class mistral::db::sync {
       Anchor['mistral::dbsync::begin']
     ],
     notify      => Anchor['mistral::dbsync::end'],
+    tag         => 'openstack-db',
   }
 
   exec { 'mistral-db-populate':
@@ -35,6 +36,7 @@ class mistral::db::sync {
       Anchor['mistral::dbsync::begin']
     ],
     notify      => Anchor['mistral::dbsync::end'],
+    tag         => 'openstack-db',
   }
 
 }
