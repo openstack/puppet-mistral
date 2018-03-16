@@ -14,6 +14,10 @@ describe 'mistral::db::sync' do
         :try_sleep   => 5,
         :tries       => 10,
         :logoutput   => 'on_failure',
+        :subscribe   => ['Anchor[mistral::install::end]',
+                         'Anchor[mistral::config::end]',
+                         'Anchor[mistral::dbsync::begin]'],
+        :notify      => 'Anchor[mistral::dbsync::end]',
         :tag         => 'openstack-db',
       )
 
@@ -23,6 +27,10 @@ describe 'mistral::db::sync' do
         :user        => 'mistral',
         :refreshonly => 'true',
         :logoutput   => 'on_failure',
+        :subscribe   => ['Anchor[mistral::install::end]',
+                         'Anchor[mistral::config::end]',
+                         'Anchor[mistral::dbsync::begin]'],
+        :notify      => 'Anchor[mistral::dbsync::end]',
         :tag         => 'openstack-db',
       )
 
