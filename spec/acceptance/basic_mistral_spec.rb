@@ -11,56 +11,7 @@ describe 'basic mistral' do
       include ::openstack_integration::rabbitmq
       include ::openstack_integration::mysql
       include ::openstack_integration::keystone
-
-      rabbitmq_user { 'mistral':
-        admin    => true,
-        password => 'an_even_bigger_secret',
-        provider => 'rabbitmqctl',
-        require  => Class['rabbitmq'],
-      }
-
-      rabbitmq_user_permissions { 'mistral@/':
-        configure_permission => '.*',
-        write_permission     => '.*',
-        read_permission      => '.*',
-        provider             => 'rabbitmqctl',
-        require              => Class['rabbitmq'],
-      }
-
-      # Mistral resources
-      case $::osfamily {
-        'Debian': {
-          warning('Mistral is not yet packaged on Ubuntu systems.')
-        }
-        'RedHat': {
-          class { '::mistral':
-            database_connection   => 'mysql+pymysql://mistral:a_big_secret@127.0.0.1/mistral?charset=utf8',
-            keystone_password     => 'a_big_secret',
-            default_transport_url => 'rabbit://mistral:an_even_bigger_secret@127.0.0.1:5672',
-            debug                 => true,
-          }
-          class { '::mistral::keystone::auth':
-            password => 'a_big_secret',
-          }
-          class { '::mistral::db::mysql':
-            password => 'a_big_secret',
-          }
-          class { '::mistral::api':
-            service_name => 'httpd',
-          }
-          include ::apache
-          class { '::mistral::wsgi::apache':
-            ssl => false,
-          }
-          class { '::mistral::client': }
-          class { '::mistral::engine': }
-          class { '::mistral::executor': }
-          class { '::mistral::event_engine': }
-        }
-        default: {
-          fail("Unsupported osfamily (${::osfamily})")
-        }
-      }
+      include ::openstack_integration::mistral
       EOS
 
 
