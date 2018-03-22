@@ -236,7 +236,7 @@ describe 'mistral' do
     end
   end
 
-  describe 'with os_actions_keystone_endpoint overriden' do
+  describe 'with os_actions_keystone_endpoint overridden' do
     let :params do
       req_params.merge({
         :os_actions_endpoint_type => 'internal',
