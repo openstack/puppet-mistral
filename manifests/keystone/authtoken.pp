@@ -42,7 +42,7 @@
 #   (Optional) Authentication type to load
 #   Defaults to 'password'
 #
-# [*auth_uri*]
+# [*www_authenticate_uri*]
 #   (Optional) Complete public Identity API endpoint.
 #   Defaults to 'http://localhost:5000'
 #
@@ -178,6 +178,12 @@
 #   (in seconds). Set to -1 to disable caching completely. Integer value
 #   Defaults to $::os_service_default.
 #
+# DEPRECATED PARAMETERS
+#
+# [*auth_uri*]
+#   (Optional) Complete public Identity API endpoint.
+#   Defaults to undef
+#
 class mistral::keystone::authtoken(
   $username                       = 'mistral',
   $password                       = $::os_service_default,
@@ -188,7 +194,7 @@ class mistral::keystone::authtoken(
   $insecure                       = $::os_service_default,
   $auth_section                   = $::os_service_default,
   $auth_type                      = 'password',
-  $auth_uri                       = 'http://localhost:5000',
+  $www_authenticate_uri           = 'http://localhost:5000',
   $auth_version                   = $::os_service_default,
   $cache                          = $::os_service_default,
   $cafile                         = $::os_service_default,
@@ -213,6 +219,8 @@ class mistral::keystone::authtoken(
   $manage_memcache_package        = false,
   $region_name                    = $::os_service_default,
   $token_cache_time               = $::os_service_default,
+  # DEPRECATED PARAMETERS
+  $auth_uri                       = undef,
 ) {
 
   include ::mistral::deps
@@ -221,19 +229,23 @@ class mistral::keystone::authtoken(
     fail('Please set password for mistral service user')
   }
 
+  if $auth_uri {
+    warning('The auth_uri parameter is deprecated. Please use www_authenticate_uri instead.')
+  }
+
   #NOTE(emilien): Use pick to keep backward compatibility
   $username_real = pick($::mistral::keystone_user,$username)
   $password_real = pick($::mistral::keystone_password,$password)
   $project_name_real = pick($::mistral::keystone_tenant,$project_name)
   $auth_url_real = pick($::mistral::identity_uri,$auth_url)
-  $auth_uri_real = pick($::mistral::auth_uri,$auth_uri)
+  $www_authenticate_uri_real = pick($::mistral::auth_uri,$auth_uri,$www_authenticate_uri)
 
   keystone::resource::authtoken { 'mistral_config':
     username                       => $username_real,
     password                       => $password_real,
     project_name                   => $project_name_real,
     auth_url                       => $auth_url_real,
-    auth_uri                       => $auth_uri_real,
+    www_authenticate_uri           => $www_authenticate_uri_real,
     auth_version                   => $auth_version,
     auth_type                      => $auth_type,
     auth_section                   => $auth_section,

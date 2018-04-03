@@ -53,7 +53,7 @@ describe 'mistral' do
       is_expected.to contain_mistral_config('oslo_messaging_rabbit/kombu_failover_strategy').with(:value => '<SERVICE DEFAULT>')
       is_expected.to contain_mistral_config('coordination/backend_url').with(:value => '<SERVICE DEFAULT>')
       is_expected.to contain_mistral_config('coordination/heartbeat_interval').with(:value => '<SERVICE DEFAULT>')
-      is_expected.to contain_mistral_config('keystone_authtoken/auth_uri').with(
+      is_expected.to contain_mistral_config('keystone_authtoken/www_authenticate_uri').with(
        :value => 'http://localhost:5000'
       )
       is_expected.to contain_mistral_config('keystone_authtoken/auth_url').with(
