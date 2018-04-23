@@ -11,6 +11,8 @@ describe 'mistral::config' do
     }
   end
 
+  it { is_expected.to contain_class('mistral::deps') }
+
   it 'configures arbitrary mistral configurations' do
     is_expected.to contain_mistral_config('DEFAULT/foo').with_value('fooValue')
     is_expected.to contain_mistral_config('DEFAULT/bar').with_value('barValue')
