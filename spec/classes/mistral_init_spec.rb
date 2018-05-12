@@ -57,7 +57,7 @@ describe 'mistral' do
        :value => 'http://localhost:5000'
       )
       is_expected.to contain_mistral_config('keystone_authtoken/auth_url').with(
-       :value => 'http://localhost:35357'
+       :value => 'http://localhost:5000'
       )
       is_expected.to contain_mistral_config('keystone_authtoken/project_name').with(
        :value => 'services'
