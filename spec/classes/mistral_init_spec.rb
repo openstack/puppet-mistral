@@ -40,15 +40,9 @@ describe 'mistral' do
       is_expected.to contain_mistral_config('oslo_messaging_notifications/transport_url').with(:value => '<SERVICE DEFAULT>')
       is_expected.to contain_mistral_config('oslo_messaging_notifications/driver').with(:value => '<SERVICE DEFAULT>')
       is_expected.to contain_mistral_config('oslo_messaging_notifications/topics').with(:value => '<SERVICE DEFAULT>')
-      is_expected.to contain_mistral_config('oslo_messaging_rabbit/rabbit_password').with(:value => '<SERVICE DEFAULT>', :secret => true)
-      is_expected.to contain_mistral_config('oslo_messaging_rabbit/rabbit_host').with(:value => '<SERVICE DEFAULT>')
-      is_expected.to contain_mistral_config('oslo_messaging_rabbit/rabbit_port').with(:value => '<SERVICE DEFAULT>')
-      is_expected.to contain_mistral_config('oslo_messaging_rabbit/rabbit_hosts').with(:value => '<SERVICE DEFAULT>')
       is_expected.to contain_mistral_config('oslo_messaging_rabbit/rabbit_ha_queues').with(:value => '<SERVICE DEFAULT>')
-      is_expected.to contain_mistral_config('oslo_messaging_rabbit/rabbit_virtual_host').with(:value => '<SERVICE DEFAULT>')
       is_expected.to contain_mistral_config('oslo_messaging_rabbit/heartbeat_timeout_threshold').with_value('<SERVICE DEFAULT>')
       is_expected.to contain_mistral_config('oslo_messaging_rabbit/heartbeat_rate').with_value('<SERVICE DEFAULT>')
-      is_expected.to contain_mistral_config('oslo_messaging_rabbit/rabbit_userid').with(:value => '<SERVICE DEFAULT>')
       is_expected.to contain_mistral_config('oslo_messaging_rabbit/kombu_reconnect_delay').with(:value => '<SERVICE DEFAULT>')
       is_expected.to contain_mistral_config('oslo_messaging_rabbit/kombu_failover_strategy').with(:value => '<SERVICE DEFAULT>')
       is_expected.to contain_mistral_config('coordination/backend_url').with(:value => '<SERVICE DEFAULT>')
@@ -73,31 +67,6 @@ describe 'mistral' do
       )
     end
 
-  end
-  describe 'with modified rabbit_hosts' do
-    let :params do
-      req_params.merge({'rabbit_hosts' => ['rabbit1:5672', 'rabbit2:5672']})
-    end
-
-    it 'should contain many' do
-      is_expected.to contain_mistral_config('oslo_messaging_rabbit/rabbit_host').with(:value => '<SERVICE DEFAULT>')
-      is_expected.to contain_mistral_config('oslo_messaging_rabbit/rabbit_port').with(:value => '<SERVICE DEFAULT>')
-      is_expected.to contain_mistral_config('oslo_messaging_rabbit/rabbit_hosts').with(:value => 'rabbit1:5672,rabbit2:5672')
-      is_expected.to contain_mistral_config('oslo_messaging_rabbit/rabbit_ha_queues').with(:value => true)
-    end
-  end
-
-  describe 'with a single rabbit_hosts entry' do
-    let :params do
-      req_params.merge({'rabbit_hosts' => ['rabbit1:5672']})
-    end
-
-    it 'should contain many' do
-      is_expected.to contain_mistral_config('oslo_messaging_rabbit/rabbit_host').with(:value => '<SERVICE DEFAULT>')
-      is_expected.to contain_mistral_config('oslo_messaging_rabbit/rabbit_port').with(:value => '<SERVICE DEFAULT>')
-      is_expected.to contain_mistral_config('oslo_messaging_rabbit/rabbit_hosts').with(:value => 'rabbit1:5672')
-      is_expected.to contain_mistral_config('oslo_messaging_rabbit/rabbit_ha_queues').with(:value => '<SERVICE DEFAULT>')
-    end
   end
 
   describe 'a single rabbit_host with enable ha queues' do
@@ -213,7 +182,6 @@ describe 'mistral' do
     let :params do
       req_params.merge({
         :database_connection => 'postgresql://user:drowssap@host/database',
-        :rabbit_password     => 'guest',
       })
     end
 

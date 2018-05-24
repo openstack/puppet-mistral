@@ -1,0 +1,6 @@
+---
+upgrade:
+  - |
+    The deprecated mistral::rabbit_host, mistral::rabbit_hosts, mistral::rabbit_password,
+    mistral::rabbit_port, mistral::rabbit_userid and mistral::rabit_virtual_host are now
+    removed. Please use mistral::default_transport_url instead.
