@@ -91,7 +91,6 @@ describe 'mistral::api' do
          include ::mistral::db
          class { '::mistral':
            keystone_password => 'foo',
-           rabbit_password   => 'bar',
          }"
       end
 
