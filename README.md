@@ -78,6 +78,48 @@ Whether to hide the value from Puppet logs. Defaults to `false`.
 
 If value is equal to ensure_absent_val then the resource will behave as if `ensure => absent` was specified. Defaults to `<SERVICE DEFAULT>`
 
+### mistral_workflow
+
+The `mistral_workflow` provider allows the creation/update/deletion of workflow definitions using a source file (in YAML).
+
+```puppet
+mistral_workflow { 'my_workflow':
+  ensure          => present,
+  definition_file => '/home/user/my_workflow.yaml',
+  is_public       => true,
+}
+```
+
+Or:
+
+```puppet
+mistral_workflow { 'my_workflow':
+  ensure => absent,
+}
+```
+
+If you need to force the update of the workflow or change it's public attribute, use `latest`:
+```puppet
+mistral_workflow { 'my_workflow':
+  ensure          => latest,
+  definition_file => '/home/user/my_workflow.yaml',
+  is_public       => false,
+}
+```
+
+Although the mistral client allows multiple workflow definitions per source file, it not recommended to do so with this provider as the `mistral_workflow` is supposed to represent a single workflow.
+
+#### name
+
+The name of the workflow; this is only used when deleting the workflow since the definition file specifies the name of the workflow to create/update.
+
+#### definition_file
+
+The path to the file containing the definition of the workflow. This parameter is not mandatory but the creation or update will fail if it is not supplied.
+
+#### is_public
+
+Specifies whether the workflow must be public or not. Defaults to `true`.
 
 Beaker-Rspec
 ------------
