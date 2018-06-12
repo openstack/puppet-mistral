@@ -28,15 +28,6 @@
 #   (Optional) The version of the executor. (string value)
 #   Defaults to $::os_service_default.
 #
-# [*evaluation_interval*]
-#   (Deprecated) This should now be set via
-#    mistral::engine::evaluation_interval.
-#   Defaults to false.
-#
-# [*older_than*]
-#   (Deprecated) This should now be set via mistral::engine::older_than.
-#   Defaults to false.
-#
 class mistral::executor (
   $package_ensure      = present,
   $manage_service      = true,
@@ -44,20 +35,10 @@ class mistral::executor (
   $host                = $::os_service_default,
   $topic               = $::os_service_default,
   $version             = $::os_service_default,
-  #DEPRECATED
-  $evaluation_interval = false,
-  $older_than          = false,
 ) {
 
   include ::mistral::deps
   include ::mistral::params
-
-  if $evaluation_interval {
-    warning('evaluation_interval is deprecated here. Please use mistral::engine::evaluation_interval instead.')
-  }
-  if $older_than {
-    warning('older_than is deprecated here. Please use mistral::engine::older_than instead.')
-  }
 
   package { 'mistral-executor':
     ensure => $package_ensure,

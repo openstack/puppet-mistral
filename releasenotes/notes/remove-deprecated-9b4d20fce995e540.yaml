@@ -1,0 +1,11 @@
+---
+upgrade:
+  - |
+    The deprecated parameters evaluation_interval and older_than in
+    mistral::executor is now removed.
+    Please use evaluation_interval and older_than in mistral::engine instead.
+  - |
+    The deprecated parameters keystone_user, keystone_password, keystone_tenant,
+    identity_uri and auth_uri in ::mistral is now removed.
+    Please use username, password, project_name, auth_url and www_authenticate_uri
+    in ::mistral::keystone::authtoken instead.
