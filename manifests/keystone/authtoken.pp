@@ -225,7 +225,7 @@ class mistral::keystone::authtoken(
 
   include ::mistral::deps
 
-  if is_service_default($password) and ! $::mistral::keystone_password {
+  if is_service_default($password) {
     fail('Please set password for mistral service user')
   }
 
@@ -233,18 +233,14 @@ class mistral::keystone::authtoken(
     warning('The auth_uri parameter is deprecated. Please use www_authenticate_uri instead.')
   }
 
-  #NOTE(emilien): Use pick to keep backward compatibility
-  $username_real = pick($::mistral::keystone_user,$username)
-  $password_real = pick($::mistral::keystone_password,$password)
-  $project_name_real = pick($::mistral::keystone_tenant,$project_name)
-  $auth_url_real = pick($::mistral::identity_uri,$auth_url)
-  $www_authenticate_uri_real = pick($::mistral::auth_uri,$auth_uri,$www_authenticate_uri)
+  # TODO(tobasco): Remove this pick when auth_uri is removed.
+  $www_authenticate_uri_real = pick($auth_uri,$www_authenticate_uri)
 
   keystone::resource::authtoken { 'mistral_config':
-    username                       => $username_real,
-    password                       => $password_real,
-    project_name                   => $project_name_real,
-    auth_url                       => $auth_url_real,
+    username                       => $username,
+    password                       => $password,
+    project_name                   => $project_name,
+    auth_url                       => $auth_url,
     www_authenticate_uri           => $www_authenticate_uri_real,
     auth_version                   => $auth_version,
     auth_type                      => $auth_type,

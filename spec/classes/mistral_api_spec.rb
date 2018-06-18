@@ -12,6 +12,12 @@ describe 'mistral::api' do
       :allow_action_execution_deletion => false}
   end
 
+  let :pre_condition do
+    "class { '::mistral::keystone::authtoken':
+      password => 'foo',
+    }"
+  end
+
   shared_examples_for 'mistral-api' do
 
     context 'config params' do
@@ -89,9 +95,7 @@ describe 'mistral::api' do
       let :pre_condition do
         "include ::apache
          include ::mistral::db
-         class { '::mistral':
-           keystone_password => 'foo',
-         }"
+         class { '::mistral': }"
       end
 
       it 'configures mistral-api service with Apache' do

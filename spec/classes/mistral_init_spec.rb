@@ -3,7 +3,6 @@ describe 'mistral' do
   let :req_params do
     {
       :database_connection => 'mysql://user:password@host/database',
-      :keystone_password   => 'foo',
       :purge_config        => false,
     }
   end
@@ -14,6 +13,12 @@ describe 'mistral' do
       :operatingsystem        => 'Debian',
       :operatingsystemrelease => 'jessie',
     })
+  end
+
+  let :pre_condition do
+      "class { '::mistral::keystone::authtoken':
+         password => 'foo',
+       }"
   end
 
   describe 'with only required params' do

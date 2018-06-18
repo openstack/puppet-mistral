@@ -177,28 +177,6 @@
 #   (Optional) Enable dbsync
 #   Defaults to true.
 #
-# === DEPRECATED PARAMTERS
-#
-# [*auth_uri*]
-#   (optional) Specifies the public Identity URI for Mistral to use.
-#   Default undef.
-#
-# [*identity_uri*]
-#   (optional) Specifies the admin Identity URI for Mistral to use.
-#   Default undef.
-#
-# [*keystone_user*]
-#   (optional) The name of the auth user
-#   Defaults to undef.
-#
-# [*keystone_tenant*]
-#   (optional) The tenant of the auth user
-#   Defaults to undef.
-#
-# [*keystone_password*]
-#   (optional) The password of the auth user.
-#   Defaults to undef.
-#
 class mistral(
   $package_ensure                     = 'present',
   $database_connection                = $::os_service_default,
@@ -231,21 +209,12 @@ class mistral(
   $coordination_heartbeat_interval    = $::os_service_default,
   $purge_config                       = false,
   $sync_db                            = true,
-  # DEPRECATED PARAMETERS
-  $keystone_password                  = undef,
-  $keystone_user                      = undef,
-  $keystone_tenant                    = undef,
-  $auth_uri                           = undef,
-  $identity_uri                       = undef,
 ){
 
   include ::mistral::deps
   include ::mistral::params
   include ::mistral::db
   include ::mistral::logging
-  include ::mistral::keystone::authtoken
-
-  validate_string($keystone_password)
 
   package { 'mistral-common':
     ensure => $package_ensure,
