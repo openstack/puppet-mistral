@@ -50,6 +50,10 @@
 #   HTTPProxyToWSGI middleware.
 #   Defaults to $::os_service_default.
 #
+# [*auth_strategy*]
+#   (optional) Type of authentication to be used.
+#   Defaults to 'keystone'
+#
 class mistral::api (
   $allow_action_execution_deletion = $::os_service_default,
   $api_workers                     = $::os_workers,
@@ -60,11 +64,16 @@ class mistral::api (
   $package_ensure                  = present,
   $service_name                    = $::mistral::params::api_service_name,
   $enable_proxy_headers_parsing    = $::os_service_default,
+  $auth_strategy                   = 'keystone',
 ) inherits mistral::params {
 
   include ::mistral::deps
   include ::mistral::params
   include ::mistral::policy
+
+  if $auth_strategy == 'keystone' {
+    include ::mistral::keystone::authtoken
+  }
 
   package { 'mistral-api':
     ensure => $package_ensure,

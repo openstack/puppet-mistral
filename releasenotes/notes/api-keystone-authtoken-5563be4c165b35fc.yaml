@@ -1,0 +1,7 @@
+---
+upgrade:
+  - |
+    Added `auth_strategy` to ::mistral::api to configure the inclusion of
+    ::mistral::keystone::authtoken during the api configuration. Set this to
+    something other than 'keystone' to have ::mistral::api not include the
+    authtoken configuration.

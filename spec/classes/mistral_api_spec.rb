@@ -24,6 +24,7 @@ describe 'mistral::api' do
 
       it { is_expected.to contain_class('mistral::params') }
       it { is_expected.to contain_class('mistral::policy') }
+      it { is_expected.to contain_class('mistral::keystone::authtoken') }
 
       it { is_expected.to contain_mistral_config('api/api_workers').with_value( params[:api_workers] ) }
       it { is_expected.to contain_mistral_config('api/host').with_value( params[:bind_host] ) }
@@ -95,7 +96,10 @@ describe 'mistral::api' do
       let :pre_condition do
         "include ::apache
          include ::mistral::db
-         class { '::mistral': }"
+         class { '::mistral': }
+         class { '::mistral::keystone::authtoken':
+             password => 'foo',
+         }"
       end
 
       it 'configures mistral-api service with Apache' do
