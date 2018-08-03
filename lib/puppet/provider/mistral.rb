@@ -57,7 +57,7 @@ class Puppet::Provider::Mistral < Puppet::Provider::MistralWorkflowRequester
   end
 
   def self.get_mistral_credentials
-    auth_keys = ['auth_uri', 'admin_tenant_name', 'admin_user',
+    auth_keys = ['auth_url', 'admin_tenant_name', 'admin_user',
                  'admin_password']
     conf = mistral_conf
     if conf and conf['keystone_authtoken'] and
@@ -91,7 +91,7 @@ class Puppet::Provider::Mistral < Puppet::Provider::MistralWorkflowRequester
 
   def self.get_auth_endpoint
     m = mistral_credentials
-    "#{m['auth_uri']}"
+    "#{m['auth_url']}"
   end
 
   def self.auth_endpoint
