@@ -24,8 +24,17 @@ describe 'mistral::client' do
         facts.merge!(OSDefaults.get_facts())
       end
 
-      let :platform_params do
-        { :client_package => 'python-mistralclient' }
+      let(:platform_params) do
+        case facts[:osfamily]
+        when 'Debian'
+          if facts[:os_package_type] == 'debian'
+            { :client_package => 'python3-mistralclient' }
+          else
+            { :client_package => 'python-mistralclient' }
+          end
+        when 'RedHat'
+          { :client_package => 'python-mistralclient' }
+        end
       end
 
       it_behaves_like 'mistral client'

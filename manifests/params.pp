@@ -5,7 +5,13 @@
 class mistral::params {
   include ::openstacklib::defaults
 
-  $client_package      = 'python-mistralclient'
+  if ($::os_package_type == 'debian') {
+    $pyvers = '3'
+  } else {
+    $pyvers = ''
+  }
+
+  $client_package      = "python-${pyvers}mistralclient"
   $db_sync_command     = 'mistral-db-manage --config-file=/etc/mistral/mistral.conf upgrade head'
   $db_populate_command = 'mistral-db-manage --config-file=/etc/mistral/mistral.conf populate'
   $group               = 'mistral'
