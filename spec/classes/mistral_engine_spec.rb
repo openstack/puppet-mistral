@@ -74,7 +74,10 @@ describe 'mistral::engine' do
 
   context 'on Debian platforms' do
     let :facts do
-      OSDefaults.get_facts({ :osfamily => 'Debian' })
+      OSDefaults.get_facts({
+        :osfamily => 'Debian',
+        :os       => { :name  => 'Debian', :family => 'Debian', :release => { :major => '8', :minor => '0' } },
+      })
     end
 
     let :platform_params do
@@ -86,7 +89,10 @@ describe 'mistral::engine' do
 
   context 'on RedHat platforms' do
     let :facts do
-      OSDefaults.get_facts({ :osfamily => 'RedHat' })
+      OSDefaults.get_facts({
+        :osfamily => 'RedHat',
+        :os       => { :name  => 'CentOS', :family => 'RedHat', :release => { :major => '7', :minor => '0' } },
+      })
     end
 
     let :platform_params do

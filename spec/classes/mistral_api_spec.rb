@@ -129,6 +129,7 @@ describe 'mistral::api' do
         :operatingsystemrelease => '8.0',
         :concat_basedir         => '/var/lib/puppet/concat',
         :fqdn                   => 'some.host.tld',
+        :os                     => { :name  => 'Debian', :family => 'Debian', :release => { :major => '8', :minor => '0' } },
       })
     end
 
@@ -147,6 +148,7 @@ describe 'mistral::api' do
         :operatingsystemrelease => '7.1',
         :fqdn                   => 'some.host.tld',
         :concat_basedir         => '/var/lib/puppet/concat',
+        :os                     => { :name  => 'RedHat', :family => 'RedHat', :release => { :major => '7', :minor => '1' } },
       })
     end
 

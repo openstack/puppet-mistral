@@ -89,7 +89,8 @@ describe 'mistral::db' do
       OSDefaults.get_facts({
         :osfamily => 'Debian',
         :operatingsystem => 'Debian',
-        :operatingsystemrelease => 'jessie'
+        :operatingsystemrelease => 'jessie',
+        :os       => { :name  => 'Debian', :family => 'Debian', :release => { :major => '8', :minor => '0' } },
       })
     end
 
@@ -131,6 +132,7 @@ describe 'mistral::db' do
       OSDefaults.get_facts({
         :osfamily => 'RedHat',
         :operatingsystemrelease => '7.1',
+        :os       => { :name  => 'CentOS', :family => 'RedHat', :release => { :major => '7', :minor => '1' } },
       })
     end
 

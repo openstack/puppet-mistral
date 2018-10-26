@@ -70,6 +70,7 @@ describe 'mistral::executor' do
     let :facts do
       OSDefaults.get_facts({
         :osfamily        => 'Debian',
+        :os       => { :name  => 'Debian', :family => 'Debian', :release => { :major => '8', :minor => '0' } },
       })
     end
 
@@ -84,6 +85,7 @@ describe 'mistral::executor' do
     let :facts do
       OSDefaults.get_facts({
         :osfamily    => 'Redhat',
+        :os          => { :name  => 'CentOS', :family => 'RedHat', :release => { :major => '7', :minor => '0' } },
       })
     end
 

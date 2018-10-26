@@ -7,7 +7,8 @@ require 'spec_helper'
 describe 'mistral::keystone::auth' do
 
   let :facts do
-    { :osfamily => 'Debian' }
+    { :osfamily => 'Debian',
+      :os       => { :name  => 'Debian', :family => 'Debian', :release => { :major => '8', :minor => '0' } }, }
   end
 
   describe 'with default class parameters' do
