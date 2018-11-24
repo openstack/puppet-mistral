@@ -1,22 +1,35 @@
 require 'spec_helper'
 
 describe 'mistral::config' do
+  shared_examples 'mistral::config' do
+    let :params do
+      {
+        :mistral_config => {
+          'DEFAULT/foo' => { 'value'  => 'fooValue' },
+          'DEFAULT/bar' => { 'value'  => 'barValue' },
+          'DEFAULT/baz' => { 'ensure' => 'absent' }
+        }
+      }
+    end
 
-  let :params do
-    { :mistral_config => {
-        'DEFAULT/foo' => { 'value'  => 'fooValue' },
-        'DEFAULT/bar' => { 'value'  => 'barValue' },
-        'DEFAULT/baz' => { 'ensure' => 'absent' }
-    }
+    it { should contain_class('mistral::deps') }
+
+    it {
+      should contain_mistral_config('DEFAULT/foo').with_value('fooValue')
+      should contain_mistral_config('DEFAULT/bar').with_value('barValue')
+      should contain_mistral_config('DEFAULT/baz').with_ensure('absent')
     }
   end
 
-  it { is_expected.to contain_class('mistral::deps') }
+  on_supported_os({
+    :supported_os => OSDefaults.get_supported_os
+  }).each do |os,facts|
+    context "on #{os}" do
+      let (:facts) do
+        facts.merge!(OSDefaults.get_facts())
+      end
 
-  it 'configures arbitrary mistral configurations' do
-    is_expected.to contain_mistral_config('DEFAULT/foo').with_value('fooValue')
-    is_expected.to contain_mistral_config('DEFAULT/bar').with_value('barValue')
-    is_expected.to contain_mistral_config('DEFAULT/baz').with_ensure('absent')
+      it_behaves_like 'mistral::config'
+    end
   end
-
 end
