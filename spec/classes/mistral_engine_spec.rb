@@ -1,22 +1,21 @@
 require 'spec_helper'
 
 describe 'mistral::engine' do
-
   let :params do
-    { :enabled                            => true,
-      :manage_service                     => true,
-      :host                               => 'foo_host',
-      :topic                              => 'foo_topic',
-      :version                            => '1.0',
-      :execution_field_size_limit_kb      => '1234',
-      :evaluation_interval                => 1234,
-      :older_than                         => 60}
+    {
+      :enabled                       => true,
+      :manage_service                => true,
+      :host                          => 'foo_host',
+      :topic                         => 'foo_topic',
+      :version                       => '1.0',
+      :execution_field_size_limit_kb => '1234',
+      :evaluation_interval           => 1234,
+      :older_than                    => 60
+    }
   end
 
-  shared_examples_for 'mistral-engine' do
-
+  shared_examples 'mistral::engine' do
     context 'config params' do
-
       it { is_expected.to contain_class('mistral::params') }
 
       it { is_expected.to contain_mistral_config('engine/host').with_value( params[:host] ) }
@@ -25,7 +24,6 @@ describe 'mistral::engine' do
       it { is_expected.to contain_mistral_config('engine/execution_field_size_limit_kb').with_value( params[:execution_field_size_limit_kb] ) }
       it { is_expected.to contain_mistral_config('execution_expiration_policy/evaluation_interval').with_value( params[:evaluation_interval] ) }
       it { is_expected.to contain_mistral_config('execution_expiration_policy/older_than').with_value( params[:older_than] ) }
-
     end
 
     [{:enabled => true}, {:enabled => false}].each do |param_hash|
@@ -35,7 +33,6 @@ describe 'mistral::engine' do
         end
 
         it 'configures mistral-engine service' do
-
           is_expected.to contain_service('mistral-engine').with(
             :ensure     => (params[:manage_service] && params[:enabled]) ? 'running' : 'stopped',
             :name       => platform_params[:engine_service_name],
@@ -57,7 +54,6 @@ describe 'mistral::engine' do
       end
 
       it 'configures mistral-engine service' do
-
         is_expected.to contain_service('mistral-engine').with(
           :ensure     => nil,
           :name       => platform_params[:engine_service_name],
@@ -69,37 +65,26 @@ describe 'mistral::engine' do
         is_expected.to contain_service('mistral-engine').that_subscribes_to(nil)
       end
     end
-
   end
 
-  context 'on Debian platforms' do
-    let :facts do
-      OSDefaults.get_facts({
-        :osfamily => 'Debian',
-        :os       => { :name  => 'Debian', :family => 'Debian', :release => { :major => '8', :minor => '0' } },
-      })
-    end
+  on_supported_os({
+    :supported_os => OSDefaults.get_supported_os
+  }).each do |os,facts|
+    context "on #{os}" do
+      let (:facts) do
+        facts.merge!(OSDefaults.get_facts())
+      end
 
-    let :platform_params do
-      { :engine_service_name => 'mistral-engine' }
-    end
+      let (:platform_params) do
+        case facts[:osfamily]
+        when 'Debian'
+          { :engine_service_name => 'mistral-engine' }
+        when 'RedHat'
+          { :engine_service_name => 'openstack-mistral-engine' }
+        end
+      end
 
-    it_configures 'mistral-engine'
+      it_behaves_like 'mistral::engine'
+    end
   end
-
-  context 'on RedHat platforms' do
-    let :facts do
-      OSDefaults.get_facts({
-        :osfamily => 'RedHat',
-        :os       => { :name  => 'CentOS', :family => 'RedHat', :release => { :major => '7', :minor => '0' } },
-      })
-    end
-
-    let :platform_params do
-      { :engine_service_name => 'openstack-mistral-engine' }
-    end
-
-    it_configures 'mistral-engine'
-  end
-
 end
