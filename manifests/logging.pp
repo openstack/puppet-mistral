@@ -117,26 +117,14 @@ class mistral::logging(
 
   include ::mistral::deps
 
-  # NOTE(spredzy): In order to keep backward compatibility we rely on the pick function
-  # to use mistral::<myparam> if mistral::logging::<myparam> isn't specified.
-  $use_syslog_real = pick($::mistral::use_syslog,$use_syslog)
-  $use_stderr_real = pick($::mistral::use_stderr,$use_stderr)
-  $log_facility_real = pick($::mistral::log_facility,$log_facility)
-  if $log_dir != '' {
-    $log_dir_real = pick($::mistral::log_dir,$log_dir)
-  } else {
-    $log_dir_real = $log_dir
-  }
-  $debug_real = pick($::mistral::debug,$debug)
-
   oslo::log { 'mistral_config':
-    use_syslog                    => $use_syslog_real,
+    use_syslog                    => $use_syslog,
     use_json                      => $use_json,
     use_journal                   => $use_journal,
-    use_stderr                    => $use_stderr_real,
-    syslog_log_facility           => $log_facility_real,
-    log_dir                       => $log_dir_real,
-    debug                         => $debug_real,
+    use_stderr                    => $use_stderr,
+    syslog_log_facility           => $log_facility,
+    log_dir                       => $log_dir,
+    debug                         => $debug,
     default_log_levels            => $default_log_levels,
     logging_context_format_string => $logging_context_format_string,
     logging_default_format_string => $logging_default_format_string,

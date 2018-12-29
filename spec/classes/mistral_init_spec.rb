@@ -20,7 +20,6 @@ describe 'mistral' do
         req_params
       end
 
-      it { should contain_class('mistral::logging') }
       it { should contain_class('mistral::params') }
       it { should contain_class('mysql::bindings::python') }
 

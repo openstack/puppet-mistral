@@ -3,6 +3,7 @@
 # Mistral base package & configuration
 #
 # === Parameters
+#
 # [*package_ensure*]
 #   (Optional) Ensure state for package.
 #   Defaults to 'present'.
@@ -11,28 +12,6 @@
 #   (optional) Type of endpoint in identity service catalog to use for
 #   communication with OpenStack services
 #   Defaults to $::os_service_default
-#
-# [*log_dir*]
-#   (optional) Directory where logs should be stored.
-#   If set to boolean false or the $::os_service_default, it will not log to
-#   any directory.
-#   Defaults to '/var/log/mistral'.
-#
-# [*use_syslog*]
-#   (Optional) Use syslog for logging.
-#   Defaults to undef.
-#
-# [*use_stderr*]
-#   (optional) Use stderr for logging
-#   Defaults to undef.
-#
-# [*log_facility*]
-#   (Optional) Syslog facility to receive log lines.
-#   Defaults to undef.
-#
-# [*debug*]
-#   (Optional) Should the daemons log debug messages
-#   Defaults to undef.
 #
 # [*database_connection*]
 #   (optional) Url used to connect to database.
@@ -200,11 +179,6 @@ class mistral(
   $kombu_ssl_version                  = $::os_service_default,
   $kombu_reconnect_delay              = $::os_service_default,
   $amqp_durable_queues                = $::os_service_default,
-  $use_syslog                         = undef,
-  $use_stderr                         = undef,
-  $log_dir                            = '/var/log/mistral',
-  $log_facility                       = undef,
-  $debug                              = undef,
   $coordination_backend_url           = $::os_service_default,
   $coordination_heartbeat_interval    = $::os_service_default,
   $purge_config                       = false,
@@ -214,7 +188,6 @@ class mistral(
   include ::mistral::deps
   include ::mistral::params
   include ::mistral::db
-  include ::mistral::logging
 
   package { 'mistral-common':
     ensure => $package_ensure,
