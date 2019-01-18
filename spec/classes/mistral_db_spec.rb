@@ -3,6 +3,8 @@ require 'spec_helper'
 describe 'mistral::db' do
   shared_examples 'mistral::db' do
     context 'with default parameters' do
+      it { should contain_class('mistral::deps') }
+
       it { should contain_oslo__db('mistral_config').with(
         :db_max_retries => '<SERVICE DEFAULT>',
         :connection     => 'sqlite:////var/lib/mistral/mistral.sqlite',
@@ -31,6 +33,8 @@ describe 'mistral::db' do
         }
       end
 
+      it { should contain_class('mistral::deps') }
+
       it { should contain_oslo__db('mistral_config').with(
         :db_max_retries => '-1',
         :connection     => 'mysql+pymysql://mistral:mistral@localhost/mistral',
@@ -42,46 +46,6 @@ describe 'mistral::db' do
         :max_overflow   => '21',
         :pool_timeout   => '21',
       )}
-    end
-
-    context 'with postgresql backend' do
-      let :params do
-        {
-          :database_connection => 'postgresql://mistral:mistral@localhost/mistral'
-        }
-      end
-
-      it { should contain_package('python-psycopg2').with_ensure('present') }
-    end
-
-    context 'with MySQL-python library as backend package' do
-      let :params do
-        {
-          :database_connection => 'mysql://mistral:mistral@localhost/mistral'
-        }
-      end
-
-      it { should contain_package('python-mysqldb').with_ensure('present') }
-    end
-
-    context 'with incorrect database_connection string' do
-      let :params do
-        {
-          :database_connection => 'redis://mistral:mistral@localhost/mistral'
-        }
-      end
-
-      it { should raise_error(Puppet::Error, /validate_re/) }
-    end
-
-    context 'with incorrect pymysql database_connection string' do
-      let :params do
-        {
-          :database_connection => 'foo+pymysql://mistral:mistral@localhost/mistral'
-        }
-      end
-
-      it { should raise_error(Puppet::Error, /validate_re/) }
     end
   end
 
