@@ -26,10 +26,10 @@ describe 'mistral::db' do
           :database_min_pool_size  => '2',
           :database_max_pool_size  => '11',
           :database_max_retries    => '11',
-          :database_retry_interval => '11', 
+          :database_retry_interval => '11',
           :database_db_max_retries => '-1',
-          :database_max_overflow   => '21', 
-          :database_pool_timeout   => '21', 
+          :database_max_overflow   => '21',
+          :database_pool_timeout   => '21',
         }
       end
 
