@@ -34,12 +34,16 @@ entirety of mistral.
 Setup
 -----
 
+**What the mistral module affects**
+
+* [Mistral](https://docs.openstack.org/mistral/latest/), the workflow service for OpenStack.
+
 ### Beginning with mistral
 
 To use the mistral module's functionality you will need to declare multiple
 resources.  This is not an exhaustive list of all the components needed; we
 recommend you consult and understand the
-[Mistral](https://docs.openstack.org/mistral/latest/) documentation.
+[core openstack](https://docs.openstack.org) documentation.
 
 
 Implementation
