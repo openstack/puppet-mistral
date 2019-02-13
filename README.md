@@ -14,7 +14,7 @@ mistral
 2. [Module Description - What does the module do?](#module-description)
 3. [Setup - The basics of getting started with mistral](#setup)
 4. [Implementation - An under-the-hood peek at what the module is doing](#implementation)
-5. [Limitations - OS compatibility, etc.]
+5. [Limitations - OS compatibility, etc.](#limitations)
 6. [Development - Guide for contributing to the module](#development)
 7. [Contributors - Those with commits](#contributors)
 8. [Release Notes - Release notes for the project](#release-notes)
@@ -126,6 +126,11 @@ The path to the file containing the definition of the workflow. This parameter i
 #### is_public
 
 Specifies whether the workflow must be public or not. Defaults to `true`.
+
+Limitations
+------------
+
+* All the mistral types use the CLI tools and so need to be ran on the mistral node.
 
 Beaker-Rspec
 ------------
