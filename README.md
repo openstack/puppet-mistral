@@ -39,7 +39,7 @@ Setup
 To use the mistral module's functionality you will need to declare multiple
 resources.  This is not an exhaustive list of all the components needed; we
 recommend you consult and understand the
-[core of openstack](http://docs.openstack.org) documentation.
+[Mistral](https://docs.openstack.org/mistral/latest/) documentation.
 
 
 Implementation
