@@ -83,7 +83,7 @@ class mistral::keystone::auth(
 
   include ::mistral::deps
 
-  validate_string($password)
+  validate_legacy(String, 'validate_string', $password)
 
   keystone::resource::service_identity { 'mistral':
     configure_user      => $configure_user,
