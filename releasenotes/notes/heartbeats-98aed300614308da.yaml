@@ -1,0 +1,5 @@
+---
+features:
+  - |
+    Add new parameters to configure hearbeat related options, max_missed_heartbeats
+    check_interval and first_heartbeat_timeout.

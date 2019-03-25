@@ -35,6 +35,9 @@ describe 'mistral' do
         should contain_mistral_config('DEFAULT/report_interval').with(:value => '<SERVICE DEFAULT>')
         should contain_mistral_config('DEFAULT/service_down_time').with(:value => '<SERVICE DEFAULT>')
         should contain_mistral_config('DEFAULT/transport_url').with(:value => '<SERVICE DEFAULT>')
+        should contain_mistral_config('action_heartbeat/max_missed_heartbeats').with(:value => '<SERVICE DEFAULT>')
+        should contain_mistral_config('action_heartbeat/check_interval').with(:value => '<SERVICE DEFAULT>')
+        should contain_mistral_config('action_heartbeat/first_heartbeat_timeout').with(:value => '<SERVICE DEFAULT>')
         should contain_mistral_config('oslo_messaging_notifications/transport_url').with(:value => '<SERVICE DEFAULT>')
         should contain_mistral_config('oslo_messaging_notifications/driver').with(:value => '<SERVICE DEFAULT>')
         should contain_mistral_config('oslo_messaging_notifications/topics').with(:value => '<SERVICE DEFAULT>')
@@ -209,6 +212,20 @@ describe 'mistral' do
       end
 
       it { should contain_mistral_config('DEFAULT/os_actions_endpoint_type').with_value('internal') }
+    end
+
+    context 'with heartbeats parameters overridden' do
+      let :params do
+        req_params.merge({
+          :max_missed_heartbeats   => '30',
+          :check_interval          => '40',
+          :first_heartbeat_timeout => '7200',
+        })
+      end
+
+      it { should contain_mistral_config('action_heartbeat/max_missed_heartbeats').with_value('30') }
+      it { should contain_mistral_config('action_heartbeat/check_interval').with_value('40') }
+      it { should contain_mistral_config('action_heartbeat/first_heartbeat_timeout').with_value('7200') }
     end
   end
 
