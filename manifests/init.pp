@@ -156,6 +156,29 @@
 #   (Optional) Enable dbsync
 #   Defaults to true.
 #
+# [*max_missed_heartbeats*]
+#   (Optional) The maximum amount of missed heartbeats to be allowed.
+#   If set to 0 then this feature is disabled. See check_interval for more
+#   details.
+#   Defaults to $::os_service_default
+#
+# [*check_interval*]
+#   (Optional) How often (in seconds) action executions are checked.
+#   For example when check_interval is 10, check action
+#   executions every 10 seconds. When the checker runs it will
+#   transit all running action executions to error if the last
+#   heartbeat received is older than 10 * max_missed_heartbeats
+#   seconds. If set to 0 then this feature is disabled.
+#   Defaults to $::os_service_default
+#
+# [*first_heartbeat_timeout*]
+#   (Optional) The first heartbeat is handled differently, to provide a
+#   grace period in case there is no available executor to handle
+#   the action execution. For example when first_heartbeat_timeout = 3600, wait
+#   3600 seconds before closing the action executions that never received a
+#   heartbeat.
+#   Defaults to $::os_service_default
+#
 class mistral(
   $package_ensure                     = 'present',
   $database_connection                = $::os_service_default,
@@ -183,6 +206,9 @@ class mistral(
   $coordination_heartbeat_interval    = $::os_service_default,
   $purge_config                       = false,
   $sync_db                            = true,
+  $max_missed_heartbeats              = $::os_service_default,
+  $check_interval                     = $::os_service_default,
+  $first_heartbeat_timeout            = $::os_service_default,
 ){
 
   include ::mistral::deps
@@ -200,11 +226,14 @@ class mistral(
   }
 
   mistral_config {
-    'coordination/backend_url':             value => $coordination_backend_url;
-    'coordination/heartbeat_interval':      value => $coordination_heartbeat_interval;
-    'DEFAULT/report_interval':              value => $report_interval;
-    'DEFAULT/service_down_time':            value => $service_down_time;
-    'DEFAULT/os_actions_endpoint_type':     value => $os_actions_endpoint_type;
+    'coordination/backend_url':                 value => $coordination_backend_url;
+    'coordination/heartbeat_interval':          value => $coordination_heartbeat_interval;
+    'DEFAULT/report_interval':                  value => $report_interval;
+    'DEFAULT/service_down_time':                value => $service_down_time;
+    'DEFAULT/os_actions_endpoint_type':         value => $os_actions_endpoint_type;
+    'action_heartbeat/max_missed_heartbeats':   value => $max_missed_heartbeats;
+    'action_heartbeat/check_interval':          value => $check_interval;
+    'action_heartbeat/first_heartbeat_timeout': value => $first_heartbeat_timeout;
   }
 
   oslo::messaging::default {'mistral_config':
