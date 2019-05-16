@@ -14,6 +14,8 @@ describe 'mistral::client' do
         :tag    => ['openstack', 'mistral-package']
       )
     end
+
+    it { is_expected.to contain_class('openstacklib::openstackclient') }
   end
 
   on_supported_os({

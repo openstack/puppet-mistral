@@ -19,4 +19,6 @@ class mistral::client(
     name   => $::mistral::params::client_package,
     tag    => ['openstack', 'mistral-package'],
   }
+
+  include '::openstacklib::openstackclient'
 }
