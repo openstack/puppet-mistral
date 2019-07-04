@@ -9,6 +9,7 @@ describe 'mistral::api' do
       :bind_host                       => '127.0.0.1',
       :bind_port                       => '1234',
       :enable_proxy_headers_parsing    => false,
+      :max_request_body_size           => '102400',
       :allow_action_execution_deletion => false
     }
   end
@@ -30,6 +31,7 @@ describe 'mistral::api' do
       it { is_expected.to contain_mistral_config('api/port').with_value( params[:bind_port] ) }
       it { is_expected.to contain_oslo__middleware('mistral_config').with(
         :enable_proxy_headers_parsing => params[:enable_proxy_headers_parsing],
+        :max_request_body_size        => params[:max_request_body_size],
       )}
       it { is_expected.to contain_mistral_config('api/allow_action_execution_deletion').with_value( params[:allow_action_execution_deletion] ) }
 
@@ -62,6 +64,16 @@ describe 'mistral::api' do
 
       it { is_expected.to contain_oslo__middleware('mistral_config').with(
         :enable_proxy_headers_parsing => params[:enable_proxy_headers_parsing],
+      )}
+    end
+
+    context 'with max_request_body_size' do
+      before do
+        params.merge!({:max_request_body_size => '102400' })
+      end
+
+      it { is_expected.to contain_oslo__middleware('mistral_config').with(
+        :max_request_body_size => params[:max_request_body_size],
       )}
     end
 

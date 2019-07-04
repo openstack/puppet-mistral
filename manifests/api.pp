@@ -50,6 +50,10 @@
 #   HTTPProxyToWSGI middleware.
 #   Defaults to $::os_service_default.
 #
+# [*max_request_body_size*]
+#   (Optional) Set max request body size
+#   Defaults to $::os_service_default.
+#
 # [*auth_strategy*]
 #   (optional) Type of authentication to be used.
 #   Defaults to 'keystone'
@@ -64,6 +68,7 @@ class mistral::api (
   $package_ensure                  = present,
   $service_name                    = $::mistral::params::api_service_name,
   $enable_proxy_headers_parsing    = $::os_service_default,
+  $max_request_body_size           = $::os_service_default,
   $auth_strategy                   = 'keystone',
 ) inherits mistral::params {
 
@@ -124,6 +129,7 @@ as a standalone service, or httpd for being run by a httpd server")
 
   oslo::middleware { 'mistral_config':
     enable_proxy_headers_parsing => $enable_proxy_headers_parsing,
+    max_request_body_size        => $max_request_body_size,
   }
 
 }
