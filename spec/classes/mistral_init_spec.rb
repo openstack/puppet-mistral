@@ -44,6 +44,7 @@ describe 'mistral' do
         should contain_mistral_config('oslo_messaging_rabbit/rabbit_ha_queues').with(:value => '<SERVICE DEFAULT>')
         should contain_mistral_config('oslo_messaging_rabbit/heartbeat_timeout_threshold').with_value('<SERVICE DEFAULT>')
         should contain_mistral_config('oslo_messaging_rabbit/heartbeat_rate').with_value('<SERVICE DEFAULT>')
+        should contain_mistral_config('oslo_messaging_rabbit/heartbeat_in_pthread').with_value('<SERVICE DEFAULT>')
         should contain_mistral_config('oslo_messaging_rabbit/kombu_reconnect_delay').with(:value => '<SERVICE DEFAULT>')
         should contain_mistral_config('oslo_messaging_rabbit/kombu_failover_strategy').with(:value => '<SERVICE DEFAULT>')
         should contain_mistral_config('coordination/backend_url').with(:value => '<SERVICE DEFAULT>')
@@ -107,12 +108,17 @@ describe 'mistral' do
 
     context 'with rabbitmq heartbeats' do
       let :params do
-        req_params.merge({'rabbit_heartbeat_timeout_threshold' => '60', 'rabbit_heartbeat_rate' => '10'})
+        req_params.merge({
+	  'rabbit_heartbeat_timeout_threshold' => '60',
+          'rabbit_heartbeat_rate' => '10',
+          'rabbit_heartbeat_in_pthread' => true 
+	})
       end
 
       it 'should contain heartbeat config' do
         should contain_mistral_config('oslo_messaging_rabbit/heartbeat_timeout_threshold').with_value('60')
         should contain_mistral_config('oslo_messaging_rabbit/heartbeat_rate').with_value('10')
+        should contain_mistral_config('oslo_messaging_rabbit/heartbeat_in_pthread').with_value(true)
       end
     end
 
