@@ -34,8 +34,8 @@ class mistral::notifier(
   $notify_publishers  = $::os_service_default,
 ) {
 
-  include ::mistral::deps
-  include ::mistral::params
+  include mistral::deps
+  include mistral::params
 
   mistral_config {
     'notifier/type':             value => $type;

@@ -15,7 +15,7 @@ describe 'mistral::api' do
   end
 
   let :pre_condition do
-    "class { '::mistral::keystone::authtoken':
+    "class { 'mistral::keystone::authtoken':
        password => 'foo',
     }"
   end
@@ -103,10 +103,10 @@ describe 'mistral::api' do
       end
 
       let :pre_condition do
-        "include ::apache
-         include ::mistral::db
-         class { '::mistral': }
-         class { '::mistral::keystone::authtoken':
+        "include apache
+         include mistral::db
+         class { 'mistral': }
+         class { 'mistral::keystone::authtoken':
              password => 'foo',
          }"
       end

@@ -45,7 +45,7 @@ class mistral::cors (
   $allow_headers     = $::os_service_default,
 ) {
 
-  include ::mistral::deps
+  include mistral::deps
 
   oslo::cors { 'mistral_config':
     allowed_origin    => $allowed_origin,

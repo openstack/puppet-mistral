@@ -3,8 +3,8 @@
 #
 class mistral::db::sync {
 
-  include ::mistral::deps
-  include ::mistral::params
+  include mistral::deps
+  include mistral::params
 
   exec { 'mistral-db-sync':
     command     => $::mistral::params::db_sync_command,

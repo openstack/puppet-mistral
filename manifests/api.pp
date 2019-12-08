@@ -72,12 +72,12 @@ class mistral::api (
   $auth_strategy                   = 'keystone',
 ) inherits mistral::params {
 
-  include ::mistral::deps
-  include ::mistral::params
-  include ::mistral::policy
+  include mistral::deps
+  include mistral::params
+  include mistral::policy
 
   if $auth_strategy == 'keystone' {
-    include ::mistral::keystone::authtoken
+    include mistral::keystone::authtoken
   }
 
   package { 'mistral-api':
@@ -104,7 +104,7 @@ class mistral::api (
       tag        => 'mistral-service',
     }
   } elsif $service_name == 'httpd' {
-    include ::apache::params
+    include apache::params
     service { 'mistral-api':
       ensure => 'stopped',
       name   => $::mistral::params::api_service_name,

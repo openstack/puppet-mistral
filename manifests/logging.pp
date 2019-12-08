@@ -120,7 +120,7 @@ class mistral::logging(
   $log_date_format               = $::os_service_default,
 ) {
 
-  include ::mistral::deps
+  include mistral::deps
 
   oslo::log { 'mistral_config':
     use_syslog                    => $use_syslog,

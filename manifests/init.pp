@@ -222,9 +222,9 @@ class mistral(
   $first_heartbeat_timeout            = $::os_service_default,
 ){
 
-  include ::mistral::deps
-  include ::mistral::params
-  include ::mistral::db
+  include mistral::deps
+  include mistral::params
+  include mistral::db
 
   package { 'mistral-common':
     ensure => $package_ensure,
@@ -275,6 +275,6 @@ class mistral(
   }
 
   if $sync_db {
-    include ::mistral::db::sync
+    include mistral::db::sync
   }
 }

@@ -24,7 +24,7 @@ class mistral::config (
   $mistral_config = {},
 ) {
 
-  include ::mistral::deps
+  include mistral::deps
 
   validate_legacy(Hash, 'validate_hash', $mistral_config)
 

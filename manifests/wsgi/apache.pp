@@ -123,12 +123,12 @@ class mistral::wsgi::apache (
   $custom_wsgi_process_options = {},
 ) {
 
-  include ::mistral::deps
-  include ::mistral::params
-  include ::apache
-  include ::apache::mod::wsgi
+  include mistral::deps
+  include mistral::params
+  include apache
+  include apache::mod::wsgi
   if $ssl {
-    include ::apache::mod::ssl
+    include apache::mod::ssl
   }
 
   # The httpd package is untagged, but needs to have ordering enforced,

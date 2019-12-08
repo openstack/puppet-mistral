@@ -37,8 +37,8 @@ class mistral::executor (
   $version             = $::os_service_default,
 ) {
 
-  include ::mistral::deps
-  include ::mistral::params
+  include mistral::deps
+  include mistral::params
 
   package { 'mistral-executor':
     ensure => $package_ensure,

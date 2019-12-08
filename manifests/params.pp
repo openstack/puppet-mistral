@@ -3,7 +3,7 @@
 # Parameters for puppet-mistral
 #
 class mistral::params {
-  include ::openstacklib::defaults
+  include openstacklib::defaults
   $pyvers = $::openstacklib::defaults::pyvers
 
   $client_package      = "python${pyvers}-mistralclient"

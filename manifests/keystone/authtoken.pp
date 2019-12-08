@@ -203,7 +203,7 @@ class mistral::keystone::authtoken(
   $service_token_roles_required   = $::os_service_default,
 ) {
 
-  include ::mistral::deps
+  include mistral::deps
 
   if is_service_default($password) {
     fail('Please set password for mistral service user')

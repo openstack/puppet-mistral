@@ -43,7 +43,7 @@ class mistral::db::mysql(
   $allowed_hosts = undef
 ) {
 
-  include ::mistral::deps
+  include mistral::deps
 
   validate_legacy(String, 'validate_string', $password)
 

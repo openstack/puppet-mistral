@@ -32,7 +32,7 @@ class mistral::db::postgresql(
   $privileges = 'ALL',
 ) {
 
-  include ::mistral::deps
+  include mistral::deps
 
   ::openstacklib::db::postgresql { 'mistral':
     password_hash => postgresql_password($user, $password),

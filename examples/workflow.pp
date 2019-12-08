@@ -1,1 +1,1 @@
-class { '::mistral:workflow': }
+class { 'mistral:workflow': }

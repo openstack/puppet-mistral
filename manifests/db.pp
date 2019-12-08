@@ -62,7 +62,7 @@ class mistral::db (
   $database_idle_timeout            = undef,
 ) {
 
-  include ::mistral::deps
+  include mistral::deps
 
   if $database_idle_timeout {
     warning('The database_idle_timeout parameter is deprecated. Please use \

@@ -9,7 +9,7 @@ describe 'mistral' do
   end
 
   let :pre_condition do
-    "class { '::mistral::keystone::authtoken':
+    "class { 'mistral::keystone::authtoken':
        password => 'foo',
      }"
   end

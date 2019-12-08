@@ -37,8 +37,8 @@ class mistral::event_engine (
   $event_definitions_cfg_file    = $::os_service_default,
 ) {
 
-  include ::mistral::deps
-  include ::mistral::params
+  include mistral::deps
+  include mistral::params
 
   package { 'mistral-event-engine':
     ensure => $package_ensure,

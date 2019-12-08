@@ -28,8 +28,8 @@ class mistral::policy (
   $policy_path = '/etc/mistral/policy.json',
 ) {
 
-  include ::mistral::deps
-  include ::mistral::params
+  include mistral::deps
+  include mistral::params
 
   validate_legacy(Hash, 'validate_hash', $policies)
 

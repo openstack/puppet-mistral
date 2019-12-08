@@ -81,7 +81,7 @@ class mistral::keystone::auth(
   $service_description    = 'OpenStack Workflow Service',
 ) {
 
-  include ::mistral::deps
+  include mistral::deps
 
   validate_legacy(String, 'validate_string', $password)
 
