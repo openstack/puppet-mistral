@@ -17,27 +17,6 @@
 #   (optional) Url used to connect to database.
 #   Defaults to undef.
 #
-# [*database_idle_timeout*]
-#   Timeout when db connections should be reaped.
-#   (Optional) Defaults to undef.
-#
-# [*database_max_pool_size*]
-#   Maximum number of SQL connections to keep open in a pool.
-#   (Optional) Defaults to undef.
-#
-# [*database_max_retries*]
-#   Maximum db connection retries during startup.
-#   Setting -1 implies an infinite retry count.
-#   (Optional) Defaults to undef.
-#
-# [*database_retry_interval*]
-#   Interval between retries of opening a sql connection.
-#   (Optional) Defaults to underf.
-#
-# [*database_max_overflow*]
-#   If set, use this value for max_overflow with sqlalchemy.
-#   (Optional) Defaults to undef.
-#
 # [*default_transport_url*]
 #   (optional) A URL representing the messaging driver to use and its full
 #   configuration. Transport URLs take the form:
