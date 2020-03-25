@@ -21,10 +21,6 @@
 #   Timeout when db connections should be reaped.
 #   (Optional) Defaults to undef.
 #
-# [*database_min_pool_size*]
-#   Minimum number of SQL connections to keep open in a pool.
-#   (Optional) Defaults to undef.
-#
 # [*database_max_pool_size*]
 #   Maximum number of SQL connections to keep open in a pool.
 #   (Optional) Defaults to undef.
