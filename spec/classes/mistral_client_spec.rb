@@ -31,7 +31,15 @@ describe 'mistral::client' do
         when 'Debian'
           { :client_package => 'python3-mistralclient' }
         when 'RedHat'
-          { :client_package => 'python-mistralclient' }
+          if facts[:operatingsystem] == 'Fedora'
+            { :client_package => 'python3-mistralclient' }
+          else
+            if facts[:operatingsystemmajrelease] > '7'
+              { :client_package => 'python3-mistralclient' }
+            else
+              { :client_package => 'python-mistralclient' }
+            end
+          end
         end
       end
 
