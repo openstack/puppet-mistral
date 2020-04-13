@@ -75,5 +75,5 @@
     ],
     "source": "git://github.com/openstack/puppet-mistral.git",
     "summary": "Puppet module for OpenStack Mistral",
-    "version": "16.2.0"
+    "version": "16.2.1"
 }
