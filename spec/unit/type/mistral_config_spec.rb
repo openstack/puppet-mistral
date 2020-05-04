@@ -49,4 +49,15 @@ describe 'Puppet::Type.type(:mistral_config)' do
       @mistral_config[:ensure] = :latest
     }.to raise_error(Puppet::Error, /Invalid value/)
   end
+
+  it 'should autorequire the package that install the file' do
+    catalog = Puppet::Resource::Catalog.new
+    anchor = Puppet::Type.type(:anchor).new(:name => 'mistral::install::end')
+    catalog.add_resource anchor, @mistral_config
+    dependency = @mistral_config.autorequire
+    expect(dependency.size).to eq(1)
+    expect(dependency[0].target).to eq(@mistral_config)
+    expect(dependency[0].source).to eq(anchor)
+  end
+
 end

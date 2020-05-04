@@ -46,8 +46,8 @@ Puppet::Type.newtype(:mistral_config) do
     defaultto('<SERVICE DEFAULT>')
   end
 
-  autorequire(:package) do
-    'mistral-common'
+  autorequire(:anchor) do
+    ['mistral::install::end']
   end
 
 end

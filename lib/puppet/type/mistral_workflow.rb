@@ -57,7 +57,7 @@ Puppet::Type.newtype(:mistral_workflow) do
   end
 
   # Require the Mistral API service to be running
-  autorequire(:service) do
-    ['mistral-api']
+  autorequire(:anchor) do
+    ['mistral::service::end']
   end
 end
