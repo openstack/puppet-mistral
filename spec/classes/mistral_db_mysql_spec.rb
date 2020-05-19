@@ -7,19 +7,19 @@ describe 'mistral::db::mysql' do
 
   let :params do
     {
-      :password => 'fooboozoo_default_password',
+      :password => 'mistralpass',
     }
   end
 
   shared_examples 'mistral::db::mysql' do
     context 'with only required params' do
       it { should contain_openstacklib__db__mysql('mistral').with(
-        :user          => 'mistral',
-        :password_hash => '*3DDF34A86854A312A8E2C65B506E21C91800D206',
-        :dbname        => 'mistral',
-        :host          => '127.0.0.1',
-        :charset       => 'utf8',
-        :collate       => 'utf8_general_ci',
+        :user     => 'mistral',
+        :password => 'mistralpass',
+        :dbname   => 'mistral',
+        :host     => '127.0.0.1',
+        :charset  => 'utf8',
+        :collate  => 'utf8_general_ci',
       )}
     end
 
