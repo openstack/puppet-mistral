@@ -49,7 +49,7 @@ class mistral::db::mysql(
 
   ::openstacklib::db::mysql { 'mistral':
     user          => $user,
-    password_hash => mysql::password($password),
+    password      => $password,
     dbname        => $dbname,
     host          => $host,
     charset       => $charset,

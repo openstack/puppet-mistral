@@ -4,7 +4,7 @@ describe 'mistral::db::postgresql' do
 
   shared_examples_for 'mistral::db::postgresql' do
     let :req_params do
-      { :password => 'pw' }
+      { :password => 'mistralpass' }
     end
 
     let :pre_condition do
@@ -16,9 +16,12 @@ describe 'mistral::db::postgresql' do
         req_params
       end
 
-      it { is_expected.to contain_postgresql__server__db('mistral').with(
-        :user     => 'mistral',
-        :password => 'md56cc4a9db977897a441d3a498a5d94fce'
+      it { is_expected.to contain_openstacklib__db__postgresql('mistral').with(
+        :user       => 'mistral',
+        :password   => 'mistralpass',
+        :dbname     => 'mistral',
+        :encoding   => nil,
+        :privileges => 'ALL',
       )}
     end
 
