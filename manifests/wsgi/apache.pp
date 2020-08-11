@@ -90,6 +90,11 @@
 #   { python-path => '/my/python/virtualenv' }
 #   Defaults to {}
 #
+#   [*vhost_custom_fragment*]
+#     (optional) Passes a string of custom configuration
+#     directives to be placed at the end of the vhost configuration.
+#     Defaults to undef.
+#
 # == Dependencies
 #
 #   requires Class['apache'] & Class['mistral']
@@ -121,6 +126,7 @@ class mistral::wsgi::apache (
   $access_log_format           = false,
   $error_log_file              = undef,
   $custom_wsgi_process_options = {},
+  $vhost_custom_fragment       = undef,
 ) {
 
   include mistral::deps
@@ -179,5 +185,6 @@ class mistral::wsgi::apache (
     access_log_format           => $access_log_format,
     error_log_file              => $error_log_file,
     custom_wsgi_process_options => $custom_wsgi_process_options,
+    vhost_custom_fragment       => $vhost_custom_fragment,
   }
 }
