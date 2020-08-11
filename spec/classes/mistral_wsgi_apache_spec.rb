@@ -44,6 +44,7 @@ describe 'mistral::wsgi::apache' do
           :custom_wsgi_process_options => {
             'python_path' => '/my/python/path',
           },
+          :vhost_custom_fragment       => 'Timeout 99',
         }
       end
       it { is_expected.to contain_class('mistral::deps') }
@@ -60,6 +61,7 @@ describe 'mistral::wsgi::apache' do
         :ssl                         => false,
         :threads                     => 1,
         :user                        => 'mistral',
+        :vhost_custom_fragment       => 'Timeout 99',
         :workers                     => 37,
         :wsgi_daemon_process         => 'mistral',
         :wsgi_process_display_name   => 'mistral',
