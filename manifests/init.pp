@@ -166,7 +166,7 @@
 #
 class mistral(
   $package_ensure                     = 'present',
-  $database_connection                = $::os_service_default,
+  $database_connection                = undef,
   $os_actions_endpoint_type           = $::os_service_default,
   $control_exchange                   = $::os_service_default,
   $rpc_response_timeout               = $::os_service_default,
