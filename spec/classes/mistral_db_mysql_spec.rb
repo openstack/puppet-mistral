@@ -12,6 +12,8 @@ describe 'mistral::db::mysql' do
   end
 
   shared_examples 'mistral::db::mysql' do
+    it { is_expected.to contain_class('mistral::deps') }
+
     context 'with only required params' do
       it { should contain_openstacklib__db__mysql('mistral').with(
         :user     => 'mistral',
