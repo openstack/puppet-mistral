@@ -16,6 +16,8 @@ describe 'mistral::db::postgresql' do
         req_params
       end
 
+      it { is_expected.to contain_class('mistral::deps') }
+
       it { is_expected.to contain_openstacklib__db__postgresql('mistral').with(
         :user       => 'mistral',
         :password   => 'mistralpass',
