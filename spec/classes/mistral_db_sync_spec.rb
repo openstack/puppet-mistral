@@ -4,6 +4,8 @@ describe 'mistral::db::sync' do
 
   shared_examples_for 'mistral-db-sync' do
 
+    it { is_expected.to contain_class('mistral::deps') }
+
     it 'runs mistral-db-manage upgrade head' do
 
       is_expected.to contain_exec('mistral-db-sync').with(
