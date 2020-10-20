@@ -3,7 +3,6 @@ require 'spec_helper'
 describe 'mistral' do
   let :req_params do
     {
-      :database_connection => 'mysql://user:password@host/database',
       :purge_config        => false,
     }
   end
@@ -21,7 +20,6 @@ describe 'mistral' do
       end
 
       it { should contain_class('mistral::params') }
-      it { should contain_class('mysql::bindings::python') }
 
       it 'passes purge to resource' do
         should contain_resources('mistral_config').with({
@@ -182,18 +180,6 @@ describe 'mistral' do
       end
 
       it { should contain_mistral_config('oslo_messaging_rabbit/amqp_durable_queues').with_value(true) }
-    end
-
-    context 'with postgresql' do
-      let :params do
-        req_params.merge({
-          :database_connection => 'postgresql://user:drowssap@host/database',
-        })
-      end
-
-      it { should_not contain_class('mysql::python') }
-      it { should_not contain_class('mysql::bindings') }
-      it { should_not contain_class('mysql::bindings::python') }
     end
 
     context 'with coordination' do
