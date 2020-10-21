@@ -1,0 +1,6 @@
+---
+deprecations:
+  - |
+    The ``mistrall::database_connection`` has been deprecated and will be
+    removed in a future release. Use the ``mistral::db::database_connection``
+    parameter instead.

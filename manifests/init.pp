@@ -13,10 +13,6 @@
 #   communication with OpenStack services
 #   Defaults to $::os_service_default
 #
-# [*database_connection*]
-#   (optional) Url used to connect to database.
-#   Defaults to undef.
-#
 # [*default_transport_url*]
 #   (optional) A URL representing the messaging driver to use and its full
 #   configuration. Transport URLs take the form:
@@ -164,9 +160,14 @@
 #   heartbeat.
 #   Defaults to $::os_service_default
 #
+# DEPRECATED PARAMETERS
+#
+# [*database_connection*]
+#   (optional) Url used to connect to database.
+#   Defaults to undef.
+#
 class mistral(
   $package_ensure                     = 'present',
-  $database_connection                = undef,
   $os_actions_endpoint_type           = $::os_service_default,
   $control_exchange                   = $::os_service_default,
   $rpc_response_timeout               = $::os_service_default,
@@ -195,11 +196,18 @@ class mistral(
   $max_missed_heartbeats              = $::os_service_default,
   $check_interval                     = $::os_service_default,
   $first_heartbeat_timeout            = $::os_service_default,
+  # DEPRECATED PARAMETERS
+  $database_connection                = undef,
 ){
 
   include mistral::deps
   include mistral::params
   include mistral::db
+
+  if $database_connection != undef {
+    warning('The database_connection parameter is deprecated and will be \
+removed in a future realse. Use mistral::db::database_connection instead')
+  }
 
   package { 'mistral-common':
     ensure => $package_ensure,
