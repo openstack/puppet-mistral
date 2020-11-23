@@ -1,7 +1,15 @@
 #
 # Class to execute "mistral-db-manage 'upgrade head' and 'populate'"
 #
-class mistral::db::sync {
+# ==Parameters
+#
+# [*db_sync_timeout*]
+#   (Optional) Timeout for the execution of the db_sync
+#   Defaults to 300
+#
+class mistral::db::sync(
+  $db_sync_timeout = 300,
+) {
 
   include mistral::deps
   include mistral::params
@@ -14,6 +22,7 @@ class mistral::db::sync {
     refreshonly => true,
     try_sleep   => 5,
     tries       => 10,
+    timeout     => $db_sync_timeout,
     subscribe   => [
       Anchor['mistral::install::end'],
       Anchor['mistral::config::end'],
@@ -28,6 +37,7 @@ class mistral::db::sync {
     command     => $::mistral::params::db_populate_command,
     path        => '/usr/bin',
     user        => 'mistral',
+    timeout     => $db_sync_timeout,
     logoutput   => on_failure,
     refreshonly => true,
     subscribe   => [
