@@ -20,12 +20,12 @@
 #   Defaults to empty hash.
 #
 # [*policy_path*]
-#   (Optional) Path to the nova policy.json file
-#   Defaults to /etc/mistral/policy.json
+#   (Optional) Path to the nova policy.yaml file
+#   Defaults to /etc/mistral/policy.yaml
 #
 class mistral::policy (
   $policies    = {},
-  $policy_path = '/etc/mistral/policy.json',
+  $policy_path = '/etc/mistral/policy.yaml',
 ) {
 
   include mistral::deps
@@ -34,9 +34,10 @@ class mistral::policy (
   validate_legacy(Hash, 'validate_hash', $policies)
 
   Openstacklib::Policy::Base {
-    file_path  => $policy_path,
-    file_user  => 'root',
-    file_group => $::mistral::params::group,
+    file_path   => $policy_path,
+    file_user   => 'root',
+    file_group  => $::mistral::params::group,
+    file_format => 'yaml',
   }
 
   create_resources('openstacklib::policy::base', $policies)
