@@ -4,6 +4,10 @@
 #
 # === Parameters
 #
+# [*enforce_scope*]
+#  (Optional) Whether or not to enforce scope when evaluating policies.
+#  Defaults to $::os_service_default.
+#
 # [*policies*]
 #   (Optional) Set of policies to configure for mistral
 #   Example :
@@ -20,12 +24,13 @@
 #   Defaults to empty hash.
 #
 # [*policy_path*]
-#   (Optional) Path to the nova policy.yaml file
+#   (Optional) Path to the mistral policy.yaml file
 #   Defaults to /etc/mistral/policy.yaml
 #
 class mistral::policy (
-  $policies    = {},
-  $policy_path = '/etc/mistral/policy.yaml',
+  $enforce_scope = $::os_service_default,
+  $policies      = {},
+  $policy_path   = '/etc/mistral/policy.yaml',
 ) {
 
   include mistral::deps
@@ -42,6 +47,9 @@ class mistral::policy (
 
   create_resources('openstacklib::policy::base', $policies)
 
-  oslo::policy { 'mistral_config': policy_file => $policy_path }
+  oslo::policy { 'mistral_config':
+    enforce_scope => $enforce_scope,
+    policy_file   => $policy_path
+  }
 
 }
