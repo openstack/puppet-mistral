@@ -224,10 +224,14 @@ removed in a future realse. Use mistral::db::database_connection instead')
     'coordination/heartbeat_interval':          value => $coordination_heartbeat_interval;
     'DEFAULT/report_interval':                  value => $report_interval;
     'DEFAULT/service_down_time':                value => $service_down_time;
-    'DEFAULT/os_actions_endpoint_type':         value => $os_actions_endpoint_type;
     'action_heartbeat/max_missed_heartbeats':   value => $max_missed_heartbeats;
     'action_heartbeat/check_interval':          value => $check_interval;
     'action_heartbeat/first_heartbeat_timeout': value => $first_heartbeat_timeout;
+  }
+
+  mistral_config {
+    'openstack_actions/os_actions_endpoint_type': value  => $os_actions_endpoint_type;
+    'DEFAULT/os_actions_endpoint_type':           ensure => absent;
   }
 
   oslo::messaging::default {'mistral_config':

@@ -62,7 +62,7 @@ describe 'mistral' do
         should contain_mistral_config('keystone_authtoken/password').with(
          :value => 'foo'
         )
-        should contain_mistral_config('DEFAULT/os_actions_endpoint_type').with(
+        should contain_mistral_config('openstack_actions/os_actions_endpoint_type').with(
           :value => '<SERVICE DEFAULT>'
         )
       end
@@ -203,7 +203,7 @@ describe 'mistral' do
         })
       end
 
-      it { should contain_mistral_config('DEFAULT/os_actions_endpoint_type').with_value('internal') }
+      it { should contain_mistral_config('openstack_actions/os_actions_endpoint_type').with_value('internal') }
     end
 
     context 'with heartbeats parameters overridden' do
