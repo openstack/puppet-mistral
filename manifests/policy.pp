@@ -32,11 +32,16 @@
 #   (Optional) Path to the mistral policy.yaml file
 #   Defaults to /etc/mistral/policy.yaml
 #
+# [*policy_dirs*]
+#   (Optional) Path to the mistral policy folder
+#   Defaults to $::os_service_default
+#
 class mistral::policy (
   $enforce_scope        = $::os_service_default,
   $enforce_new_defaults = $::os_service_default,
   $policies             = {},
   $policy_path          = '/etc/mistral/policy.yaml',
+  $policy_dirs          = $::os_service_default,
 ) {
 
   include mistral::deps
@@ -56,7 +61,8 @@ class mistral::policy (
   oslo::policy { 'mistral_config':
     enforce_scope        => $enforce_scope,
     enforce_new_defaults => $enforce_new_defaults,
-    policy_file          => $policy_path
+    policy_file          => $policy_path,
+    policy_dirs          => $policy_dirs,
   }
 
 }

@@ -7,6 +7,7 @@ describe 'mistral::policy' do
         :enforce_scope        => false,
         :enforce_new_defaults => false,
         :policy_path          => '/etc/mistral/policy.yaml',
+        :policy_dirs          => '/etc/mistral/policy.d',
         :policies             => {
           'context_is_admin' => {
             'key'   => 'context_is_admin',
@@ -28,6 +29,7 @@ describe 'mistral::policy' do
         :enforce_scope        => false,
         :enforce_new_defaults => false,
         :policy_file          => '/etc/mistral/policy.yaml',
+        :policy_dirs          => '/etc/mistral/policy.d',
       )
     end
   end
