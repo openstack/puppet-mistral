@@ -120,14 +120,6 @@
 #   (Optional) Seconds to wait for a response from a call. (integer value)
 #   Defaults to $::os_service_default
 #
-# [*coordination_backend_url*]
-#   (optional) The backend URL to be used for coordination.
-#   Defaults to $::os_service_default
-#
-# [*coordination_heartbeat_interval*]
-#   (optional) Number of seconds between heartbeats for coordination.
-#   Defaults to $::os_service_default
-#
 # [*purge_config*]
 #   (optional) Whether to set only the specified config options
 #   in the mistral config.
@@ -166,6 +158,14 @@
 #   (optional) Url used to connect to database.
 #   Defaults to undef.
 #
+# [*coordination_backend_url*]
+#   (optional) The backend URL to be used for coordination.
+#   Defaults to $::os_service_default
+#
+# [*coordination_heartbeat_interval*]
+#   (optional) Number of seconds between heartbeats for coordination.
+#   Defaults to $::os_service_default
+#
 class mistral(
   $package_ensure                     = 'present',
   $os_actions_endpoint_type           = $::os_service_default,
@@ -189,8 +189,6 @@ class mistral(
   $kombu_ssl_version                  = $::os_service_default,
   $kombu_reconnect_delay              = $::os_service_default,
   $amqp_durable_queues                = $::os_service_default,
-  $coordination_backend_url           = $::os_service_default,
-  $coordination_heartbeat_interval    = $::os_service_default,
   $purge_config                       = false,
   $sync_db                            = true,
   $max_missed_heartbeats              = $::os_service_default,
@@ -198,6 +196,8 @@ class mistral(
   $first_heartbeat_timeout            = $::os_service_default,
   # DEPRECATED PARAMETERS
   $database_connection                = undef,
+  $coordination_backend_url           = undef,
+  $coordination_heartbeat_interval    = undef,
 ){
 
   include mistral::deps
@@ -207,6 +207,11 @@ class mistral(
   if $database_connection != undef {
     warning('The database_connection parameter is deprecated and will be \
 removed in a future realse. Use mistral::db::database_connection instead')
+  }
+
+  if $coordination_backend_url != undef or $coordination_heartbeat_interval != undef {
+    warning('The mistral::coordination_* parameters are deprecated. Use mistral::coordination instead')
+    include mistral::coordination
   }
 
   package { 'mistral-common':
@@ -220,8 +225,6 @@ removed in a future realse. Use mistral::db::database_connection instead')
   }
 
   mistral_config {
-    'coordination/backend_url':                 value => $coordination_backend_url;
-    'coordination/heartbeat_interval':          value => $coordination_heartbeat_interval;
     'DEFAULT/report_interval':                  value => $report_interval;
     'DEFAULT/service_down_time':                value => $service_down_time;
     'action_heartbeat/max_missed_heartbeats':   value => $max_missed_heartbeats;

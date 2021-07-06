@@ -45,8 +45,6 @@ describe 'mistral' do
         should contain_mistral_config('oslo_messaging_rabbit/heartbeat_in_pthread').with_value('<SERVICE DEFAULT>')
         should contain_mistral_config('oslo_messaging_rabbit/kombu_reconnect_delay').with(:value => '<SERVICE DEFAULT>')
         should contain_mistral_config('oslo_messaging_rabbit/kombu_failover_strategy').with(:value => '<SERVICE DEFAULT>')
-        should contain_mistral_config('coordination/backend_url').with(:value => '<SERVICE DEFAULT>')
-        should contain_mistral_config('coordination/heartbeat_interval').with(:value => '<SERVICE DEFAULT>')
         should contain_mistral_config('keystone_authtoken/www_authenticate_uri').with(
          :value => 'http://localhost:5000'
         )

@@ -1,0 +1,12 @@
+---
+features:
+  - |
+    The new ``mistral::coordination`` class has been added.
+
+deprecations:
+  - |
+    The following parameters have been deprecated in favor of the new
+    ``mistral::coordination`` class.
+
+    - ``mistral::coordination_backend_url``
+    - ``mistral::coordination_heartbeat_interval``
