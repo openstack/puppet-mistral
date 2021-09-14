@@ -38,6 +38,10 @@
 #   (Optional) File where logs should be stored.
 #   Defaults to $::os_service_default
 #
+# [*watch_log_file*]
+#   (Optional) Uses logging handler designed to watch file system (boolean value).
+#   Defaults to $::os_service_default
+#
 # [*logging_context_format_string*]
 #   (Optional) Format string to use for log messages with context.
 #   Defaults to $::os_service_default
@@ -106,6 +110,7 @@ class mistral::logging(
   $log_facility                  = $::os_service_default,
   $log_dir                       = '/var/log/mistral',
   $log_file                      = $::os_service_default,
+  $watch_log_file                = $::os_service_default,
   $debug                         = $::os_service_default,
   $logging_context_format_string = $::os_service_default,
   $logging_default_format_string = $::os_service_default,
@@ -130,6 +135,7 @@ class mistral::logging(
     syslog_log_facility           => $log_facility,
     log_dir                       => $log_dir,
     log_file                      => $log_file,
+    watch_log_file                => $watch_log_file,
     debug                         => $debug,
     default_log_levels            => $default_log_levels,
     logging_context_format_string => $logging_context_format_string,
