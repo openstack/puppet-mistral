@@ -30,7 +30,7 @@ class mistral::deps {
 
   # policy config should occur in the config block
   Anchor['mistral::config::begin']
-  -> Openstacklib::Policy::Base<||>
+  -> Openstacklib::Policy<||>
   ~> Anchor['mistral::config::end']
 
   # Installation or config changes will always restart services.
