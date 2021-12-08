@@ -24,6 +24,10 @@ class mistral::deps {
   ~> Service<| tag == 'mistral-service' |>
   ~> anchor { 'mistral::service::end': }
 
+  # all coordination settings should be applied and all packages should be
+  # installed before service startup
+  Oslo::Coordination<||> -> Anchor['mistral::service::begin']
+
   # all db settings should be applied and all packages should be installed
   # before dbsync starts
   Oslo::Db<||> -> Anchor['mistral::dbsync::begin']
