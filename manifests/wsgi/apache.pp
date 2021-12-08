@@ -136,31 +136,6 @@ class mistral::wsgi::apache (
 
   include mistral::deps
   include mistral::params
-  include apache
-  include apache::mod::wsgi
-  if $ssl_real {
-    include apache::mod::ssl
-  }
-
-  # The httpd package is untagged, but needs to have ordering enforced,
-  # so handle it here rather than in the deps class.
-  Anchor['mistral::install::begin']
-  -> Package['httpd']
-  -> Anchor['mistral::install::end']
-
-  # Configure apache during the config phase
-  Anchor['mistral::config::begin']
-  -> Apache::Vhost<||>
-  ~> Anchor['mistral::config::end']
-
-  # Start the service during the service phase
-  Anchor['mistral::service::begin']
-  -> Service['httpd']
-  -> Anchor['mistral::service::end']
-
-  # Notify the service when config changes
-  Anchor['mistral::config::end']
-  ~> Service['httpd']
 
   ::openstacklib::wsgi::apache { 'mistral_wsgi':
     bind_host                   => $bind_host,

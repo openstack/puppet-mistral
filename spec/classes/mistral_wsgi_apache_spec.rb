@@ -6,9 +6,6 @@ describe 'mistral::wsgi::apache' do
     context 'with default parameters' do
       it { is_expected.to contain_class('mistral::deps') }
       it { is_expected.to contain_class('mistral::params') }
-      it { is_expected.to contain_class('apache') }
-      it { is_expected.to contain_class('apache::mod::wsgi') }
-      it { is_expected.to contain_class('apache::mod::ssl') }
       it { is_expected.to contain_openstacklib__wsgi__apache('mistral_wsgi').with(
         :bind_port                   => 8989,
         :group                       => 'mistral',
@@ -49,9 +46,6 @@ describe 'mistral::wsgi::apache' do
       end
       it { is_expected.to contain_class('mistral::deps') }
       it { is_expected.to contain_class('mistral::params') }
-      it { is_expected.to contain_class('apache') }
-      it { is_expected.to contain_class('apache::mod::wsgi') }
-      it { is_expected.to_not contain_class('apache::mod::ssl') }
       it { is_expected.to contain_openstacklib__wsgi__apache('mistral_wsgi').with(
         :bind_host                   => '10.42.51.1',
         :bind_port                   => 12345,

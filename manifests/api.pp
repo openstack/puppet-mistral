@@ -104,7 +104,6 @@ class mistral::api (
       tag        => 'mistral-service',
     }
   } elsif $service_name == 'httpd' {
-    include apache::params
     service { 'mistral-api':
       ensure => 'stopped',
       name   => $::mistral::params::api_service_name,
