@@ -29,12 +29,12 @@ describe 'Puppet::Type.type(:mistral_config)' do
 
   it 'should accept a valid value' do
     @mistral_config[:value] = 'bar'
-    expect(@mistral_config[:value]).to eq('bar')
+    expect(@mistral_config[:value]).to eq(['bar'])
   end
 
   it 'should not accept a value with whitespace' do
     @mistral_config[:value] = 'b ar'
-    expect(@mistral_config[:value]).to eq('b ar')
+    expect(@mistral_config[:value]).to eq(['b ar'])
   end
 
   it 'should accept valid ensure values' do
