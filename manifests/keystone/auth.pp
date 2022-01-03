@@ -19,6 +19,18 @@
 #   (Optional) Tenant for mistral user.
 #   Defaults to 'services'.
 #
+# [*roles*]
+#   (Optional) List of roles assigned to neutron user.
+#   Defaults to ['admin']
+#
+# [*system_scope*]
+#   (Optional) Scope for system operations.
+#   Defaults to 'all'
+#
+# [*system_roles*]
+#   (Optional) List of system roles assigned to neutron user.
+#   Defaults to []
+#
 # [*configure_endpoint*]
 #   (Optional) Should mistral endpoint be configured?
 #   Defaults to true.
@@ -74,6 +86,9 @@ class mistral::keystone::auth(
   $internal_url           = 'http://127.0.0.1:8989/v2',
   $region                 = 'RegionOne',
   $tenant                 = 'services',
+  $roles                  = ['admin'],
+  $system_scope           = 'all',
+  $system_roles           = [],
   $configure_endpoint     = true,
   $configure_service      = true,
   $configure_user         = true,
@@ -97,6 +112,9 @@ class mistral::keystone::auth(
     password            => $password,
     email               => $email,
     tenant              => $tenant,
+    roles               => $roles,
+    system_scope        => $system_scope,
+    system_roles        => $system_roles,
     public_url          => $public_url,
     admin_url           => $admin_url,
     internal_url        => $internal_url,
