@@ -166,5 +166,6 @@ class mistral::wsgi::apache (
     error_log_file              => $error_log_file,
     custom_wsgi_process_options => $custom_wsgi_process_options,
     vhost_custom_fragment       => $vhost_custom_fragment,
+    require                     => Anchor['mistral::install::end'],
   }
 }
