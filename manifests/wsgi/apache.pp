@@ -137,6 +137,8 @@ class mistral::wsgi::apache (
   include mistral::deps
   include mistral::params
 
+  Anchor['mistral::install::end'] -> Class['apache']
+
   ::openstacklib::wsgi::apache { 'mistral_wsgi':
     bind_host                   => $bind_host,
     bind_port                   => $port,
@@ -166,6 +168,5 @@ class mistral::wsgi::apache (
     error_log_file              => $error_log_file,
     custom_wsgi_process_options => $custom_wsgi_process_options,
     vhost_custom_fragment       => $vhost_custom_fragment,
-    require                     => Anchor['mistral::install::end'],
   }
 }
