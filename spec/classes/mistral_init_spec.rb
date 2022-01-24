@@ -7,12 +7,6 @@ describe 'mistral' do
     }
   end
 
-  let :pre_condition do
-    "class { 'mistral::keystone::authtoken':
-       password => 'foo',
-     }"
-  end
-
   shared_examples 'mistral' do
     context 'with only required params' do
       let :params do
@@ -45,21 +39,6 @@ describe 'mistral' do
         should contain_mistral_config('oslo_messaging_rabbit/heartbeat_in_pthread').with_value('<SERVICE DEFAULT>')
         should contain_mistral_config('oslo_messaging_rabbit/kombu_reconnect_delay').with(:value => '<SERVICE DEFAULT>')
         should contain_mistral_config('oslo_messaging_rabbit/kombu_failover_strategy').with(:value => '<SERVICE DEFAULT>')
-        should contain_mistral_config('keystone_authtoken/www_authenticate_uri').with(
-         :value => 'http://localhost:5000'
-        )
-        should contain_mistral_config('keystone_authtoken/auth_url').with(
-         :value => 'http://localhost:5000'
-        )
-        should contain_mistral_config('keystone_authtoken/project_name').with(
-         :value => 'services'
-        )
-        should contain_mistral_config('keystone_authtoken/username').with(
-         :value => 'mistral'
-        )
-        should contain_mistral_config('keystone_authtoken/password').with(
-         :value => 'foo'
-        )
         should contain_mistral_config('openstack_actions/os_actions_endpoint_type').with(
           :value => '<SERVICE DEFAULT>'
         )
