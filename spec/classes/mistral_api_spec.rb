@@ -45,7 +45,7 @@ describe 'mistral::api' do
 
         it 'configures mistral-api service' do
           is_expected.to contain_service('mistral-api').with(
-            :ensure     => (params[:manage_service] && params[:enabled]) ? 'running' : 'stopped',
+            :ensure     => params[:enabled] ? 'running' : 'stopped',
             :name       => platform_params[:api_service_name],
             :enable     => params[:enabled],
             :hasstatus  => true,
@@ -80,20 +80,12 @@ describe 'mistral::api' do
     context 'with disabled service managing' do
       before do
         params.merge!({
-          :manage_service => false,
-          :enabled        => false })
+          :manage_service => false
+        })
       end
 
-      it 'configures mistral-api service' do
-        is_expected.to contain_service('mistral-api').with(
-          :ensure     => nil,
-          :name       => platform_params[:api_service_name],
-          :enable     => false,
-          :hasstatus  => true,
-          :hasrestart => true,
-          :tag        => 'mistral-service',
-        )
-        is_expected.to contain_service('mistral-api').that_subscribes_to(nil)
+      it 'does not configure mistral-api service' do
+        is_expected.to_not contain_service('mistral-api')
       end
     end
 

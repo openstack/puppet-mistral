@@ -52,15 +52,15 @@ class mistral::executor (
     } else {
       $service_ensure = 'stopped'
     }
-  }
 
-  service { 'mistral-executor':
-    ensure     => $service_ensure,
-    name       => $::mistral::params::executor_service_name,
-    enable     => $enabled,
-    hasstatus  => true,
-    hasrestart => true,
-    tag        => 'mistral-service',
+    service { 'mistral-executor':
+      ensure     => $service_ensure,
+      name       => $::mistral::params::executor_service_name,
+      enable     => $enabled,
+      hasstatus  => true,
+      hasrestart => true,
+      tag        => 'mistral-service',
+    }
   }
 
   mistral_config {

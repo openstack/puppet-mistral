@@ -29,7 +29,7 @@ describe 'mistral::executor' do
         it 'configures mistral-executor service' do
 
           is_expected.to contain_service('mistral-executor').with(
-            :ensure     => (params[:manage_service] && params[:enabled]) ? 'running' : 'stopped',
+            :ensure     => params[:enabled] ? 'running' : 'stopped',
             :name       => platform_params[:executor_service_name],
             :enable     => params[:enabled],
             :hasstatus  => true,
@@ -44,20 +44,12 @@ describe 'mistral::executor' do
     context 'with disabled service managing' do
       before do
         params.merge!({
-          :manage_service => false,
-          :enabled        => false })
+          :manage_service => false
+        })
       end
 
-      it 'configures mistral-executor service' do
-        is_expected.to contain_service('mistral-executor').with(
-          :ensure     => nil,
-          :name       => platform_params[:executor_service_name],
-          :enable     => false,
-          :hasstatus  => true,
-          :hasrestart => true,
-          :tag        => 'mistral-service',
-        )
-        is_expected.to contain_service('mistral-executor').that_subscribes_to(nil)
+      it 'does not configure mistral-executor service' do
+        is_expected.to_not contain_service('mistral-executor')
       end
     end
   end

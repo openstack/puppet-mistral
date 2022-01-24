@@ -74,15 +74,15 @@ class mistral::engine (
     } else {
       $service_ensure = 'stopped'
     }
-  }
 
-  service { 'mistral-engine':
-    ensure     => $service_ensure,
-    name       => $::mistral::params::engine_service_name,
-    enable     => $enabled,
-    hasstatus  => true,
-    hasrestart => true,
-    tag        => 'mistral-service',
+    service { 'mistral-engine':
+      ensure     => $service_ensure,
+      name       => $::mistral::params::engine_service_name,
+      enable     => $enabled,
+      hasstatus  => true,
+      hasrestart => true,
+      tag        => 'mistral-service',
+    }
   }
 
   mistral_config {
