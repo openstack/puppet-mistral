@@ -100,6 +100,8 @@ class mistral::keystone::auth(
 
   validate_legacy(String, 'validate_string', $password)
 
+  Keystone::Resource::Service_identity['mistral'] -> Anchor['mistral::service::end']
+
   keystone::resource::service_identity { 'mistral':
     configure_user      => $configure_user,
     configure_user_role => $configure_user_role,
