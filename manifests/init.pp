@@ -154,10 +154,6 @@
 #
 # DEPRECATED PARAMETERS
 #
-# [*database_connection*]
-#   (optional) Url used to connect to database.
-#   Defaults to undef.
-#
 # [*coordination_backend_url*]
 #   (optional) The backend URL to be used for coordination.
 #   Defaults to $::os_service_default
@@ -195,7 +191,6 @@ class mistral(
   $check_interval                     = $::os_service_default,
   $first_heartbeat_timeout            = $::os_service_default,
   # DEPRECATED PARAMETERS
-  $database_connection                = undef,
   $coordination_backend_url           = undef,
   $coordination_heartbeat_interval    = undef,
 ){
@@ -203,11 +198,6 @@ class mistral(
   include mistral::deps
   include mistral::params
   include mistral::db
-
-  if $database_connection != undef {
-    warning('The database_connection parameter is deprecated and will be \
-removed in a future realse. Use mistral::db::database_connection instead')
-  }
 
   if $coordination_backend_url != undef or $coordination_heartbeat_interval != undef {
     warning('The mistral::coordination_* parameters are deprecated. Use mistral::coordination instead')
