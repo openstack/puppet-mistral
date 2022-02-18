@@ -13,33 +13,45 @@ describe 'mistral' do
         req_params
       end
 
-      it { should contain_class('mistral::params') }
+      it { is_expected.to contain_class('mistral::params') }
 
       it 'passes purge to resource' do
-        should contain_resources('mistral_config').with({
+        is_expected.to contain_resources('mistral_config').with({
           :purge => false
         })
       end
 
       it 'should contain default config' do
-        should contain_mistral_config('DEFAULT/control_exchange').with(:value => '<SERVICE DEFAULT>')
-        should contain_mistral_config('DEFAULT/rpc_response_timeout').with(:value => '<SERVICE DEFAULT>')
-        should contain_mistral_config('DEFAULT/report_interval').with(:value => '<SERVICE DEFAULT>')
-        should contain_mistral_config('DEFAULT/service_down_time').with(:value => '<SERVICE DEFAULT>')
-        should contain_mistral_config('DEFAULT/transport_url').with(:value => '<SERVICE DEFAULT>')
-        should contain_mistral_config('action_heartbeat/max_missed_heartbeats').with(:value => '<SERVICE DEFAULT>')
-        should contain_mistral_config('action_heartbeat/check_interval').with(:value => '<SERVICE DEFAULT>')
-        should contain_mistral_config('action_heartbeat/first_heartbeat_timeout').with(:value => '<SERVICE DEFAULT>')
-        should contain_mistral_config('oslo_messaging_notifications/transport_url').with(:value => '<SERVICE DEFAULT>')
-        should contain_mistral_config('oslo_messaging_notifications/driver').with(:value => '<SERVICE DEFAULT>')
-        should contain_mistral_config('oslo_messaging_notifications/topics').with(:value => '<SERVICE DEFAULT>')
-        should contain_mistral_config('oslo_messaging_rabbit/rabbit_ha_queues').with(:value => '<SERVICE DEFAULT>')
-        should contain_mistral_config('oslo_messaging_rabbit/heartbeat_timeout_threshold').with_value('<SERVICE DEFAULT>')
-        should contain_mistral_config('oslo_messaging_rabbit/heartbeat_rate').with_value('<SERVICE DEFAULT>')
-        should contain_mistral_config('oslo_messaging_rabbit/heartbeat_in_pthread').with_value('<SERVICE DEFAULT>')
-        should contain_mistral_config('oslo_messaging_rabbit/kombu_reconnect_delay').with(:value => '<SERVICE DEFAULT>')
-        should contain_mistral_config('oslo_messaging_rabbit/kombu_failover_strategy').with(:value => '<SERVICE DEFAULT>')
-        should contain_mistral_config('openstack_actions/os_actions_endpoint_type').with(
+        is_expected.to contain_mistral_config('DEFAULT/report_interval').with(:value => '<SERVICE DEFAULT>')
+        is_expected.to contain_mistral_config('DEFAULT/service_down_time').with(:value => '<SERVICE DEFAULT>')
+        is_expected.to contain_mistral_config('action_heartbeat/max_missed_heartbeats').with(:value => '<SERVICE DEFAULT>')
+        is_expected.to contain_mistral_config('action_heartbeat/check_interval').with(:value => '<SERVICE DEFAULT>')
+        is_expected.to contain_mistral_config('action_heartbeat/first_heartbeat_timeout').with(:value => '<SERVICE DEFAULT>')
+        is_expected.to contain_oslo__messaging__default('mistral_config').with(
+          :transport_url        => '<SERVICE DEFAULT>',
+          :rpc_response_timeout => '<SERVICE DEFAULT>',
+          :control_exchange     => '<SERVICE DEFAULT>'
+        )
+        is_expected.to contain_oslo__messaging__notifications('mistral_config').with(
+          :transport_url => '<SERVICE DEFAULT>',
+          :driver        => '<SERVICE DEFAULT>',
+          :topics        => '<SERVICE DEFAULT>'
+        )
+        is_expected.to contain_oslo__messaging__rabbit('mistral_config').with(
+          :rabbit_use_ssl              => '<SERVICE DEFAULT>',
+          :heartbeat_timeout_threshold => '<SERVICE DEFAULT>',
+          :heartbeat_rate              => '<SERVICE DEFAULT>',
+          :heartbeat_in_pthread        => '<SERVICE DEFAULT>',
+          :kombu_reconnect_delay       => '<SERVICE DEFAULT>',
+          :kombu_failover_strategy     => '<SERVICE DEFAULT>',
+          :amqp_durable_queues         => '<SERVICE DEFAULT>',
+          :kombu_ssl_ca_certs          => '<SERVICE DEFAULT>',
+          :kombu_ssl_certfile          => '<SERVICE DEFAULT>',
+          :kombu_ssl_keyfile           => '<SERVICE DEFAULT>',
+          :kombu_ssl_version           => '<SERVICE DEFAULT>',
+          :rabbit_ha_queues            => '<SERVICE DEFAULT>',
+        )
+        is_expected.to contain_mistral_config('openstack_actions/os_actions_endpoint_type').with(
           :value => '<SERVICE DEFAULT>'
         )
       end
@@ -51,7 +63,9 @@ describe 'mistral' do
       end
 
       it 'should contain rabbit_ha_queues' do
-        should contain_mistral_config('oslo_messaging_rabbit/rabbit_ha_queues').with(:value => true)
+        is_expected.to contain_oslo__messaging__rabbit('mistral_config').with(
+          :rabbit_ha_queues => true
+        )
       end
     end
 
@@ -61,7 +75,9 @@ describe 'mistral' do
       end
 
       it 'should contain transport_url' do
-        should contain_mistral_config('DEFAULT/transport_url').with(:value => 'rabbit://user:pass@host:1234/virt')
+        is_expected.to contain_oslo__messaging__default('mistral_config').with(
+          :transport_url => 'rabbit://user:pass@host:1234/virt',
+        )
       end
     end
 
@@ -75,25 +91,29 @@ describe 'mistral' do
       end
 
       it 'should contain transport_url' do
-        should contain_mistral_config('oslo_messaging_notifications/transport_url').with(:value => 'rabbit://user:pass@host:1234/virt')
-        should contain_mistral_config('oslo_messaging_notifications/driver').with(:value => 'messagingv1')
-        should contain_mistral_config('oslo_messaging_notifications/topics').with(:value => 'openstack')
+        is_expected.to contain_oslo__messaging__notifications('mistral_config').with(
+          :transport_url => 'rabbit://user:pass@host:1234/virt',
+          :driver        => 'messagingv1',
+          :topics        => 'openstack',
+        )
       end
     end
 
     context 'with rabbitmq heartbeats' do
       let :params do
         req_params.merge({
-	  'rabbit_heartbeat_timeout_threshold' => '60',
-          'rabbit_heartbeat_rate' => '10',
-          'rabbit_heartbeat_in_pthread' => true 
-	})
+	      :rabbit_heartbeat_timeout_threshold => '60',
+          :rabbit_heartbeat_rate              => '10',
+          :rabbit_heartbeat_in_pthread        => true 
+        })
       end
 
       it 'should contain heartbeat config' do
-        should contain_mistral_config('oslo_messaging_rabbit/heartbeat_timeout_threshold').with_value('60')
-        should contain_mistral_config('oslo_messaging_rabbit/heartbeat_rate').with_value('10')
-        should contain_mistral_config('oslo_messaging_rabbit/heartbeat_in_pthread').with_value(true)
+        is_expected.to contain_oslo__messaging__rabbit('mistral_config').with(
+          :heartbeat_timeout_threshold => '60',
+          :heartbeat_rate              => '10',
+          :heartbeat_in_pthread        => true,
+        )
       end
     end
 
@@ -108,7 +128,7 @@ describe 'mistral' do
         })
       end
 
-      it { should contain_oslo__messaging__rabbit('mistral_config').with(
+      it { is_expected.to contain_oslo__messaging__rabbit('mistral_config').with(
         :rabbit_use_ssl     => true,
         :kombu_ssl_ca_certs => '/path/to/ssl/ca/certs',
         :kombu_ssl_certfile => '/path/to/ssl/cert/file',
@@ -120,11 +140,11 @@ describe 'mistral' do
     context 'with SSL enabled without kombu' do
       let :params do
         req_params.merge!({
-          :rabbit_use_ssl     => true,
+          :rabbit_use_ssl => true,
         })
       end
 
-      it { should contain_oslo__messaging__rabbit('mistral_config').with(
+      it { is_expected.to contain_oslo__messaging__rabbit('mistral_config').with(
         :rabbit_use_ssl => true,
       )}
     end
@@ -132,21 +152,13 @@ describe 'mistral' do
     context 'with SSL disabled' do
       let :params do
         req_params.merge!({
-          :rabbit_use_ssl     => false,
+          :rabbit_use_ssl => false,
         })
       end
 
-      it { should contain_oslo__messaging__rabbit('mistral_config').with(
+      it { is_expected.to contain_oslo__messaging__rabbit('mistral_config').with(
         :rabbit_use_ssl => false,
       )}
-    end
-
-    context 'with amqp_durable_queues disabled' do
-      let :params do
-        req_params
-      end
-
-      it { should contain_mistral_config('oslo_messaging_rabbit/amqp_durable_queues').with_value('<SERVICE DEFAULT>') }
     end
 
     context 'with amqp_durable_queues enabled' do
@@ -155,8 +167,9 @@ describe 'mistral' do
           :amqp_durable_queues => true,
         })
       end
-
-      it { should contain_mistral_config('oslo_messaging_rabbit/amqp_durable_queues').with_value(true) }
+      it { is_expected.to contain_oslo__messaging__rabbit('mistral_config').with(
+        :amqp_durable_queues => true
+      )}
     end
 
     context 'with coordination' do
@@ -168,8 +181,8 @@ describe 'mistral' do
       end
 
       it 'should contain coordination config' do
-        should contain_mistral_config('coordination/backend_url').with(:value => 'redis://127.0.0.1')
-        should contain_mistral_config('coordination/heartbeat_interval').with(:value => '10.0')
+        is_expected.to contain_mistral_config('coordination/backend_url').with(:value => 'redis://127.0.0.1')
+        is_expected.to contain_mistral_config('coordination/heartbeat_interval').with(:value => '10.0')
       end
     end
 
@@ -180,7 +193,7 @@ describe 'mistral' do
         })
       end
 
-      it { should contain_mistral_config('openstack_actions/os_actions_endpoint_type').with_value('internal') }
+      it { is_expected.to contain_mistral_config('openstack_actions/os_actions_endpoint_type').with_value('internal') }
     end
 
     context 'with heartbeats parameters overridden' do
@@ -192,9 +205,9 @@ describe 'mistral' do
         })
       end
 
-      it { should contain_mistral_config('action_heartbeat/max_missed_heartbeats').with_value('30') }
-      it { should contain_mistral_config('action_heartbeat/check_interval').with_value('40') }
-      it { should contain_mistral_config('action_heartbeat/first_heartbeat_timeout').with_value('7200') }
+      it { is_expected.to contain_mistral_config('action_heartbeat/max_missed_heartbeats').with_value('30') }
+      it { is_expected.to contain_mistral_config('action_heartbeat/check_interval').with_value('40') }
+      it { is_expected.to contain_mistral_config('action_heartbeat/first_heartbeat_timeout').with_value('7200') }
     end
   end
 
