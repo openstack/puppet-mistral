@@ -142,7 +142,7 @@ class mistral::wsgi::apache (
   ::openstacklib::wsgi::apache { 'mistral_wsgi':
     bind_host                   => $bind_host,
     bind_port                   => $port,
-    group                       => 'mistral',
+    group                       => $::mistral::params::group,
     path                        => $path,
     priority                    => $priority,
     servername                  => $servername,
@@ -155,7 +155,7 @@ class mistral::wsgi::apache (
     ssl_crl_path                => $ssl_crl_path,
     ssl_key                     => $ssl_key,
     threads                     => $threads,
-    user                        => 'mistral',
+    user                        => $::mistral::params::user,
     workers                     => $workers,
     wsgi_daemon_process         => 'mistral',
     wsgi_process_display_name   => $wsgi_process_display_name,

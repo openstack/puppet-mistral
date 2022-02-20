@@ -8,6 +8,7 @@ class mistral::params {
   $client_package      = 'python3-mistralclient'
   $db_sync_command     = 'mistral-db-manage --config-file=/etc/mistral/mistral.conf upgrade head'
   $db_populate_command = 'mistral-db-manage --config-file=/etc/mistral/mistral.conf populate'
+  $user                = 'mistral'
   $group               = 'mistral'
 
   case $::osfamily {
