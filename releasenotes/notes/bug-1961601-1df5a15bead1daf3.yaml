@@ -1,0 +1,5 @@
+---
+fixes:
+  - |
+    Now the base ``Puppet::Provider::Mistral`` class loads service user
+    credential using the proper keystoneauth parameters.
