@@ -101,6 +101,7 @@ class Puppet::Provider::Mistral < Puppet::Provider::MistralWorkflowRequester
   def self.reset
     @mistral_conf = nil
     @mistral_credentials = nil
+    @auth_endpoint = nil
   end
 
 end
