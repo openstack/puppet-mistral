@@ -17,9 +17,9 @@ class Puppet::Provider::Mistral < Puppet::Provider::MistralWorkflowRequester
 
   def self.mistral_request(service, action, error, properties=nil)
     properties ||= []
-    @credentials.username = mistral_credentials['admin_username']
-    @credentials.password = mistral_credentials['admin_password']
-    @credentials.project_name = mistral_credentials['admin_project_name']
+    @credentials.username = mistral_credentials['username']
+    @credentials.password = mistral_credentials['password']
+    @credentials.project_name = mistral_credentials['project_name']
     @credentials.auth_url = auth_endpoint
     if mistral_credentials['region_name']
       @credentials.region_name = mistral_credentials['region_name']
@@ -57,8 +57,7 @@ class Puppet::Provider::Mistral < Puppet::Provider::MistralWorkflowRequester
   end
 
   def self.get_mistral_credentials
-    auth_keys = ['auth_url', 'admin_tenant_name', 'admin_user',
-                 'admin_password']
+    auth_keys = ['auth_url', 'project_name', 'username', 'password']
     conf = mistral_conf
     if conf and conf['keystone_authtoken'] and
         auth_keys.all?{|k| !conf['keystone_authtoken'][k].nil?}
