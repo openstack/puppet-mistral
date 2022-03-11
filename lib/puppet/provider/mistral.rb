@@ -16,6 +16,7 @@ class Puppet::Provider::Mistral < Puppet::Provider::MistralWorkflowRequester
   end
 
   def self.mistral_request(service, action, error, properties=nil)
+    warning('Usage of keystone_authtoken parameters is deprecated.')
     properties ||= []
     @credentials.username = mistral_credentials['username']
     @credentials.password = mistral_credentials['password']
