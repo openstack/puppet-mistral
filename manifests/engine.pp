@@ -33,6 +33,25 @@
 #   of runtime execution objects. Use -1 for no limit.
 #   Defaults to $::os_service_default.
 #
+# [*execution_integrity_check_delay*]
+#   (Optional) A number of seconds since the last update of a task execution
+#   in RUNNING state after which Mistral will start checking its integrity.
+#   Defaults to $::os_service_default.
+#
+# [*execution_integrity_check_batch_size*]
+#   (Optional) A number of task executions in RUNNING state that the execution
+#   integurity checker can process in a single iteration.
+#   Defaults to $::os_service_default.
+#
+# [*action_definition_cache_time*]
+#   (Optional) A number of seconds that indicates how long action definitions
+#   should be stored in the local cache.
+#   Defaults to $::os_service_default.
+#
+# [*start_subworkflows_via_rpc*]
+#   (Optional) Enables startin subworkflows via RPC.
+#   Defaults to $::os_service_default.
+#
 # [*evaluation_interval*]
 #   (Optional) How often will the executions be evaluated
 #   (in minutes). For example for value 120 the interval
@@ -48,15 +67,19 @@
 #   Defaults to $::os_service_default.
 #
 class mistral::engine (
-  $package_ensure                = present,
-  $manage_service                = true,
-  $enabled                       = true,
-  $host                          = $::os_service_default,
-  $topic                         = $::os_service_default,
-  $version                       = $::os_service_default,
-  $execution_field_size_limit_kb = $::os_service_default,
-  $evaluation_interval           = $::os_service_default,
-  $older_than                    = $::os_service_default,
+  $package_ensure                       = present,
+  $manage_service                       = true,
+  $enabled                              = true,
+  $host                                 = $::os_service_default,
+  $topic                                = $::os_service_default,
+  $version                              = $::os_service_default,
+  $execution_field_size_limit_kb        = $::os_service_default,
+  $execution_integrity_check_delay      = $::os_service_default,
+  $execution_integrity_check_batch_size = $::os_service_default,
+  $action_definition_cache_time         = $::os_service_default,
+  $start_subworkflows_via_rpc           = $::os_service_default,
+  $evaluation_interval                  = $::os_service_default,
+  $older_than                           = $::os_service_default,
 ) {
 
   include mistral::deps
@@ -86,10 +109,17 @@ class mistral::engine (
   }
 
   mistral_config {
-    'engine/host':                                     value => $host;
-    'engine/topic':                                    value => $topic;
-    'engine/version':                                  value => $version;
-    'engine/execution_field_size_limit_kb':            value => $execution_field_size_limit_kb;
+    'engine/host':                                 value => $host;
+    'engine/topic':                                value => $topic;
+    'engine/version':                              value => $version;
+    'engine/execution_field_size_limit_kb':        value => $execution_field_size_limit_kb;
+    'engine/execution_integrity_check_delay':      value => $execution_integrity_check_delay;
+    'engine/execution_integrity_check_batch_size': value => $execution_integrity_check_batch_size;
+    'engine/action_definition_cache_time':         value => $action_definition_cache_time;
+    'engine/start_subworkflows_via_rpc':           value => $start_subworkflows_via_rpc;
+  }
+
+  mistral_config {
     'execution_expiration_policy/evaluation_interval': value => $evaluation_interval;
     'execution_expiration_policy/older_than':          value => $older_than;
   }
