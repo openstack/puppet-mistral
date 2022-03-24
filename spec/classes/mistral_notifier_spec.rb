@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'mistral::notifier' do
 
-  shared_examples_for 'mistral notifier' do
+  shared_examples_for 'mistral::notifier' do
     it 'configure notifier default params' do
       is_expected.to contain_mistral_config('notifier/type').with_value('<SERVICE DEFAULT>')
       is_expected.to contain_mistral_config('notifier/host').with_value('<SERVICE DEFAULT>')
@@ -12,9 +12,9 @@ describe 'mistral::notifier' do
 
     context 'with specific parameters' do
       let :params do
-        { :type => "remote",
-          :host => "localhost",
-          :topic => "mistral-event-stream",
+        { :type              => "remote",
+          :host              => "localhost",
+          :topic             => "mistral-event-stream",
           :notify_publishers => "[{'type': 'noop'}]",
         }
       end
@@ -36,7 +36,7 @@ describe 'mistral::notifier' do
         facts.merge!(OSDefaults.get_facts())
       end
 
-      it_configures 'mistral notifier'
+      it_configures 'mistral::notifier'
     end
   end
 
