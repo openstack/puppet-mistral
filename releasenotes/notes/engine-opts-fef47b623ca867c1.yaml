@@ -1,0 +1,9 @@
+---
+features:
+  - |
+    The following parameters have been added to the ``mistral::engine`` class.
+
+    - ``execution_integrity_check_delay``
+    - ``execution_integrity_check_batch_size``
+    - ``action_definition_cache_time``
+    - ``start_subworkflows_via_rpc``
