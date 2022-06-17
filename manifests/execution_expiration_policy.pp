@@ -14,7 +14,7 @@
 #   Defaults to $::os_service_default.
 #
 # [*max_finished_executions*]
-#   (Optional) THe maximum nuber of finised workflow executions to be stored.
+#   (Optional) The maximum number of finished workflow executions to be stored.
 #   Defaults to $::os_service_default.
 #
 # [*batch_size*]
@@ -22,7 +22,7 @@
 #   Defaults to $::os_service_default.
 #
 # [*ignored_states*]
-#   (Optional) THe states that the expiration policy will filter out and will
+#   (Optional) The states that the expiration policy will filter out and will
 #   not delete.
 #   Defaults to $::os_service_default.
 #

@@ -9,7 +9,7 @@
 #   Defaults to $::os_service_default
 #
 # [*heartbeat_interval*]
-#   (Optional) Number of seconds between hearbeats for coordintation.
+#   (Optional) Number of seconds between heartbeats for coordination.
 #   Defaults to $::os_service_default
 #
 class mistral::coordination (

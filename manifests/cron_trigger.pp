@@ -15,7 +15,7 @@
 #   (Optional) This setting defines how frequently Mistral checks for cron
 #   triggers that need execution. By default this is every second
 #   which can lead to high system load. Increasing the number will
-#   reduce the load but also limit the minimum freqency. For
+#   reduce the load but also limit the minimum frequency. For
 #   example, a cron trigger can be configured to run every second
 #   but if the execution_interval is set to 60, it will only run
 #   once per minute.

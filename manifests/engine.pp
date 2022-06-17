@@ -40,7 +40,7 @@
 #
 # [*execution_integrity_check_batch_size*]
 #   (Optional) A number of task executions in RUNNING state that the execution
-#   integurity checker can process in a single iteration.
+#   integrity checker can process in a single iteration.
 #   Defaults to $::os_service_default.
 #
 # [*action_definition_cache_time*]
@@ -49,7 +49,7 @@
 #   Defaults to $::os_service_default.
 #
 # [*start_subworkflows_via_rpc*]
-#   (Optional) Enables startin subworkflows via RPC.
+#   (Optional) Enables starting subworkflows via RPC.
 #   Defaults to $::os_service_default.
 #
 # DEPRECATED PARAMETERS

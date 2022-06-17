@@ -44,7 +44,7 @@
 #   Defaults to 'workflowv2'.
 #
 # [*public_url*]
-#   (0ptional) The endpoint's public url.
+#   (Optional) The endpoint's public url.
 #   Defaults to 'http://127.0.0.1:8989:/v2'
 #
 # [*internal_url*]
