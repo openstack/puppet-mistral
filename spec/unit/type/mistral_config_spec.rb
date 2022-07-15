@@ -32,7 +32,7 @@ describe 'Puppet::Type.type(:mistral_config)' do
     expect(@mistral_config[:value]).to eq(['bar'])
   end
 
-  it 'should not accept a value with whitespace' do
+  it 'should accept a value with whitespace' do
     @mistral_config[:value] = 'b ar'
     expect(@mistral_config[:value]).to eq(['b ar'])
   end
