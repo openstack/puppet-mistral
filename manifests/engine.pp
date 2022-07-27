@@ -52,22 +52,6 @@
 #   (Optional) Enables starting subworkflows via RPC.
 #   Defaults to $::os_service_default.
 #
-# DEPRECATED PARAMETERS
-#
-# [*evaluation_interval*]
-#   (Optional) How often will the executions be evaluated
-#   (in minutes). For example for value 120 the interval
-#   will be 2 hours (every 2 hours).
-#   Defaults to undef.
-#
-# [*older_than*]
-#   (Optional) Evaluate from which time remove executions in minutes.
-#   For example when older_than = 60, remove all executions
-#   that finished a 60 minutes ago or more.
-#   Minimum value is 1.
-#   Note that only final state execution will remove (SUCCESS/ERROR).
-#   Defaults to undef.
-#
 class mistral::engine (
   $package_ensure                       = present,
   $manage_service                       = true,
@@ -80,23 +64,10 @@ class mistral::engine (
   $execution_integrity_check_batch_size = $::os_service_default,
   $action_definition_cache_time         = $::os_service_default,
   $start_subworkflows_via_rpc           = $::os_service_default,
-  # DEPRECATED PARAMETERS
-  $evaluation_interval                  = undef,
-  $older_than                           = undef,
 ) {
 
   include mistral::deps
   include mistral::params
-
-  if $evaluation_interval != undef {
-    warning('The mistral::engine::evaluation_interval parameter is deprecated. \
-Use the mistral::execution_expiration_policy class instead.')
-  }
-  if $older_than != undef {
-    warning('The mistral::engine::older_than parameter is deprecated. \
-Use the mistral::execution_expiration_policy class instead.')
-  }
-  include mistral::execution_expiration_policy
 
   package { 'mistral-engine':
     ensure => $package_ensure,

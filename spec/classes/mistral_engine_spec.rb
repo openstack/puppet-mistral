@@ -26,11 +26,6 @@ describe 'mistral::engine' do
           .with_value('<SERVICE DEFAULT>')
         is_expected.to contain_mistral_config('engine/start_subworkflows_via_rpc')
           .with_value('<SERVICE DEFAULT>')
-
-        is_expected.to contain_mistral_config('execution_expiration_policy/evaluation_interval')\
-          .with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_mistral_config('execution_expiration_policy/older_than')\
-          .with_value('<SERVICE DEFAULT>')
       end
     end
 
@@ -45,8 +40,6 @@ describe 'mistral::engine' do
           :execution_integrity_check_batch_size => 5,
           :action_definition_cache_time         => 60,
           :start_subworkflows_via_rpc           => false,
-          :evaluation_interval                  => 1234,
-          :older_than                           => 60
         })
       end
 
@@ -67,11 +60,6 @@ describe 'mistral::engine' do
           .with_value(params[:action_definition_cache_time])
         is_expected.to contain_mistral_config('engine/start_subworkflows_via_rpc')
           .with_value(params[:start_subworkflows_via_rpc])
-
-        is_expected.to contain_mistral_config('execution_expiration_policy/evaluation_interval')\
-          .with_value(params[:evaluation_interval])
-        is_expected.to contain_mistral_config('execution_expiration_policy/older_than')\
-          .with_value(params[:older_than])
       end
     end
 

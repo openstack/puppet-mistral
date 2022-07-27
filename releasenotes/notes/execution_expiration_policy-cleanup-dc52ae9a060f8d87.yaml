@@ -1,0 +1,8 @@
+---
+upgrade:
+  - |
+    The following parameters of the ``mistral::engine`` class have been
+    removed.
+
+    - ``evaluation_interval``
+    - ``older_than``
