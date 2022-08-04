@@ -19,14 +19,11 @@ class mistral::coordination (
 
   include mistral::deps
 
-  $backend_url_real = pick($::mistral::coordination_backend_url, $backend_url)
-  $heartbeat_interval_real = pick($::mistral::coordination_heartbeat_interval, $heartbeat_interval)
-
   oslo::coordination{ 'mistral_config':
-    backend_url => $backend_url_real
+    backend_url => $backend_url
   }
 
   mistral_config {
-    'coordination/heartbeat_interval': value => $heartbeat_interval_real;
+    'coordination/heartbeat_interval': value => $heartbeat_interval;
   }
 }

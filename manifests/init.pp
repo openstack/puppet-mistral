@@ -152,16 +152,6 @@
 #   heartbeat.
 #   Defaults to $::os_service_default
 #
-# DEPRECATED PARAMETERS
-#
-# [*coordination_backend_url*]
-#   (optional) The backend URL to be used for coordination.
-#   Defaults to $::os_service_default
-#
-# [*coordination_heartbeat_interval*]
-#   (optional) Number of seconds between heartbeats for coordination.
-#   Defaults to $::os_service_default
-#
 class mistral(
   $package_ensure                     = 'present',
   $os_actions_endpoint_type           = $::os_service_default,
@@ -190,19 +180,11 @@ class mistral(
   $max_missed_heartbeats              = $::os_service_default,
   $check_interval                     = $::os_service_default,
   $first_heartbeat_timeout            = $::os_service_default,
-  # DEPRECATED PARAMETERS
-  $coordination_backend_url           = undef,
-  $coordination_heartbeat_interval    = undef,
 ){
 
   include mistral::deps
   include mistral::params
   include mistral::db
-
-  if $coordination_backend_url != undef or $coordination_heartbeat_interval != undef {
-    warning('The mistral::coordination_* parameters are deprecated. Use mistral::coordination instead')
-    include mistral::coordination
-  }
 
   package { 'mistral-common':
     ensure => $package_ensure,
