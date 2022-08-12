@@ -1,0 +1,7 @@
+---
+upgrade:
+  - |
+    The following parameters have been removed.
+
+    - ``mistral::coordination_backend_url``
+    - ``mistral::coordination_heartbeat_interval``

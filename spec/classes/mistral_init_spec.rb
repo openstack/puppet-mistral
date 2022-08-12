@@ -172,20 +172,6 @@ describe 'mistral' do
       )}
     end
 
-    context 'with coordination' do
-      let :params do
-        req_params.merge({
-          :coordination_backend_url        => 'redis://127.0.0.1',
-          :coordination_heartbeat_interval => '10.0',
-        })
-      end
-
-      it 'should contain coordination config' do
-        is_expected.to contain_mistral_config('coordination/backend_url').with(:value => 'redis://127.0.0.1')
-        is_expected.to contain_mistral_config('coordination/heartbeat_interval').with(:value => '10.0')
-      end
-    end
-
     context 'with os_actions_keystone_endpoint overridden' do
       let :params do
         req_params.merge({
