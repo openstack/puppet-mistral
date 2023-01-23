@@ -32,6 +32,10 @@
 #   (Optional) Path to the mistral policy.yaml file
 #   Defaults to /etc/mistral/policy.yaml
 #
+# [*policy_default_rule*]
+#   (Optional) Default rule. Enforced when a requested rule is not found.
+#   Defaults to $::os_service_default.
+#
 # [*policy_dirs*]
 #   (Optional) Path to the mistral policy folder
 #   Defaults to $::os_service_default
@@ -46,6 +50,7 @@ class mistral::policy (
   $enforce_new_defaults = $::os_service_default,
   $policies             = {},
   $policy_path          = '/etc/mistral/policy.yaml',
+  $policy_default_rule  = $::os_service_default,
   $policy_dirs          = $::os_service_default,
   $purge_config         = false,
 ) {
@@ -70,6 +75,7 @@ class mistral::policy (
     enforce_scope        => $enforce_scope,
     enforce_new_defaults => $enforce_new_defaults,
     policy_file          => $policy_path,
+    policy_default_rule  => $policy_default_rule,
     policy_dirs          => $policy_dirs,
   }
 
