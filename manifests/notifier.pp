@@ -9,31 +9,31 @@
 #   the engine server. Use remote if the notifier is launched as a separate
 #   server to process events.
 #   (string value)
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 # [*host*]
 #   (Optional) Name of the notifier node. This can be an opaque identifier.
 #   It is not necessarily a hostname, FQDN, or IP address.
 #   (string value)
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 # [*topic*]
 #   (Optional) The message topic that the notifier server listens on.
 #   (string value)
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 # [*notify_publishers*]
 #   (Optional) List of publishers to publish notification.
 #   Note: This maps to the mistral config option `notify` but this is reserved
 #   in Puppet.
 #   (list of dicts)
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 class mistral::notifier(
-  $type              = $::os_service_default,
-  $host              = $::os_service_default,
-  $topic             = $::os_service_default,
-  $notify_publishers = $::os_service_default,
+  $type              = $facts['os_service_default'],
+  $host              = $facts['os_service_default'],
+  $topic             = $facts['os_service_default'],
+  $notify_publishers = $facts['os_service_default'],
 ) {
 
   include mistral::deps

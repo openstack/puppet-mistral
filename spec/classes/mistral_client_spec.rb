@@ -27,7 +27,7 @@ describe 'mistral::client' do
       end
 
       let(:platform_params) do
-        case facts[:osfamily]
+        case facts[:os]['family']
         when 'Debian'
           { :client_package => 'python3-mistralclient' }
         when 'RedHat'

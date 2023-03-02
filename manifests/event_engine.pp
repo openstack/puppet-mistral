@@ -18,23 +18,23 @@
 # [*host*]
 #   (Optional) Name of the engine node. This can be an opaque identifier.
 #   It is not necessarily a hostname, FQDN, or IP address. (string value)
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 # [*topic*]
 #   (Optional) The message topic that the engine listens on.
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 # [*event_definitions_cfg_file*]
 #   (Optional) The path to the event_definitions config file.
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 class mistral::event_engine (
   $package_ensure                = present,
   $manage_service                = true,
   $enabled                       = true,
-  $host                          = $::os_service_default,
-  $topic                         = $::os_service_default,
-  $event_definitions_cfg_file    = $::os_service_default,
+  $host                          = $facts['os_service_default'],
+  $topic                         = $facts['os_service_default'],
+  $event_definitions_cfg_file    = $facts['os_service_default'],
 ) {
 
   include mistral::deps

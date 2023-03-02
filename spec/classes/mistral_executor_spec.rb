@@ -63,7 +63,7 @@ describe 'mistral::executor' do
       end
 
       let (:platform_params) do
-        case facts[:osfamily]
+        case facts[:os]['family']
         when 'Debian'
           { :executor_service_name => 'mistral-executor' }
         when 'RedHat'

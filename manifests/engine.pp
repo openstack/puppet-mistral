@@ -18,52 +18,52 @@
 # [*host*]
 #   (Optional) Name of the engine node. This can be an opaque identifier.
 #   It is not necessarily a hostname, FQDN, or IP address. (string value)
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 # [*topic*]
 #   (Optional) The message topic that the engine listens on.
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 # [*version*]
 #   (Optional) The version of the engine. (string value)
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 # [*execution_field_size_limit_kb*]
 #   (Optional) The default maximum size in KB of large text fields
 #   of runtime execution objects. Use -1 for no limit.
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 # [*execution_integrity_check_delay*]
 #   (Optional) A number of seconds since the last update of a task execution
 #   in RUNNING state after which Mistral will start checking its integrity.
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 # [*execution_integrity_check_batch_size*]
 #   (Optional) A number of task executions in RUNNING state that the execution
 #   integrity checker can process in a single iteration.
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 # [*action_definition_cache_time*]
 #   (Optional) A number of seconds that indicates how long action definitions
 #   should be stored in the local cache.
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 # [*start_subworkflows_via_rpc*]
 #   (Optional) Enables starting subworkflows via RPC.
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 class mistral::engine (
   $package_ensure                       = present,
   $manage_service                       = true,
   $enabled                              = true,
-  $host                                 = $::os_service_default,
-  $topic                                = $::os_service_default,
-  $version                              = $::os_service_default,
-  $execution_field_size_limit_kb        = $::os_service_default,
-  $execution_integrity_check_delay      = $::os_service_default,
-  $execution_integrity_check_batch_size = $::os_service_default,
-  $action_definition_cache_time         = $::os_service_default,
-  $start_subworkflows_via_rpc           = $::os_service_default,
+  $host                                 = $facts['os_service_default'],
+  $topic                                = $facts['os_service_default'],
+  $version                              = $facts['os_service_default'],
+  $execution_field_size_limit_kb        = $facts['os_service_default'],
+  $execution_integrity_check_delay      = $facts['os_service_default'],
+  $execution_integrity_check_batch_size = $facts['os_service_default'],
+  $action_definition_cache_time         = $facts['os_service_default'],
+  $start_subworkflows_via_rpc           = $facts['os_service_default'],
 ) {
 
   include mistral::deps

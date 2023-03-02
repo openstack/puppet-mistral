@@ -7,22 +7,22 @@
 # [*allow_action_execution_deletion*]
 #   (Optional) Enables the ability to delete action_execution
 #   which has no relationship with workflows. (boolean value).
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 # [*api_workers*]
 #   (Optional) Number of workers for Mistral API service
 #   default is equal to the number of CPUs available if that can
 #   be determined, else a default worker count of 1 is returned.
-#   Defaults to $::os_workers
+#   Defaults to $facts['os_workers']
 #
 # [*bind_host*]
 #   (Optional) Address to bind the server. Useful when
 #   selecting a particular network interface.
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 # [*bind_port*]
 #   (Optional) The port on which the server will listen.
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 # [*enabled*]
 #   (optional) Should the service be enabled.
@@ -48,27 +48,27 @@
 # [*enable_proxy_headers_parsing*]
 #   (Optional) Enable paste middleware to handle SSL requests through
 #   HTTPProxyToWSGI middleware.
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 # [*max_request_body_size*]
 #   (Optional) Set max request body size
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 # [*auth_strategy*]
 #   (optional) Type of authentication to be used.
 #   Defaults to 'keystone'
 #
 class mistral::api (
-  $allow_action_execution_deletion = $::os_service_default,
-  $api_workers                     = $::os_workers,
-  $bind_host                       = $::os_service_default,
-  $bind_port                       = $::os_service_default,
+  $allow_action_execution_deletion = $facts['os_service_default'],
+  $api_workers                     = $facts['os_workers'],
+  $bind_host                       = $facts['os_service_default'],
+  $bind_port                       = $facts['os_service_default'],
   $enabled                         = true,
   $manage_service                  = true,
   $package_ensure                  = present,
   $service_name                    = $::mistral::params::api_service_name,
-  $enable_proxy_headers_parsing    = $::os_service_default,
-  $max_request_body_size           = $::os_service_default,
+  $enable_proxy_headers_parsing    = $facts['os_service_default'],
+  $max_request_body_size           = $facts['os_service_default'],
   $auth_strategy                   = 'keystone',
 ) inherits mistral::params {
 

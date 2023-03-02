@@ -66,7 +66,7 @@ describe 'mistral::event_engine' do
       end
 
       let(:platform_params) do
-        case facts[:osfamily]
+        case facts[:os]['family']
         when 'Debian'
           { :event_engine_service_name => 'mistral-event-engine' }
         when 'RedHat'

@@ -18,23 +18,23 @@
 # [*host*]
 #   (Optional) Name of the executor node. This can be an opaque identifier.
 #   It is not necessarily a hostname, FQDN, or IP address. (string value)
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 # [*topic*]
 #   (Optional) The message topic that the executor listens on. (string value)
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 # [*version*]
 #   (Optional) The version of the executor. (string value)
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 class mistral::executor (
   $package_ensure      = present,
   $manage_service      = true,
   $enabled             = true,
-  $host                = $::os_service_default,
-  $topic               = $::os_service_default,
-  $version             = $::os_service_default,
+  $host                = $facts['os_service_default'],
+  $topic               = $facts['os_service_default'],
+  $version             = $facts['os_service_default'],
 ) {
 
   include mistral::deps

@@ -11,32 +11,32 @@
 # [*os_actions_endpoint_type*]
 #   (optional) Type of endpoint in identity service catalog to use for
 #   communication with OpenStack services
-#   Defaults to $::os_service_default
+#   Defaults to $facts['os_service_default']
 #
 # [*default_transport_url*]
 #   (optional) A URL representing the messaging driver to use and its full
 #   configuration. Transport URLs take the form:
 #     transport://user:pass@host1:port[,hostN:portN]/virtual_host
-#   Defaults to $::os_service_default
+#   Defaults to $facts['os_service_default']
 #
 # [*notification_transport_url*]
 #   (optional) A URL representing the messaging driver to use for notifications
 #   and its full configuration. Transport URLs take the form:
 #     transport://user:pass@host1:port[,hostN:portN]/virtual_host
-#   Defaults to $::os_service_default
+#   Defaults to $facts['os_service_default']
 #
 # [*notification_driver*]
 #   (optional) Driver or drivers to handle sending notifications.
 #   Value can be a string or a list.
-#   Defaults to $::os_service_default
+#   Defaults to $facts['os_service_default']
 #
 # [*notification_topics*]
 #   (optional) AMQP topic used for OpenStack notifications
-#   Defaults to $::os_service_default
+#   Defaults to $facts['os_service_default']
 #
 # [*rabbit_ha_queues*]
 #   (optional) Use HA queues in RabbitMQ (x-ha-policy: all).
-#   Defaults to $::os_service_default
+#   Defaults to $facts['os_service_default']
 #
 # [*rabbit_heartbeat_timeout_threshold*]
 #   (optional) Number of seconds after which the RabbitMQ broker is considered
@@ -44,14 +44,14 @@
 #   Heartbeating helps to ensure the TCP connection to RabbitMQ isn't silently
 #   closed, resulting in missed or lost messages from the queue.
 #   (Requires kombu >= 3.0.7 and amqp >= 1.4.0)
-#   Defaults to $::os_service_default
+#   Defaults to $facts['os_service_default']
 #
 # [*rabbit_heartbeat_rate*]
 #   (optional) How often during the rabbit_heartbeat_timeout_threshold period to
 #   check the heartbeat on RabbitMQ connection.  (i.e. rabbit_heartbeat_rate=2
 #   when rabbit_heartbeat_timeout_threshold=60, the heartbeat will be checked
 #   every 30 seconds.
-#   Defaults to $::os_service_default
+#   Defaults to $facts['os_service_default']
 #
 # [*rabbit_heartbeat_in_pthread*]
 #   (Optional) EXPERIMENTAL: Run the health check heartbeat thread
@@ -61,64 +61,64 @@
 #   example if the parent process have monkey patched the
 #   stdlib by using eventlet/greenlet then the heartbeat
 #   will be run through a green thread.
-#   Defaults to $::os_service_default
+#   Defaults to $facts['os_service_default']
 #
 # [*rabbit_use_ssl*]
 #   (optional) Connect over SSL for RabbitMQ
-#   Defaults to $::os_service_default
+#   Defaults to $facts['os_service_default']
 #
 # [*report_interval*]
 #  (optional) Interval, in seconds, between nodes reporting state to
 #  datastore (integer value).
-#  Defaults to $::os_service_default
+#  Defaults to $facts['os_service_default']
 #
 # [*service_down_time*]
 #  (optional) Maximum time since last check-in for a service to be
 #  considered up (integer value).
-#  Defaults to $::os_service_default
+#  Defaults to $facts['os_service_default']
 #
 # [*kombu_failover_strategy*]
 #   (Optional) Determines how the next RabbitMQ node is chosen in case the one
 #   we are currently connected to becomes unavailable. Takes effect only if
 #   more than one RabbitMQ node is provided in config. (string value)
-#   Defaults to $::os_service_default
+#   Defaults to $facts['os_service_default']
 #
 # [*kombu_ssl_ca_certs*]
 #   (optional) SSL certification authority file (valid only if SSL enabled).
-#   Defaults to $::os_service_default
+#   Defaults to $facts['os_service_default']
 #
 # [*kombu_ssl_certfile*]
 #   (optional) SSL cert file (valid only if SSL enabled).
-#   Defaults to $::os_service_default
+#   Defaults to $facts['os_service_default']
 #
 # [*kombu_ssl_keyfile*]
 #   (optional) SSL key file (valid only if SSL enabled).
-#   Defaults to $::os_service_default
+#   Defaults to $facts['os_service_default']
 #
 # [*kombu_ssl_version*]
 #   (optional) SSL version to use (valid only if SSL enabled).
 #   Valid values are TLSv1, SSLv23 and SSLv3. SSLv2 may be
 #   available on some distributions.
-#   Defaults to $::os_service_default
+#   Defaults to $facts['os_service_default']
 #
 # [*kombu_reconnect_delay*]
 #   (optional) How long to wait before reconnecting in response to an AMQP
 #   consumer cancel notification.
-#   Defaults to $::os_service_default
+#   Defaults to $facts['os_service_default']
 #
 # [*amqp_durable_queues*]
 #   (optional)Use durable queues in amqp.
-#   Defaults to $::os_service_default
+#   Defaults to $facts['os_service_default']
 #
 # [*control_exchange*]
 #   (Optional) The default exchange under which topics are scoped. May be
 #   overridden by an exchange name specified in the transport_url
 #   option.
-#   Defaults to $::os_service_default
+#   Defaults to $facts['os_service_default']
 #
 # [*rpc_response_timeout*]
 #   (Optional) Seconds to wait for a response from a call. (integer value)
-#   Defaults to $::os_service_default
+#   Defaults to $facts['os_service_default']
 #
 # [*purge_config*]
 #   (optional) Whether to set only the specified config options
@@ -133,7 +133,7 @@
 #   (Optional) The maximum amount of missed heartbeats to be allowed.
 #   If set to 0 then this feature is disabled. See check_interval for more
 #   details.
-#   Defaults to $::os_service_default
+#   Defaults to $facts['os_service_default']
 #
 # [*check_interval*]
 #   (Optional) How often (in seconds) action executions are checked.
@@ -142,7 +142,7 @@
 #   transit all running action executions to error if the last
 #   heartbeat received is older than 10 * max_missed_heartbeats
 #   seconds. If set to 0 then this feature is disabled.
-#   Defaults to $::os_service_default
+#   Defaults to $facts['os_service_default']
 #
 # [*first_heartbeat_timeout*]
 #   (Optional) The first heartbeat is handled differently, to provide a
@@ -150,36 +150,36 @@
 #   the action execution. For example when first_heartbeat_timeout = 3600, wait
 #   3600 seconds before closing the action executions that never received a
 #   heartbeat.
-#   Defaults to $::os_service_default
+#   Defaults to $facts['os_service_default']
 #
 class mistral(
   $package_ensure                     = 'present',
-  $os_actions_endpoint_type           = $::os_service_default,
-  $control_exchange                   = $::os_service_default,
-  $rpc_response_timeout               = $::os_service_default,
-  $default_transport_url              = $::os_service_default,
-  $notification_transport_url         = $::os_service_default,
-  $notification_driver                = $::os_service_default,
-  $notification_topics                = $::os_service_default,
-  $rabbit_ha_queues                   = $::os_service_default,
-  $rabbit_heartbeat_timeout_threshold = $::os_service_default,
-  $rabbit_heartbeat_rate              = $::os_service_default,
-  $rabbit_heartbeat_in_pthread        = $::os_service_default,
-  $rabbit_use_ssl                     = $::os_service_default,
-  $service_down_time                  = $::os_service_default,
-  $report_interval                    = $::os_service_default,
-  $kombu_failover_strategy            = $::os_service_default,
-  $kombu_ssl_ca_certs                 = $::os_service_default,
-  $kombu_ssl_certfile                 = $::os_service_default,
-  $kombu_ssl_keyfile                  = $::os_service_default,
-  $kombu_ssl_version                  = $::os_service_default,
-  $kombu_reconnect_delay              = $::os_service_default,
-  $amqp_durable_queues                = $::os_service_default,
+  $os_actions_endpoint_type           = $facts['os_service_default'],
+  $control_exchange                   = $facts['os_service_default'],
+  $rpc_response_timeout               = $facts['os_service_default'],
+  $default_transport_url              = $facts['os_service_default'],
+  $notification_transport_url         = $facts['os_service_default'],
+  $notification_driver                = $facts['os_service_default'],
+  $notification_topics                = $facts['os_service_default'],
+  $rabbit_ha_queues                   = $facts['os_service_default'],
+  $rabbit_heartbeat_timeout_threshold = $facts['os_service_default'],
+  $rabbit_heartbeat_rate              = $facts['os_service_default'],
+  $rabbit_heartbeat_in_pthread        = $facts['os_service_default'],
+  $rabbit_use_ssl                     = $facts['os_service_default'],
+  $service_down_time                  = $facts['os_service_default'],
+  $report_interval                    = $facts['os_service_default'],
+  $kombu_failover_strategy            = $facts['os_service_default'],
+  $kombu_ssl_ca_certs                 = $facts['os_service_default'],
+  $kombu_ssl_certfile                 = $facts['os_service_default'],
+  $kombu_ssl_keyfile                  = $facts['os_service_default'],
+  $kombu_ssl_version                  = $facts['os_service_default'],
+  $kombu_reconnect_delay              = $facts['os_service_default'],
+  $amqp_durable_queues                = $facts['os_service_default'],
   $purge_config                       = false,
   $sync_db                            = true,
-  $max_missed_heartbeats              = $::os_service_default,
-  $check_interval                     = $::os_service_default,
-  $first_heartbeat_timeout            = $::os_service_default,
+  $max_missed_heartbeats              = $facts['os_service_default'],
+  $check_interval                     = $facts['os_service_default'],
+  $first_heartbeat_timeout            = $facts['os_service_default'],
 ){
 
   include mistral::deps

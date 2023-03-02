@@ -9,7 +9,7 @@
 #   cron triggers is disabled.
 #   Disabling cron triggers increases system performance.
 #   (boolean value)
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 # [*execution_interval*]
 #   (Optional) This setting defines how frequently Mistral checks for cron
@@ -20,12 +20,12 @@
 #   but if the execution_interval is set to 60, it will only run
 #   once per minute.
 #   (integer value)
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 #
 class mistral::cron_trigger (
-  $enabled            = $::os_service_default,
-  $execution_interval = $::os_service_default,
+  $enabled            = $facts['os_service_default'],
+  $execution_interval = $facts['os_service_default'],
 ) {
 
   include mistral::deps
