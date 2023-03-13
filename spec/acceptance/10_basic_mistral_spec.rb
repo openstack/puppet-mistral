@@ -16,18 +16,14 @@ describe 'basic mistral' do
       include openstack_integration::mistral
       EOS
 
-
       # Run it twice and test for idempotency
       apply_manifest(pp, :catch_failures => true)
       apply_manifest(pp, :catch_changes => true)
     end
 
-    if os[:family].casecmp('RedHat') == 0
-      describe port(8989) do
-        it { is_expected.to be_listening }
-      end
+    describe port(8989) do
+      it { is_expected.to be_listening }
     end
-
   end
 
 end
