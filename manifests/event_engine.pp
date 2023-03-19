@@ -40,6 +40,9 @@ class mistral::event_engine (
   include mistral::deps
   include mistral::params
 
+  validate_legacy(Boolean, 'validate_bool', $manage_service)
+  validate_legacy(Boolean, 'validate_bool', $enabled)
+
   package { 'mistral-event-engine':
     ensure => $package_ensure,
     name   => $::mistral::params::event_engine_package_name,

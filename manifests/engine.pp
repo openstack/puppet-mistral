@@ -69,6 +69,9 @@ class mistral::engine (
   include mistral::deps
   include mistral::params
 
+  validate_legacy(Boolean, 'validate_bool', $manage_service)
+  validate_legacy(Boolean, 'validate_bool', $enabled)
+
   package { 'mistral-engine':
     ensure => $package_ensure,
     name   => $::mistral::params::engine_package_name,
