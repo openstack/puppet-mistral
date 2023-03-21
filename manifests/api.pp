@@ -76,6 +76,9 @@ class mistral::api (
   include mistral::params
   include mistral::policy
 
+  validate_legacy(Boolean, 'validate_bool', $manage_service)
+  validate_legacy(Boolean, 'validate_bool', $enabled)
+
   if $auth_strategy == 'keystone' {
     include mistral::keystone::authtoken
   }

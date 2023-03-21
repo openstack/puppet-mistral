@@ -40,6 +40,9 @@ class mistral::executor (
   include mistral::deps
   include mistral::params
 
+  validate_legacy(Boolean, 'validate_bool', $manage_service)
+  validate_legacy(Boolean, 'validate_bool', $enabled)
+
   package { 'mistral-executor':
     ensure => $package_ensure,
     name   => $::mistral::params::executor_package_name,

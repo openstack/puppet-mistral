@@ -186,6 +186,8 @@ class mistral(
   include mistral::params
   include mistral::db
 
+  validate_legacy(Boolean, 'validate_bool', $sync_db)
+
   package { 'mistral-common':
     ensure => $package_ensure,
     name   => $::mistral::params::common_package_name,
