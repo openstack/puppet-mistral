@@ -25,5 +25,4 @@ describe 'basic mistral' do
       it { is_expected.to be_listening }
     end
   end
-
 end
