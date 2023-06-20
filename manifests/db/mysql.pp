@@ -34,7 +34,7 @@
 #   Defaults to 'utf8_general_ci'
 #
 class mistral::db::mysql(
-  $password,
+  String[1] $password,
   $dbname        = 'mistral',
   $user          = 'mistral',
   $host          = '127.0.0.1',
@@ -44,8 +44,6 @@ class mistral::db::mysql(
 ) {
 
   include mistral::deps
-
-  validate_legacy(String, 'validate_string', $password)
 
   ::openstacklib::db::mysql { 'mistral':
     user          => $user,

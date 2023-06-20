@@ -29,19 +29,16 @@
 #   Defaults to $facts['os_service_default'].
 #
 class mistral::executor (
-  $package_ensure      = present,
-  $manage_service      = true,
-  $enabled             = true,
-  $host                = $facts['os_service_default'],
-  $topic               = $facts['os_service_default'],
-  $version             = $facts['os_service_default'],
+  $package_ensure         = present,
+  Boolean $manage_service = true,
+  Boolean $enabled        = true,
+  $host                   = $facts['os_service_default'],
+  $topic                  = $facts['os_service_default'],
+  $version                = $facts['os_service_default'],
 ) {
 
   include mistral::deps
   include mistral::params
-
-  validate_legacy(Boolean, 'validate_bool', $manage_service)
-  validate_legacy(Boolean, 'validate_bool', $enabled)
 
   package { 'mistral-executor':
     ensure => $package_ensure,

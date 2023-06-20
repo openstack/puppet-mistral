@@ -176,7 +176,7 @@ class mistral(
   $kombu_reconnect_delay              = $facts['os_service_default'],
   $amqp_durable_queues                = $facts['os_service_default'],
   $purge_config                       = false,
-  $sync_db                            = true,
+  Boolean $sync_db                    = true,
   $max_missed_heartbeats              = $facts['os_service_default'],
   $check_interval                     = $facts['os_service_default'],
   $first_heartbeat_timeout            = $facts['os_service_default'],
@@ -185,8 +185,6 @@ class mistral(
   include mistral::deps
   include mistral::params
   include mistral::db
-
-  validate_legacy(Boolean, 'validate_bool', $sync_db)
 
   package { 'mistral-common':
     ensure => $package_ensure,

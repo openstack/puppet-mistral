@@ -76,7 +76,7 @@
 #   Defaults to true
 #
 class mistral::keystone::auth(
-  $password,
+  String[1] $password,
   $email                  = 'mistral@localhost',
   $auth_name              = 'mistral',
   $service_name           = 'mistral',
@@ -97,8 +97,6 @@ class mistral::keystone::auth(
 ) {
 
   include mistral::deps
-
-  validate_legacy(String, 'validate_string', $password)
 
   Keystone::Resource::Service_identity['mistral'] -> Anchor['mistral::service::end']
 

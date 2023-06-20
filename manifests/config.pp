@@ -21,12 +21,10 @@
 #   or Puppet catalog compilation will fail with duplicate resources.
 #
 class mistral::config (
-  $mistral_config = {},
+  Hash $mistral_config = {},
 ) {
 
   include mistral::deps
-
-  validate_legacy(Hash, 'validate_hash', $mistral_config)
 
   create_resources('mistral_config', $mistral_config)
 }

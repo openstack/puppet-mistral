@@ -63,8 +63,8 @@ class mistral::api (
   $api_workers                     = $facts['os_workers'],
   $bind_host                       = $facts['os_service_default'],
   $bind_port                       = $facts['os_service_default'],
-  $enabled                         = true,
-  $manage_service                  = true,
+  Boolean $enabled                 = true,
+  Boolean $manage_service          = true,
   $package_ensure                  = present,
   $service_name                    = $::mistral::params::api_service_name,
   $enable_proxy_headers_parsing    = $facts['os_service_default'],
@@ -75,9 +75,6 @@ class mistral::api (
   include mistral::deps
   include mistral::params
   include mistral::policy
-
-  validate_legacy(Boolean, 'validate_bool', $manage_service)
-  validate_legacy(Boolean, 'validate_bool', $enabled)
 
   if $auth_strategy == 'keystone' {
     include mistral::keystone::authtoken
