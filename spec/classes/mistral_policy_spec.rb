@@ -33,6 +33,7 @@ describe 'mistral::policy' do
           :file_group   => 'mistral',
           :file_format  => 'yaml',
           :purge_config => false,
+          :tag          => 'mistral',
         )
         is_expected.to contain_oslo__policy('mistral_config').with(
           :enforce_scope        => false,
@@ -63,6 +64,7 @@ describe 'mistral::policy' do
           :file_group   => 'mistral',
           :file_format  => 'yaml',
           :purge_config => true,
+          :tag          => 'mistral',
         )
         is_expected.to contain_oslo__policy('mistral_config').with(
           :enforce_scope        => false,

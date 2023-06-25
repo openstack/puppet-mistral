@@ -67,6 +67,7 @@ class mistral::policy (
     file_group   => $::mistral::params::group,
     file_format  => 'yaml',
     purge_config => $purge_config,
+    tag          => 'mistral',
   }
 
   create_resources('openstacklib::policy', { $policy_path => $policy_parameters })
