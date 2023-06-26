@@ -37,12 +37,9 @@ class mistral::execution_expiration_policy (
   include mistral::deps
   include mistral::params
 
-  $evaluation_interval_real = pick($::mistral::engine::evaluation_interval, $evaluation_interval)
-  $older_than_real = pick($::mistral::engine::older_than, $older_than)
-
   mistral_config {
-    'execution_expiration_policy/evaluation_interval':     value => $evaluation_interval_real;
-    'execution_expiration_policy/older_than':              value => $older_than_real;
+    'execution_expiration_policy/evaluation_interval':     value => $evaluation_interval;
+    'execution_expiration_policy/older_than':              value => $older_than;
     'execution_expiration_policy/max_finished_executions': value => $max_finished_executions;
     'execution_expiration_policy/batch_size':              value => $batch_size;
     'execution_expiration_policy/ignored_states':          value => join(any2array($ignored_states), ',');
