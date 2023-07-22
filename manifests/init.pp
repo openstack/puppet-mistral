@@ -175,7 +175,7 @@ class mistral(
   $kombu_ssl_version                  = $facts['os_service_default'],
   $kombu_reconnect_delay              = $facts['os_service_default'],
   $amqp_durable_queues                = $facts['os_service_default'],
-  $purge_config                       = false,
+  Boolean $purge_config               = false,
   Boolean $sync_db                    = true,
   $max_missed_heartbeats              = $facts['os_service_default'],
   $check_interval                     = $facts['os_service_default'],
