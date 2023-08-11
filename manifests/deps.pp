@@ -37,6 +37,13 @@ class mistral::deps {
   -> Openstacklib::Policy<| tag == 'mistral' |>
   ~> Anchor['mistral::config::end']
 
+  # We need openstackclient before marking service end so that mistral
+  # will have clients available to create resources. This tag handles the
+  # openstackclient but indirectly since the client is not available in
+  # all catalogs that don't need the client class (like many spec tests)
+  Package<| tag == 'openstack'|>
+  ~> Anchor['mistral::service::end']
+
   # Installation or config changes will always restart services.
   Anchor['mistral::install::end'] ~> Anchor['mistral::service::begin']
   Anchor['mistral::config::end']  ~> Anchor['mistral::service::begin']
