@@ -35,7 +35,7 @@ class mistral::deps {
   # policy config should occur in the config block
   Anchor['mistral::config::begin']
   -> Openstacklib::Policy<| tag == 'mistral' |>
-  ~> Anchor['mistral::config::end']
+  -> Anchor['mistral::config::end']
 
   # We need openstackclient before marking service end so that mistral
   # will have clients available to create resources. This tag handles the
