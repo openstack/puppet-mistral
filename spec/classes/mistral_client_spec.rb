@@ -11,7 +11,7 @@ describe 'mistral::client' do
       is_expected.to contain_package('python-mistralclient').with(
         :ensure => 'present',
         :name   => platform_params[:client_package],
-        :tag    => ['openstack', 'mistral-package']
+        :tag    => ['openstack', 'openstackclient']
       )
     end
 
