@@ -7,8 +7,8 @@ class mistral::params {
   $pyver3 = $::openstacklib::defaults::pyver3
 
   $client_package      = 'python3-mistralclient'
-  $db_sync_command     = 'mistral-db-manage --config-file=/etc/mistral/mistral.conf upgrade head'
-  $db_populate_command = 'mistral-db-manage --config-file=/etc/mistral/mistral.conf populate'
+  $db_sync_command     = 'mistral-db-manage upgrade head'
+  $db_populate_command = 'mistral-db-manage populate'
   $user                = 'mistral'
   $group               = 'mistral'
 

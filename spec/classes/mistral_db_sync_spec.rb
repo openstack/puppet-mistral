@@ -9,7 +9,7 @@ describe 'mistral::db::sync' do
     it 'runs mistral-db-manage upgrade head' do
 
       is_expected.to contain_exec('mistral-db-sync').with(
-        :command     => 'mistral-db-manage --config-file=/etc/mistral/mistral.conf upgrade head',
+        :command     => 'mistral-db-manage upgrade head',
         :path        => '/usr/bin',
         :user        => 'mistral',
         :refreshonly => 'true',
@@ -25,7 +25,7 @@ describe 'mistral::db::sync' do
       )
 
       is_expected.to contain_exec('mistral-db-populate').with(
-        :command     => 'mistral-db-manage --config-file=/etc/mistral/mistral.conf populate',
+        :command     => 'mistral-db-manage populate',
         :path        => '/usr/bin',
         :user        => 'mistral',
         :refreshonly => 'true',
