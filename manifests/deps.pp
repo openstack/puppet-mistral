@@ -24,19 +24,6 @@ class mistral::deps {
   ~> Service<| tag == 'mistral-service' |>
   ~> anchor { 'mistral::service::end': }
 
-  # all coordination settings should be applied and all packages should be
-  # installed before service startup
-  Oslo::Coordination<||> -> Anchor['mistral::service::begin']
-
-  # all db settings should be applied and all packages should be installed
-  # before dbsync starts
-  Oslo::Db<||> -> Anchor['mistral::dbsync::begin']
-
-  # policy config should occur in the config block
-  Anchor['mistral::config::begin']
-  -> Openstacklib::Policy<| tag == 'mistral' |>
-  -> Anchor['mistral::config::end']
-
   # We need openstackclient before marking service end so that mistral
   # will have clients available to create resources. This tag handles the
   # openstackclient but indirectly since the client is not available in

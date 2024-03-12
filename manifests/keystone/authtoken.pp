@@ -279,4 +279,6 @@ class mistral::keystone::authtoken(
       service_type                   => $service_type,
       interface                      => $interface;
   }
+
+  Keystone::Resource::Authtoken['mistral_config'] -> Anchor['mistral::config::end']
 }

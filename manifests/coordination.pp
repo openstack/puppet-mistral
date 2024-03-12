@@ -26,4 +26,8 @@ class mistral::coordination (
   mistral_config {
     'coordination/heartbeat_interval': value => $heartbeat_interval;
   }
+
+  # all coordination settings should be applied and all packages should be
+  # installed before service startup
+  Oslo::Coordination['mistral_config'] -> Anchor['mistral::service::begin']
 }
