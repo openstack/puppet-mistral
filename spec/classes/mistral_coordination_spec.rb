@@ -7,15 +7,13 @@ describe 'mistral::coordination' do
         is_expected.to contain_oslo__coordination('mistral_config').with(
           :backend_url => '<SERVICE DEFAULT>'
         )
-        is_expected.to contain_mistral_config('coordination/heartbeat_interval').with_value('<SERVICE DEFAULT>')
       }
     end
 
     context 'with specified parameters' do
       let :params do
         {
-          :backend_url        => 'etcd3+http://127.0.0.1:2379',
-          :heartbeat_interval => 5.0,
+          :backend_url => 'etcd3+http://127.0.0.1:2379',
         }
       end
 
@@ -23,7 +21,6 @@ describe 'mistral::coordination' do
         is_expected.to contain_oslo__coordination('mistral_config').with(
           :backend_url => 'etcd3+http://127.0.0.1:2379'
         )
-        is_expected.to contain_mistral_config('coordination/heartbeat_interval').with_value(5.0)
       }
     end
   end

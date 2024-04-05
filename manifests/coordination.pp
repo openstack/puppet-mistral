@@ -8,23 +8,30 @@
 #   (Optional) Coordination backend URL.
 #   Defaults to $facts['os_service_default']
 #
+# DEPRECATED PARAMETERS
+#
 # [*heartbeat_interval*]
 #   (Optional) Number of seconds between heartbeats for coordination.
-#   Defaults to $facts['os_service_default']
+#   Defaults to undef
 #
 class mistral::coordination (
   $backend_url        = $facts['os_service_default'],
-  $heartbeat_interval = $facts['os_service_default'],
+  # DEPRECATED PARAMETERS
+  $heartbeat_interval = undef,
 ) {
 
   include mistral::deps
+
+  if $heartbeat_interval != undef {
+    warning('The heartbeat_interval parameter has been deprecated and has no effect.')
+  }
 
   oslo::coordination{ 'mistral_config':
     backend_url => $backend_url
   }
 
   mistral_config {
-    'coordination/heartbeat_interval': value => $heartbeat_interval;
+    'coordination/heartbeat_interval': ensure => absent;
   }
 
   # all coordination settings should be applied and all packages should be
