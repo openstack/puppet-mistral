@@ -1,0 +1,5 @@
+---
+upgrade:
+  - |
+    The deprecated ``mistral::coordination::heartbeat_interval`` parameter has
+    been removed.
