@@ -42,6 +42,7 @@ describe 'mistral' do
           :heartbeat_timeout_threshold        => '<SERVICE DEFAULT>',
           :heartbeat_rate                     => '<SERVICE DEFAULT>',
           :heartbeat_in_pthread               => '<SERVICE DEFAULT>',
+          :rabbit_qos_prefetch_count          => '<SERVICE DEFAULT>',
           :kombu_reconnect_delay              => '<SERVICE DEFAULT>',
           :kombu_failover_strategy            => '<SERVICE DEFAULT>',
           :amqp_durable_queues                => '<SERVICE DEFAULT>',
