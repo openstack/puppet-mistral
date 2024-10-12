@@ -39,6 +39,14 @@
 #   (Optional) Should the service user be configured?
 #   Defaults to true.
 #
+# [*configure_user_role*]
+#   (Optional) Whether to configure the admin role for the service user.
+#   Defaults to true
+#
+# [*configure_service*]
+#   (Optional) Should mistral service be configured?
+#   Defaults to true.
+#
 # [*service_type*]
 #   (Optional) Type of service.
 #   Defaults to 'workflowv2'.
@@ -63,18 +71,10 @@
 #   (Optional) Name of the service.
 #   Defaults to 'mistral'.
 #
-# [*configure_service*]
-#   (Optional) Should mistral service be configured?
-#   Defaults to true.
-#
 # [*service_description*]
 #   (Optional) Description for keystone service.
 #   Defaults to 'Openstack workflow Service'.
 
-# [*configure_user_role*]
-#   (Optional) Whether to configure the admin role for the service user.
-#   Defaults to true
-#
 class mistral::keystone::auth(
   String[1] $password,
   String[1] $email                        = 'mistral@localhost',
@@ -90,9 +90,9 @@ class mistral::keystone::auth(
   String[1] $system_scope                 = 'all',
   Array[String[1]] $system_roles          = [],
   Boolean $configure_endpoint             = true,
-  Boolean $configure_service              = true,
   Boolean $configure_user                 = true,
   Boolean $configure_user_role            = true,
+  Boolean $configure_service              = true,
   String[1] $service_description          = 'OpenStack Workflow Service',
 ) {
 
@@ -104,6 +104,7 @@ class mistral::keystone::auth(
     configure_user      => $configure_user,
     configure_user_role => $configure_user_role,
     configure_endpoint  => $configure_endpoint,
+    configure_service   => $configure_service,
     service_type        => $service_type,
     service_description => $service_description,
     service_name        => $service_name,
