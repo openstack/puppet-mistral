@@ -45,7 +45,7 @@ class mistral::db::mysql(
 
   include mistral::deps
 
-  ::openstacklib::db::mysql { 'mistral':
+  openstacklib::db::mysql { 'mistral':
     user          => $user,
     password      => $password,
     dbname        => $dbname,

@@ -34,7 +34,7 @@ class mistral::db::postgresql(
 
   include mistral::deps
 
-  ::openstacklib::db::postgresql { 'mistral':
+  openstacklib::db::postgresql { 'mistral':
     password   => $password,
     dbname     => $dbname,
     user       => $user,

@@ -166,7 +166,7 @@ class mistral::wsgi::apache (
 
   Anchor['mistral::install::end'] -> Class['apache']
 
-  ::openstacklib::wsgi::apache { 'mistral_wsgi':
+  openstacklib::wsgi::apache { 'mistral_wsgi':
     bind_host                   => $bind_host,
     bind_port                   => $port,
     group                       => $::mistral::params::group,
