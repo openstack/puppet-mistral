@@ -53,16 +53,6 @@
 #   every 30 seconds.
 #   Defaults to $facts['os_service_default']
 #
-# [*rabbit_heartbeat_in_pthread*]
-#   (Optional) EXPERIMENTAL: Run the health check heartbeat thread
-#   through a native python thread. By default if this
-#   option isn't provided the  health check heartbeat will
-#   inherit the execution model from the parent process. By
-#   example if the parent process have monkey patched the
-#   stdlib by using eventlet/greenlet then the heartbeat
-#   will be run through a green thread.
-#   Defaults to $facts['os_service_default']
-#
 # [*rabbit_qos_prefetch_count*]
 #   (Optional) Specifies the number of messages to prefetch.
 #   Defaults to $facts['os_service_default']
@@ -183,6 +173,18 @@
 #   heartbeat.
 #   Defaults to $facts['os_service_default']
 #
+# DEPRECATED PARAMETERS
+#
+# [*rabbit_heartbeat_in_pthread*]
+#   (Optional) EXPERIMENTAL: Run the health check heartbeat thread
+#   through a native python thread. By default if this
+#   option isn't provided the  health check heartbeat will
+#   inherit the execution model from the parent process. By
+#   example if the parent process have monkey patched the
+#   stdlib by using eventlet/greenlet then the heartbeat
+#   will be run through a green thread.
+#   Defaults to undef
+#
 class mistral(
   $package_ensure                     = 'present',
   $os_actions_endpoint_type           = $facts['os_service_default'],
@@ -195,7 +197,6 @@ class mistral(
   $rabbit_ha_queues                   = $facts['os_service_default'],
   $rabbit_heartbeat_timeout_threshold = $facts['os_service_default'],
   $rabbit_heartbeat_rate              = $facts['os_service_default'],
-  $rabbit_heartbeat_in_pthread        = $facts['os_service_default'],
   $rabbit_qos_prefetch_count          = $facts['os_service_default'],
   $rabbit_quorum_queue                = $facts['os_service_default'],
   $rabbit_transient_quorum_queue      = $facts['os_service_default'],
@@ -218,6 +219,8 @@ class mistral(
   $max_missed_heartbeats              = $facts['os_service_default'],
   $check_interval                     = $facts['os_service_default'],
   $first_heartbeat_timeout            = $facts['os_service_default'],
+  # DEPRECATED PARAMETERS
+  $rabbit_heartbeat_in_pthread        = undef,
 ){
 
   include mistral::deps
