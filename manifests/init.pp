@@ -246,7 +246,7 @@ class mistral(
   }
 
   mistral_config {
-    'openstack_actions/os_actions_endpoint_type': value  => $os_actions_endpoint_type;
+    'openstack_actions/os_actions_endpoint_type':  value => $os_actions_endpoint_type;
     'DEFAULT/os_actions_endpoint_type':           ensure => absent;
   }
 
