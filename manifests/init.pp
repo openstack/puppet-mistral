@@ -238,16 +238,12 @@ class mistral(
   }
 
   mistral_config {
-    'DEFAULT/report_interval':                  value => $report_interval;
-    'DEFAULT/service_down_time':                value => $service_down_time;
-    'action_heartbeat/max_missed_heartbeats':   value => $max_missed_heartbeats;
-    'action_heartbeat/check_interval':          value => $check_interval;
-    'action_heartbeat/first_heartbeat_timeout': value => $first_heartbeat_timeout;
-  }
-
-  mistral_config {
-    'openstack_actions/os_actions_endpoint_type':  value => $os_actions_endpoint_type;
-    'DEFAULT/os_actions_endpoint_type':           ensure => absent;
+    'DEFAULT/report_interval':                    value => $report_interval;
+    'DEFAULT/service_down_time':                  value => $service_down_time;
+    'action_heartbeat/max_missed_heartbeats':     value => $max_missed_heartbeats;
+    'action_heartbeat/check_interval':            value => $check_interval;
+    'action_heartbeat/first_heartbeat_timeout':   value => $first_heartbeat_timeout;
+    'openstack_actions/os_actions_endpoint_type': value => $os_actions_endpoint_type;
   }
 
   oslo::messaging::default {'mistral_config':
