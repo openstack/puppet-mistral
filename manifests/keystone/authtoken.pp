@@ -239,7 +239,7 @@ class mistral::keystone::authtoken(
 
   keystone::resource::authtoken {
     'mistral_config':
-      *                              => $params;
+      * => $params;
     default:
       username                       => $username,
       password                       => $password,
