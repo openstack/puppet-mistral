@@ -1,5 +1,5 @@
 # == Class: mistral::coordination
-#
+# DEPRECATED !!
 # Setup and configure Mistral coordination settings.
 #
 # === Parameters
@@ -13,6 +13,8 @@ class mistral::coordination (
 ) {
 
   include mistral::deps
+
+  warning('Support for coordination has been deprecated.')
 
   oslo::coordination{ 'mistral_config':
     backend_url => $backend_url

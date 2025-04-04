@@ -1,0 +1,5 @@
+---
+deprecations:
+  - |
+    The ``mistral::coordination`` class has been deprecated, because
+    the coordination code in mistral was deprecated.
