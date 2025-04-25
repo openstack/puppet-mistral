@@ -1,0 +1,6 @@
+---
+features:
+  - |
+    Added ``mistral::action_providers`` and ``mistral::legacy_action_providers``
+    classes to configure the ``[action_providers]`` and ``[legacy_action_providers]``
+    configuration groups in Mistral.
