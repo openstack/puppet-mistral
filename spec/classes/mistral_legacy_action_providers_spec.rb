@@ -22,8 +22,8 @@ describe 'mistral::legacy_action_providers' do
           :load_action_plugins    => true,
           :load_action_generators => false,
           :only_builtin_actions   => true,
-          :allowlist              => ['test'],
-          :denylist               => ['test2'],
+          :allowlist              => ['allow0', 'allow1'],
+          :denylist               => ['deny0', 'deny1'],
         })
       end
 
@@ -31,8 +31,8 @@ describe 'mistral::legacy_action_providers' do
         is_expected.to contain_mistral_config('legacy_action_providers/load_action_plugins').with_value(true)
         is_expected.to contain_mistral_config('legacy_action_providers/load_action_generators').with_value(false)
         is_expected.to contain_mistral_config('legacy_action_providers/only_builtin_actions').with_value(true)
-        is_expected.to contain_mistral_config('legacy_action_providers/allowlist').with_value(['test'])
-        is_expected.to contain_mistral_config('legacy_action_providers/denylist').with_value(['test2'])
+        is_expected.to contain_mistral_config('legacy_action_providers/allowlist').with_value('allow0,allow1')
+        is_expected.to contain_mistral_config('legacy_action_providers/denylist').with_value('deny0,deny1')
       }
     end
   end

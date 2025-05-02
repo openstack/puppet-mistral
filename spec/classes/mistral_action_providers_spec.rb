@@ -16,14 +16,14 @@ describe 'mistral::action_providers' do
     context 'with parameters' do
       before do
         params.merge!({
-          :allowlist => ['test'],
-          :denylist  => ['test2'],
+          :allowlist => ['allow0', 'allow1'],
+          :denylist  => ['deny0', 'deny1'],
         })
       end
 
       it {
-        is_expected.to contain_mistral_config('action_providers/allowlist').with_value(['test'])
-        is_expected.to contain_mistral_config('action_providers/denylist').with_value(['test2'])
+        is_expected.to contain_mistral_config('action_providers/allowlist').with_value('allow0,allow1')
+        is_expected.to contain_mistral_config('action_providers/denylist').with_value('deny0,deny1')
       }
     end
   end
