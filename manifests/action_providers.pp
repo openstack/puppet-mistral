@@ -21,7 +21,7 @@ class mistral::action_providers (
 ) {
 
   mistral_config {
-    'action_providers/allowlist': value => $allowlist;
-    'action_providers/denylist':  value => $denylist;
+    'action_providers/allowlist': value => join(any2array($allowlist), ',');
+    'action_providers/denylist':  value => join(any2array($denylist), ',');
   }
 }

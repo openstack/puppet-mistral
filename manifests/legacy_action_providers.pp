@@ -44,7 +44,7 @@ class mistral::legacy_action_providers (
     'legacy_action_providers/load_action_plugins':    value => $load_action_plugins;
     'legacy_action_providers/load_action_generators': value => $load_action_generators;
     'legacy_action_providers/only_builtin_actions':   value => $only_builtin_actions;
-    'legacy_action_providers/allowlist':              value => $allowlist;
-    'legacy_action_providers/denylist':               value => $denylist;
+    'legacy_action_providers/allowlist':              value => join(any2array($allowlist), ',');
+    'legacy_action_providers/denylist':               value => join(any2array($denylist), ',');
   }
 }
