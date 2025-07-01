@@ -58,6 +58,8 @@ describe 'mistral' do
           :rabbit_quorum_delivery_limit    => '<SERVICE DEFAULT>',
           :rabbit_quorum_max_memory_length => '<SERVICE DEFAULT>',
           :rabbit_quorum_max_memory_bytes  => '<SERVICE DEFAULT>',
+          :use_queue_manager               => '<SERVICE DEFAULT>',
+          :rabbit_stream_fanout            => '<SERVICE DEFAULT>',
           :enable_cancel_on_failover       => '<SERVICE DEFAULT>',
         )
         is_expected.to contain_mistral_config('openstack_actions/os_actions_endpoint_type').with(
