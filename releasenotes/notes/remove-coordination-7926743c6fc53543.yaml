@@ -1,0 +1,4 @@
+---
+upgrade:
+  - |
+    The ``mistral::coordination`` class has been removed.
