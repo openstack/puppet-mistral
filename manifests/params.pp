@@ -22,6 +22,8 @@ class mistral::params {
       $executor_service_name      = 'openstack-mistral-executor'
       $event_engine_package_name  = 'openstack-mistral-event-engine'
       $event_engine_service_name  = 'openstack-mistral-event-engine'
+      $notifier_package_name      = 'openstack-mistral-notifier'
+      $notifier_service_name      = 'openstack-mistral-notifier'
       $mistral_wsgi_script_path   = '/var/www/cgi-bin/mistral'
       $mistral_wsgi_script_source = '/usr/bin/mistral-wsgi-api'
     }
@@ -35,6 +37,8 @@ class mistral::params {
       $executor_service_name      = 'mistral-executor'
       $event_engine_package_name  = 'mistral-event-engine'
       $event_engine_service_name  = 'mistral-event-engine'
+      $notifier_package_name      = undef
+      $notifier_service_name      = undef
       $mistral_wsgi_script_path   = '/usr/lib/cgi-bin/mistral'
       $mistral_wsgi_script_source = '/usr/bin/mistral-wsgi-api'
     }

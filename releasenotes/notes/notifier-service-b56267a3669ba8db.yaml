@@ -1,0 +1,5 @@
+---
+features:
+  - |
+    The ``mistral::notifier`` class now installs and configures
+    the dedicated ``mistral-notifier`` service.
