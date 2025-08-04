@@ -1,0 +1,4 @@
+---
+features:
+  - |
+    The new ``mistral::executor::type`` parameter has been added.

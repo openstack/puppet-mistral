@@ -4,16 +4,23 @@
 #
 # === Parameters
 # [*package_ensure*]
-#    (Optional) Ensure state for package.
-#    Defaults to present
+#   (Optional) Ensure state for package.
+#   Defaults to present
 #
 # [*enabled*]
 #   (optional) Should the service be enabled.
-#   Defaults to 'true'.
+#   Defaults to true.
 #
 # [*manage_service*]
 #   (optional) Whether the service should be managed by Puppet.
-#   Defaults to 'true'.
+#   Defaults to true.
+#
+# [*type*]
+#   (Optional) Type of executor. Use local to run the executor within
+#   the engine server. Use remote if the executor is launched as a separate
+#   server to process events.
+#   (string value)
+#   Defaults to 'remote'.
 #
 # [*host*]
 #   (Optional) Name of the executor node. This can be an opaque identifier.
@@ -29,12 +36,13 @@
 #   Defaults to $facts['os_service_default'].
 #
 class mistral::executor (
-  $package_ensure         = present,
-  Boolean $manage_service = true,
-  Boolean $enabled        = true,
-  $host                   = $facts['os_service_default'],
-  $topic                  = $facts['os_service_default'],
-  $version                = $facts['os_service_default'],
+  $package_ensure               = present,
+  Boolean $manage_service       = true,
+  Boolean $enabled              = true,
+  Enum['local', 'remote'] $type = 'remote',
+  $host                         = $facts['os_service_default'],
+  $topic                        = $facts['os_service_default'],
+  $version                      = $facts['os_service_default'],
 ) {
 
   include mistral::deps
@@ -47,7 +55,12 @@ class mistral::executor (
   }
 
   if $manage_service {
-    if $enabled {
+    $enabled_real = $type ? {
+      'remote' => $enabled,
+      default  => false,
+    }
+
+    if $enabled_real {
       $service_ensure = 'running'
     } else {
       $service_ensure = 'stopped'
@@ -56,7 +69,7 @@ class mistral::executor (
     service { 'mistral-executor':
       ensure     => $service_ensure,
       name       => $::mistral::params::executor_service_name,
-      enable     => $enabled,
+      enable     => $enabled_real,
       hasstatus  => true,
       hasrestart => true,
       tag        => 'mistral-service',
@@ -64,6 +77,7 @@ class mistral::executor (
   }
 
   mistral_config {
+    'executor/type':    value => $type;
     'executor/host':    value => $host;
     'executor/topic':   value => $topic;
     'executor/version': value => $version;
