@@ -43,7 +43,7 @@
 #   service, and you must use another class to configure that
 #   web service. For example, use class { 'mistral::wsgi::apache'...}
 #   to make mistral-api be a web app using apache mod_wsgi.
-#   Defaults to '$::mistral::params::api_service_name'
+#   Defaults to '$mistral::params::api_service_name'
 #
 # [*enable_proxy_headers_parsing*]
 #   (Optional) Enable paste middleware to handle SSL requests through
@@ -66,7 +66,7 @@ class mistral::api (
   Boolean $enabled                 = true,
   Boolean $manage_service          = true,
   $package_ensure                  = present,
-  $service_name                    = $::mistral::params::api_service_name,
+  $service_name                    = $mistral::params::api_service_name,
   $enable_proxy_headers_parsing    = $facts['os_service_default'],
   $max_request_body_size           = $facts['os_service_default'],
   $auth_strategy                   = 'keystone',
@@ -82,7 +82,7 @@ class mistral::api (
 
   package { 'mistral-api':
     ensure => $package_ensure,
-    name   => $::mistral::params::api_package_name,
+    name   => $mistral::params::api_package_name,
     tag    => ['openstack', 'mistral-package'],
   }
 
@@ -93,10 +93,10 @@ class mistral::api (
       $service_ensure = 'stopped'
     }
 
-    if $service_name == $::mistral::params::api_service_name {
+    if $service_name == $mistral::params::api_service_name {
       service { 'mistral-api':
         ensure     => $service_ensure,
-        name       => $::mistral::params::api_service_name,
+        name       => $mistral::params::api_service_name,
         enable     => $enabled,
         hasstatus  => true,
         hasrestart => true,
@@ -105,7 +105,7 @@ class mistral::api (
     } elsif $service_name == 'httpd' {
       service { 'mistral-api':
         ensure => 'stopped',
-        name   => $::mistral::params::api_service_name,
+        name   => $mistral::params::api_service_name,
         enable => false,
         tag    => 'mistral-service',
       }

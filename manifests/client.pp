@@ -16,7 +16,7 @@ class mistral::client(
 
   package { 'python-mistralclient':
     ensure => $package_ensure,
-    name   => $::mistral::params::client_package,
+    name   => $mistral::params::client_package,
     tag    => ['openstack', 'openstackclient'],
   }
 

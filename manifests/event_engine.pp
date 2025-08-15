@@ -42,7 +42,7 @@ class mistral::event_engine (
 
   package { 'mistral-event-engine':
     ensure => $package_ensure,
-    name   => $::mistral::params::event_engine_package_name,
+    name   => $mistral::params::event_engine_package_name,
     tag    => ['openstack', 'mistral-package'],
   }
 
@@ -55,7 +55,7 @@ class mistral::event_engine (
 
     service { 'mistral-event-engine':
       ensure     => $service_ensure,
-      name       => $::mistral::params::event_engine_service_name,
+      name       => $mistral::params::event_engine_service_name,
       enable     => $enabled,
       hasstatus  => true,
       hasrestart => true,

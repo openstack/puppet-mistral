@@ -253,7 +253,7 @@ class mistral(
 
   package { 'mistral-common':
     ensure => $package_ensure,
-    name   => $::mistral::params::common_package_name,
+    name   => $mistral::params::common_package_name,
     tag    => ['openstack', 'mistral-package'],
   }
 

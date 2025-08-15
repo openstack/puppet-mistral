@@ -15,9 +15,9 @@ class mistral::db::sync(
   include mistral::params
 
   exec { 'mistral-db-sync':
-    command     => $::mistral::params::db_sync_command,
+    command     => $mistral::params::db_sync_command,
     path        => '/usr/bin',
-    user        => $::mistral::params::user,
+    user        => $mistral::params::user,
     logoutput   => on_failure,
     refreshonly => true,
     try_sleep   => 5,
@@ -34,9 +34,9 @@ class mistral::db::sync(
 
   exec { 'mistral-db-populate':
     require     => Exec['mistral-db-sync'],
-    command     => $::mistral::params::db_populate_command,
+    command     => $mistral::params::db_populate_command,
     path        => '/usr/bin',
-    user        => $::mistral::params::user,
+    user        => $mistral::params::user,
     timeout     => $db_sync_timeout,
     logoutput   => on_failure,
     refreshonly => true,

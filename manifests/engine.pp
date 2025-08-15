@@ -71,7 +71,7 @@ class mistral::engine (
 
   package { 'mistral-engine':
     ensure => $package_ensure,
-    name   => $::mistral::params::engine_package_name,
+    name   => $mistral::params::engine_package_name,
     tag    => ['openstack', 'mistral-package'],
   }
 
@@ -84,7 +84,7 @@ class mistral::engine (
 
     service { 'mistral-engine':
       ensure     => $service_ensure,
-      name       => $::mistral::params::engine_service_name,
+      name       => $mistral::params::engine_service_name,
       enable     => $enabled,
       hasstatus  => true,
       hasrestart => true,

@@ -50,7 +50,7 @@ class mistral::executor (
 
   package { 'mistral-executor':
     ensure => $package_ensure,
-    name   => $::mistral::params::executor_package_name,
+    name   => $mistral::params::executor_package_name,
     tag    => ['openstack', 'mistral-package'],
   }
 
@@ -68,7 +68,7 @@ class mistral::executor (
 
     service { 'mistral-executor':
       ensure     => $service_ensure,
-      name       => $::mistral::params::executor_service_name,
+      name       => $mistral::params::executor_service_name,
       enable     => $enabled_real,
       hasstatus  => true,
       hasrestart => true,

@@ -54,10 +54,10 @@ class mistral::notifier(
   include mistral::deps
   include mistral::params
 
-  if $::mistral::params::notifier_package_name {
+  if $mistral::params::notifier_package_name {
     package { 'mistral-notifier':
       ensure => $package_ensure,
-      name   => $::mistral::params::notifier_package_name,
+      name   => $mistral::params::notifier_package_name,
       tag    => ['openstack', 'mistral-package'],
     }
   }
@@ -74,10 +74,10 @@ class mistral::notifier(
       $service_ensure = 'stopped'
     }
 
-    if $::mistral::params::notifier_service_name {
+    if $mistral::params::notifier_service_name {
       service { 'mistral-notifier':
         ensure     => $service_ensure,
-        name       => $::mistral::params::notifier_service_name,
+        name       => $mistral::params::notifier_service_name,
         enable     => $enabled_real,
         hasstatus  => true,
         hasrestart => true,
