@@ -23,7 +23,6 @@
 class mistral::config (
   Hash $mistral_config = {},
 ) {
-
   include mistral::deps
 
   create_resources('mistral_config', $mistral_config)

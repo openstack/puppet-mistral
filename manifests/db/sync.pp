@@ -7,10 +7,9 @@
 #   (Optional) Timeout for the execution of the db_sync
 #   Defaults to 300
 #
-class mistral::db::sync(
+class mistral::db::sync (
   $db_sync_timeout = 300,
 ) {
-
   include mistral::deps
   include mistral::params
 
@@ -48,5 +47,4 @@ class mistral::db::sync(
     notify      => Anchor['mistral::dbsync::end'],
     tag         => 'openstack-db',
   }
-
 }

@@ -33,7 +33,6 @@ class mistral::execution_expiration_policy (
   $batch_size              = $facts['os_service_default'],
   $ignored_states          = $facts['os_service_default'],
 ) {
-
   include mistral::deps
   include mistral::params
 

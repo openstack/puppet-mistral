@@ -33,7 +33,7 @@
 #   Only used with mysql modules >= 2.2.
 #   Defaults to 'utf8_general_ci'
 #
-class mistral::db::mysql(
+class mistral::db::mysql (
   String[1] $password,
   $dbname        = 'mistral',
   $user          = 'mistral',
@@ -42,7 +42,6 @@ class mistral::db::mysql(
   $collate       = 'utf8_general_ci',
   $allowed_hosts = undef
 ) {
-
   include mistral::deps
 
   openstacklib::db::mysql { 'mistral':

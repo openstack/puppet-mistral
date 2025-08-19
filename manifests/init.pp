@@ -205,7 +205,7 @@
 #   will be run through a green thread.
 #   Defaults to undef
 #
-class mistral(
+class mistral (
   $package_ensure                     = 'present',
   $os_actions_endpoint_type           = $facts['os_service_default'],
   $control_exchange                   = $facts['os_service_default'],
@@ -245,8 +245,7 @@ class mistral(
   $first_heartbeat_timeout            = $facts['os_service_default'],
   # DEPRECATED PARAMETERS
   $rabbit_heartbeat_in_pthread        = undef,
-){
-
+) {
   include mistral::deps
   include mistral::params
   include mistral::db
@@ -270,19 +269,19 @@ class mistral(
     'openstack_actions/os_actions_endpoint_type': value => $os_actions_endpoint_type;
   }
 
-  oslo::messaging::default {'mistral_config':
+  oslo::messaging::default { 'mistral_config':
     transport_url        => $default_transport_url,
     control_exchange     => $control_exchange,
     rpc_response_timeout => $rpc_response_timeout,
   }
 
-  oslo::messaging::notifications {'mistral_config':
+  oslo::messaging::notifications { 'mistral_config':
     transport_url => $notification_transport_url,
     driver        => $notification_driver,
     topics        => $notification_topics,
   }
 
-  oslo::messaging::rabbit {'mistral_config':
+  oslo::messaging::rabbit { 'mistral_config':
     rabbit_ha_queues                => $rabbit_ha_queues,
     rabbit_use_ssl                  => $rabbit_use_ssl,
     kombu_failover_strategy         => $kombu_failover_strategy,

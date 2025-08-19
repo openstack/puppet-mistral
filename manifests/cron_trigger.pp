@@ -27,7 +27,6 @@ class mistral::cron_trigger (
   $enabled            = $facts['os_service_default'],
   $execution_interval = $facts['os_service_default'],
 ) {
-
   include mistral::deps
   include mistral::params
 

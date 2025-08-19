@@ -54,7 +54,6 @@ class mistral::db (
   $mysql_enable_ndb                 = $facts['os_service_default'],
   $database_db_max_retries          = $facts['os_service_default'],
 ) {
-
   include mistral::deps
 
   oslo::db { 'mistral_config':

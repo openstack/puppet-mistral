@@ -65,7 +65,6 @@ class mistral::engine (
   $action_definition_cache_time         = $facts['os_service_default'],
   $start_subworkflows_via_rpc           = $facts['os_service_default'],
 ) {
-
   include mistral::deps
   include mistral::params
 

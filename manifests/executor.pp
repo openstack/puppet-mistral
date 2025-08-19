@@ -44,7 +44,6 @@ class mistral::executor (
   $topic                        = $facts['os_service_default'],
   $version                      = $facts['os_service_default'],
 ) {
-
   include mistral::deps
   include mistral::params
 
@@ -82,5 +81,4 @@ class mistral::executor (
     'executor/topic':   value => $topic;
     'executor/version': value => $version;
   }
-
 }

@@ -160,7 +160,6 @@ class mistral::wsgi::apache (
   $request_headers             = undef,
   $vhost_custom_fragment       = undef,
 ) {
-
   include mistral::deps
   include mistral::params
 

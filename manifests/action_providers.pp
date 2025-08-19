@@ -19,6 +19,7 @@ class mistral::action_providers (
   $allowlist = $facts['os_service_default'],
   $denylist  = $facts['os_service_default'],
 ) {
+  include mistral::deps
 
   mistral_config {
     'action_providers/allowlist': value => join(any2array($allowlist), ',');

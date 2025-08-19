@@ -75,7 +75,7 @@
 #   (Optional) Description for keystone service.
 #   Defaults to 'Openstack workflow Service'.
 
-class mistral::keystone::auth(
+class mistral::keystone::auth (
   String[1] $password,
   String[1] $email                        = 'mistral@localhost',
   String[1] $auth_name                    = 'mistral',
@@ -95,7 +95,6 @@ class mistral::keystone::auth(
   Boolean $configure_service              = true,
   String[1] $service_description          = 'OpenStack Workflow Service',
 ) {
-
   include mistral::deps
 
   Keystone::Resource::Service_identity['mistral'] -> Anchor['mistral::service::end']

@@ -36,7 +36,6 @@ class mistral::event_engine (
   $topic                         = $facts['os_service_default'],
   $event_definitions_cfg_file    = $facts['os_service_default'],
 ) {
-
   include mistral::deps
   include mistral::params
 
@@ -64,9 +63,8 @@ class mistral::event_engine (
   }
 
   mistral_config {
-    'event_engine/host':                         value => $host;
-    'event_engine/topic':                        value => $topic;
-    'event_engine/event_definitions_cfg_file':   value => $event_definitions_cfg_file;
+    'event_engine/host':                       value => $host;
+    'event_engine/topic':                      value => $topic;
+    'event_engine/event_definitions_cfg_file': value => $event_definitions_cfg_file;
   }
-
 }

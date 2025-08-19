@@ -39,6 +39,7 @@ class mistral::legacy_action_providers (
   $allowlist              = $facts['os_service_default'],
   $denylist               = $facts['os_service_default'],
 ) {
+  include mistral::deps
 
   mistral_config {
     'legacy_action_providers/load_action_plugins':    value => $load_action_plugins;

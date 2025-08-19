@@ -41,7 +41,7 @@
 #   (list of dicts)
 #   Defaults to $facts['os_service_default'].
 #
-class mistral::notifier(
+class mistral::notifier (
   $package_ensure               = present,
   Boolean $manage_service       = true,
   Boolean $enabled              = true,
@@ -50,7 +50,6 @@ class mistral::notifier(
   $topic                        = $facts['os_service_default'],
   $notify_publishers            = $facts['os_service_default'],
 ) {
-
   include mistral::deps
   include mistral::params
 

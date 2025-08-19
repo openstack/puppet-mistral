@@ -71,7 +71,6 @@ class mistral::api (
   $max_request_body_size           = $facts['os_service_default'],
   $auth_strategy                   = 'keystone',
 ) inherits mistral::params {
-
   include mistral::deps
   include mistral::params
   include mistral::policy
@@ -130,5 +129,4 @@ class mistral::api (
     enable_proxy_headers_parsing => $enable_proxy_headers_parsing,
     max_request_body_size        => $max_request_body_size,
   }
-
 }

@@ -24,14 +24,13 @@
 #    (Optional) Privileges given to the database user.
 #    Default to 'ALL'
 #
-class mistral::db::postgresql(
+class mistral::db::postgresql (
   $password,
   $dbname     = 'mistral',
   $user       = 'mistral',
   $encoding   = undef,
   $privileges = 'ALL',
 ) {
-
   include mistral::deps
 
   openstacklib::db::postgresql { 'mistral':
