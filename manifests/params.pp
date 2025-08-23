@@ -5,6 +5,8 @@
 class mistral::params {
   include openstacklib::defaults
 
+  $pyver3 = $openstacklib::defaults::pyver3
+
   $client_package      = 'python3-mistralclient'
   $db_sync_command     = 'mistral-db-manage upgrade head'
   $db_populate_command = 'mistral-db-manage populate'
@@ -25,7 +27,7 @@ class mistral::params {
       $notifier_package_name      = 'openstack-mistral-notifier'
       $notifier_service_name      = 'openstack-mistral-notifier'
       $mistral_wsgi_script_path   = '/var/www/cgi-bin/mistral'
-      $mistral_wsgi_script_source = '/usr/bin/mistral-wsgi-api'
+      $mistral_wsgi_script_source = "/usr/lib/python${pyver3}/site-packages/mistral/api/wsgi.py"
     }
     'Debian': {
       $common_package_name        = 'mistral-common'

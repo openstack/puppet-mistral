@@ -163,7 +163,7 @@ describe 'mistral::wsgi::apache' do
         when 'RedHat'
           {
             :wsgi_script_path   => '/var/www/cgi-bin/mistral',
-            :wsgi_script_source => '/usr/bin/mistral-wsgi-api'
+            :wsgi_script_source => '/usr/lib/python3.9/site-packages/mistral/api/wsgi.py',
           }
 
         end
