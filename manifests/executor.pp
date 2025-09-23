@@ -36,13 +36,13 @@
 #   Defaults to $facts['os_service_default'].
 #
 class mistral::executor (
-  $package_ensure               = present,
-  Boolean $manage_service       = true,
-  Boolean $enabled              = true,
-  Enum['local', 'remote'] $type = 'remote',
-  $host                         = $facts['os_service_default'],
-  $topic                        = $facts['os_service_default'],
-  $version                      = $facts['os_service_default'],
+  Stdlib::Ensure::Package $package_ensure = present,
+  Boolean $manage_service                 = true,
+  Boolean $enabled                        = true,
+  Enum['local', 'remote'] $type           = 'remote',
+  $host                                   = $facts['os_service_default'],
+  $topic                                  = $facts['os_service_default'],
+  $version                                = $facts['os_service_default'],
 ) {
   include mistral::deps
   include mistral::params

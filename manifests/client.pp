@@ -8,7 +8,7 @@
 #   Ensure state for package. Defaults to 'present'.
 #
 class mistral::client (
-  $package_ensure = 'present'
+  Stdlib::Ensure::Package $package_ensure = present,
 ) {
   include mistral::deps
   include mistral::params
