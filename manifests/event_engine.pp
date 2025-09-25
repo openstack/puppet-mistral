@@ -29,12 +29,12 @@
 #   Defaults to $facts['os_service_default'].
 #
 class mistral::event_engine (
-  $package_ensure                = present,
-  Boolean $manage_service        = true,
-  Boolean $enabled               = true,
-  $host                          = $facts['os_service_default'],
-  $topic                         = $facts['os_service_default'],
-  $event_definitions_cfg_file    = $facts['os_service_default'],
+  Stdlib::Ensure::Package $package_ensure = present,
+  Boolean $manage_service                 = true,
+  Boolean $enabled                        = true,
+  $host                                   = $facts['os_service_default'],
+  $topic                                  = $facts['os_service_default'],
+  $event_definitions_cfg_file             = $facts['os_service_default'],
 ) {
   include mistral::deps
   include mistral::params

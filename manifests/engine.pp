@@ -53,17 +53,17 @@
 #   Defaults to $facts['os_service_default'].
 #
 class mistral::engine (
-  $package_ensure                       = present,
-  Boolean $manage_service               = true,
-  Boolean $enabled                      = true,
-  $host                                 = $facts['os_service_default'],
-  $topic                                = $facts['os_service_default'],
-  $version                              = $facts['os_service_default'],
-  $execution_field_size_limit_kb        = $facts['os_service_default'],
-  $execution_integrity_check_delay      = $facts['os_service_default'],
-  $execution_integrity_check_batch_size = $facts['os_service_default'],
-  $action_definition_cache_time         = $facts['os_service_default'],
-  $start_subworkflows_via_rpc           = $facts['os_service_default'],
+  Stdlib::Ensure::Package $package_ensure = present,
+  Boolean $manage_service                 = true,
+  Boolean $enabled                        = true,
+  $host                                   = $facts['os_service_default'],
+  $topic                                  = $facts['os_service_default'],
+  $version                                = $facts['os_service_default'],
+  $execution_field_size_limit_kb          = $facts['os_service_default'],
+  $execution_integrity_check_delay        = $facts['os_service_default'],
+  $execution_integrity_check_batch_size   = $facts['os_service_default'],
+  $action_definition_cache_time           = $facts['os_service_default'],
+  $start_subworkflows_via_rpc             = $facts['os_service_default'],
 ) {
   include mistral::deps
   include mistral::params
