@@ -112,14 +112,6 @@ describe 'mistral::api' do
         )
       end
     end
-
-    context 'when service_name is not valid' do
-      before do
-        params.merge!({ :service_name => 'foobar' })
-      end
-
-      it { should raise_error(Puppet::Error, /Invalid service_name/) }
-    end
   end
 
   on_supported_os({

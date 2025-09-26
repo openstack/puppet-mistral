@@ -66,7 +66,7 @@ class mistral::api (
   Boolean $enabled                        = true,
   Boolean $manage_service                 = true,
   Stdlib::Ensure::Package $package_ensure = present,
-  $service_name                           = $mistral::params::api_service_name,
+  String[1] $service_name                 = $mistral::params::api_service_name,
   $enable_proxy_headers_parsing           = $facts['os_service_default'],
   $max_request_body_size                  = $facts['os_service_default'],
   $auth_strategy                          = 'keystone',
@@ -86,35 +86,34 @@ class mistral::api (
   }
 
   if $manage_service {
-    if $enabled {
-      $service_ensure = 'running'
-    } else {
-      $service_ensure = 'stopped'
-    }
+    case $service_name {
+      'httpd': {
+        Service <| title == 'httpd' |> { tag +> 'mistral-service' }
 
-    if $service_name == $mistral::params::api_service_name {
-      service { 'mistral-api':
-        ensure     => $service_ensure,
-        name       => $mistral::params::api_service_name,
-        enable     => $enabled,
-        hasstatus  => true,
-        hasrestart => true,
-        tag        => 'mistral-service',
+        service { 'mistral-api':
+          ensure => 'stopped',
+          name   => $mistral::params::api_service_name,
+          enable => false,
+          tag    => 'mistral-service',
+        }
+        # we need to make sure mistral-api s stopped before trying to start apache
+        Service['mistral-api'] -> Service['httpd']
       }
-    } elsif $service_name == 'httpd' {
-      service { 'mistral-api':
-        ensure => 'stopped',
-        name   => $mistral::params::api_service_name,
-        enable => false,
-        tag    => 'mistral-service',
-      }
-      Service <| title == 'httpd' |> { tag +> 'mistral-service' }
+      default: {
+        $service_ensure = $enabled ? {
+          true    => 'running',
+          default => 'stopped',
+        }
 
-      # we need to make sure mistral-api s stopped before trying to start apache
-      Service['mistral-api'] -> Service[$service_name]
-    } else {
-      fail("Invalid service_name. Either mistral/openstack-mistral-api for running \
- as a standalone service, or httpd for being run by a httpd server")
+        service { 'mistral-api':
+          ensure     => $service_ensure,
+          name       => $service_name,
+          enable     => $enabled,
+          hasstatus  => true,
+          hasrestart => true,
+          tag        => 'mistral-service',
+        }
+      }
     }
   }
 
