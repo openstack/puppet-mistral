@@ -46,13 +46,13 @@
 #    Defaults to false.
 #
 class mistral::policy (
-  $enforce_scope        = $facts['os_service_default'],
-  $enforce_new_defaults = $facts['os_service_default'],
-  Hash $policies        = {},
-  $policy_path          = '/etc/mistral/policy.yaml',
-  $policy_default_rule  = $facts['os_service_default'],
-  $policy_dirs          = $facts['os_service_default'],
-  Boolean $purge_config = false,
+  $enforce_scope                    = $facts['os_service_default'],
+  $enforce_new_defaults             = $facts['os_service_default'],
+  Openstacklib::Policies $policies  = {},
+  Stdlib::Absolutepath $policy_path = '/etc/mistral/policy.yaml',
+  $policy_default_rule              = $facts['os_service_default'],
+  $policy_dirs                      = $facts['os_service_default'],
+  Boolean $purge_config             = false,
 ) {
   include mistral::deps
   include mistral::params
@@ -64,12 +64,11 @@ class mistral::policy (
     file_group   => $mistral::params::group,
     file_format  => 'yaml',
     purge_config => $purge_config,
-    tag          => 'mistral',
   }
 
   create_resources('openstacklib::policy', { $policy_path => $policy_parameters })
 
-  # policy config should occur in the config block
+  # policy config should occur in the config block also.
   Anchor['mistral::config::begin']
   -> Openstacklib::Policy[$policy_path]
   -> Anchor['mistral::config::end']
