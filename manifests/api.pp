@@ -113,6 +113,8 @@ class mistral::api (
           hasrestart => true,
           tag        => 'mistral-service',
         }
+        # On any uwsgi config change, we must restart Mistral API.
+        Mistral_api_uwsgi_config<||> ~> Service['mistral-api']
       }
     }
   }

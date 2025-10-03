@@ -24,6 +24,10 @@ class mistral::deps {
   ~> Service<| tag == 'mistral-service' |>
   ~> anchor { 'mistral::service::end': }
 
+  Anchor['mistral::config::begin']
+  -> Mistral_api_uwsgi_config<||>
+  -> Anchor['mistral::config::end']
+
   # We need openstackclient before marking service end so that mistral
   # will have clients available to create resources. This tag handles the
   # openstackclient but indirectly since the client is not available in
