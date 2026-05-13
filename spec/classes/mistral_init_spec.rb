@@ -112,7 +112,7 @@ describe 'mistral' do
     context 'with rabbitmq heartbeats' do
       let :params do
         req_params.merge({
-	      :rabbit_heartbeat_timeout_threshold => '60',
+          :rabbit_heartbeat_timeout_threshold => '60',
           :rabbit_heartbeat_rate              => '10',
         })
       end
