@@ -1,0 +1,4 @@
+---
+features:
+  - |
+    The new ``mistral::extra`` class has been added.

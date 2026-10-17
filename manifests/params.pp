@@ -28,6 +28,7 @@ class mistral::params {
       $notifier_service_name      = 'openstack-mistral-notifier'
       $mistral_wsgi_script_path   = '/var/www/cgi-bin/mistral'
       $mistral_wsgi_script_source = "${pybasedir}/mistral/api/wsgi.py"
+      $extra_package_name         = 'python3-mistral-extra'
     }
     'Debian': {
       $common_package_name        = 'mistral-common'
@@ -43,6 +44,7 @@ class mistral::params {
       $notifier_service_name      = undef
       $mistral_wsgi_script_path   = '/usr/lib/cgi-bin/mistral'
       $mistral_wsgi_script_source = "${pybasedir}/mistral/api/wsgi.py"
+      $extra_package_name         = 'mistral-extra'
     }
     default: {
       fail("Unsupported osfamily: ${facts['os']['family']}")
